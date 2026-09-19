@@ -71,18 +71,14 @@ export default function FounderSection() {
               </p>
 
               {/* Special Freelancing Job Opportunity Banner in English */}
-              <div className="p-3.5 sm:p-4 rounded-xl bg-gradient-to-r from-[#116E63]/10 via-[#FDA31B]/10 to-[#116E63]/10 border border-[#116E63]/25 flex items-start gap-3 shadow-xs">
-                <div className="w-8 h-8 rounded-lg bg-[#116E63] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm text-sm">
-                  💼
-                </div>
+              <div className="p-3.5 sm:p-4 rounded-xl border flex">
+
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <h4 className="text-xs sm:text-sm font-black text-[#19232B] font-[family-name:var(--font-yantramanav)] uppercase tracking-wide">
                       100% Freelancing & Job Opportunity Support
                     </h4>
-                    <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#116E63] text-white">
-                      Guaranteed For All Learners
-                    </span>
+
                   </div>
                   <p className="text-[11px] sm:text-xs text-slate-700 leading-relaxed font-medium">
                     Every student who enrolls, completes their masterclass, and masters skills will be directly provided with live freelance client projects, gig acquisition support, and income opportunities.
