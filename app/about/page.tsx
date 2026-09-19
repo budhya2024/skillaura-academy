@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "../../components/shared/Header";
 import Footer from "../../components/shared/Footer";
 import AboutSection from "../../components/home/AboutSection";
+import FounderSection from "../../components/home/FounderSection";
 import CounterSection from "../../components/home/CounterSection";
 import TestimonialsSection from "../../components/home/TestimonialsSection";
 import { ChevronRight } from "lucide-react";
@@ -38,9 +39,12 @@ export default function AboutPage() {
       </section>
 
       {/* Main Content */}
-      <main className="flex-1 ">
+      <main className="flex-1">
         {/* About Section (Eduka Photo Collage Layout) */}
         <AboutSection />
+
+        {/* Founder Section (SUBHA KUMAR MAHATA) */}
+        <FounderSection />
 
         <div className="flex flex-col gap-8 md:gap-16 mb-8 md:mb-16">
           {/* Counter / Stats Section */}

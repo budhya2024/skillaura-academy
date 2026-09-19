@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  MapPin,
   Mail,
   Phone,
   Search,
@@ -18,7 +17,6 @@ import {
 import {
   FaFacebookF,
   FaInstagram,
-  FaYoutube,
   FaWhatsapp,
 } from "react-icons/fa6";
 
@@ -44,11 +42,13 @@ const NAV_ITEMS: NavItem[] = [
     label: "Course",
     href: "#courses",
     dropdown: [
-      { label: "AI Mastery", href: "/courses/1" },
-      { label: "Poster & Logo Design Mastery", href: "/courses/2" },
-      { label: "Attraction Mastery", href: "/courses/3" },
-      { label: "Content Creation Mastery", href: "/courses/4" },
-      { label: "Video Editing Mastery", href: "/courses/5" },
+      { label: "Video Editing Mastery", href: "/courses/1" },
+      { label: "Poster & Logo Design", href: "/courses/2" },
+      { label: "Content Creation Mastery", href: "/courses/3" },
+      { label: "Knowledge Mastery", href: "/courses/4" },
+      { label: "Business Mastery", href: "/courses/5" },
+      { label: "Facebook Ads Mastery", href: "/courses/6" },
+      { label: "Google Ads Mastery", href: "/courses/7" },
     ],
   },
   {
@@ -117,7 +117,7 @@ export default function Header() {
             </span>
             <div className="flex items-center gap-2">
               <a
-                href="https://www.facebook.com/share/1Jraz1G15N/"
+                href="https://www.facebook.com/share/1EQZ7zHQaZ/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
@@ -126,7 +126,7 @@ export default function Header() {
                 <FaFacebookF className="w-3.5 h-3.5" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/skillaura.academy_?stkn=c3N5eW1uamp1bndu"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -135,19 +135,10 @@ export default function Header() {
                 <FaInstagram className="w-3.5 h-3.5" />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://whatsapp.com/channel/0029Vb8yz5uG8l55QwjXzE0w"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="YouTube"
-                className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#FDA31B] text-white flex items-center justify-center transition-all duration-200 shadow-sm"
-              >
-                <FaYoutube className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="https://wa.me/919144288641"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
+                aria-label="WhatsApp Channel"
                 className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#FDA31B] text-white flex items-center justify-center transition-all duration-200 shadow-sm"
               >
                 <FaWhatsapp className="w-3.5 h-3.5" />
@@ -157,21 +148,13 @@ export default function Header() {
 
           {/* Right Section: Contact Info Bar */}
           <div className="flex items-center justify-end gap-6 text-white font-medium text-xs sm:text-sm whitespace-nowrap">
-            {/* Address */}
-            <div className="flex items-center gap-2 group cursor-pointer hover:text-[#FDA31B] transition-colors">
-              <MapPin className="w-5 h-5 text-[#FDA31B] shrink-0" />
-              <span>TechShift Tower, HSR Layout, Bengaluru</span>
-            </div>
-
-            <span className="text-white/30 h-4 border-r border-white/20"></span>
-
             {/* Email */}
             <a
-              href="mailto:info@example.com"
+              href="mailto:skillauraacademy.in@gmail.com"
               className="flex items-center gap-2 group hover:text-[#FDA31B] transition-colors"
             >
               <Mail className="w-5 h-5 text-[#FDA31B] shrink-0" />
-              <span>info@example.com</span>
+              <span>skillauraacademy.in@gmail.com</span>
             </a>
 
             <span className="text-white/30 h-4 border-r border-white/20"></span>
@@ -267,12 +250,12 @@ export default function Header() {
               <Search className="w-5 h-5 stroke-[2.5]" />
             </button>
 
-            {/* ENROLL NOW Button */}
+            {/* ENROLL NOW Button (Size SM) */}
             <button
               onClick={() => setIsEnrollModalOpen(true)}
-              className="hidden sm:flex items-center gap-2.5 bg-[#FDA31B] hover:bg-[#116E63] text-white font-bold text-sm tracking-wider uppercase px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-[11px] sm:text-xs tracking-wider uppercase px-3 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
             >
-              <GraduationCap className="w-5 h-5 fill-white/20 stroke-[2.5]" />
+              <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white/20 stroke-[2.5]" />
               <span>ENROLL NOW</span>
             </button>
 
@@ -382,16 +365,16 @@ export default function Header() {
               </div>
             ))}
 
-            {/* Mobile Enroll Now Button */}
+            {/* Mobile Enroll Now Button (Size SM) */}
             <div className="pt-4">
               <button
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   setIsEnrollModalOpen(true);
                 }}
-                className="w-full flex items-center justify-center gap-2 bg-[#FDA31B] hover:bg-[#e6900f] text-white font-bold text-base uppercase py-3.5 rounded-full shadow-md cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-xs uppercase tracking-wider py-2.5 px-4 rounded-full shadow-md cursor-pointer"
               >
-                <GraduationCap className="w-5 h-5 fill-white/20 stroke-[2.5]" />
+                <GraduationCap className="w-4 h-4 fill-white/20 stroke-[2.5]" />
                 <span>ENROLL NOW</span>
               </button>
             </div>

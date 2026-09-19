@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { Star } from "lucide-react";
 import { FaQuoteLeft } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,78 +12,84 @@ import "swiper/css/pagination";
 export interface TestimonialItem {
   id: number;
   name: string;
+  initials: string;
   role: string;
   enrolledCourse: string;
   quote: string;
-  avatar: string;
+  avatarBg: string;
   rating: number;
 }
 
 const TESTIMONIALS: TestimonialItem[] = [
   {
     id: 1,
-    name: "Aarav Sharma",
-    role: "AI Specialist & Agency Founder",
-    enrolledCourse: "AI Mastery",
+    name: "Rahul Sharma",
+    initials: "RS",
+    role: "Freelance Video Editor",
+    enrolledCourse: "Video Editing Mastery",
     quote:
-      "The AI Mastery course completely transformed my agency! Learning prompt engineering, ChatGPT 4o, and building automated AI agents helped us scale revenue 3x in 90 days.",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
+      "After completing the Video Editing Mastery masterclass in Premiere Pro & CapCut, the academy connected me directly to my first freelance clients. I am now editing full-time from home!",
+    avatarBg: "from-[#116E63] to-[#1a9385]",
     rating: 5,
   },
   {
     id: 2,
     name: "Priya Patel",
-    role: "Commercial Video Editor",
-    enrolledCourse: "Video Editing Mastery",
+    initials: "PP",
+    role: "Graphic & Logo Designer",
+    enrolledCourse: "Poster & Logo Design",
     quote:
-      "DaVinci Resolve color grading and sound design modules were absolute game-changers. I landed 3 high-paying commercial editing clients right after finishing!",
-    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=200",
+      "Learning vector branding in Illustrator and social creatives in Photoshop gave me an elite portfolio. The 1-on-1 mentorship and client assistance were truly game-changing!",
+    avatarBg: "from-[#FDA31B] to-[#f98207]",
     rating: 5,
   },
   {
     id: 3,
-    name: "Rohan Malhotra",
-    role: "Brand Identity Designer",
-    enrolledCourse: "Poster & Logo Design Mastery",
+    name: "Ankit Verma",
+    initials: "AV",
+    role: "Content Creator & YouTuber",
+    enrolledCourse: "Content Creation Mastery",
     quote:
-      "From vector logo concepts in Illustrator to movie poster manipulation in Photoshop, the step-by-step guidance and mentorship were world-class.",
-    avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=200",
+      "The viral hook frameworks and video retention scripting strategies completely transformed my channel. My audience grew by over 30,000 engaged subscribers in just 60 days!",
+    avatarBg: "from-[#116E63] to-[#0d554c]",
     rating: 5,
   },
   {
     id: 4,
-    name: "Ananya Deshmukh",
-    role: "Social Media Growth Lead",
-    enrolledCourse: "Content Creation Mastery",
+    name: "Sneha Mukherjee",
+    initials: "SM",
+    role: "Freelance Brand Designer",
+    enrolledCourse: "Poster & Logo Design",
     quote:
-      "I learned viral scriptwriting hooks and content batching systems. My Instagram account grew from 1k to over 50k followers in just 3 months!",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
+      "Skill Aura Academy delivered on its promise 100%. Right after graduating, I was handed real commercial design projects. Huge thanks to Subha Sir for the guidance!",
+    avatarBg: "from-[#FDA31B] to-[#e67e22]",
     rating: 5,
   },
   {
     id: 5,
-    name: "Karan Verma",
-    role: "Executive Consultant",
-    enrolledCourse: "Attraction Mastery",
+    name: "Rohan Das",
+    initials: "RD",
+    role: "Performance Marketer",
+    enrolledCourse: "Facebook Ads Mastery",
     quote:
-      "The public speaking charisma and voice modulation modules gave me unshakeable confidence in high-stakes investor pitch meetings. Highly recommended!",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200",
+      "Mastered Meta pixel setup, custom audience targeting, and Google search ads. I am now managing live ad spend for e-commerce brands with high ROAS.",
+    avatarBg: "from-[#116E63] to-[#158074]",
     rating: 5,
   },
   {
     id: 6,
-    name: "Simran Kaur",
-    role: "Freelance Motion Artist",
-    enrolledCourse: "Video Editing Mastery",
+    name: "Pooja Banerjee",
+    initials: "PB",
+    role: "Business & Sales Specialist",
+    enrolledCourse: "Knowledge & Business Mastery",
     quote:
-      "The After Effects motion graphics masterclass helped me transition from basic cuts to high-end commercial motion design. Worth every rupee!",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200",
+      "The sales psychology, objection handling, and affiliate monetization strategies gave me the confidence to close high-ticket clients remotely with ease.",
+    avatarBg: "from-[#FDA31B] to-[#d35400]",
     rating: 5,
   },
 ];
 
 export default function TestimonialsSection() {
-
   return (
     <section
       id="testimonials"
@@ -101,7 +106,7 @@ export default function TestimonialsSection() {
             What Our Students <span className="text-[#FDA31B]">Say</span>
           </h2>
           <p className="text-slate-200 text-sm sm:text-base font-normal leading-relaxed">
-            Hear directly from our graduates who transformed their careers and launched successful businesses through Skill Aura Academy.
+            Hear directly from our graduates who learned real digital skills and received freelancing job opportunities through Skill Aura Academy.
           </p>
         </div>
 
@@ -166,22 +171,18 @@ export default function TestimonialsSection() {
                     </div>
                   </div>
 
-                  {/* Student Profile Info */}
+                  {/* Student Profile Info with Initials Avatar */}
                   <div className="flex items-center gap-3.5 pt-5 mt-6 border-t border-slate-100">
-                    <div className="relative w-14 h-14 rounded-full border border-[#FDA31B] shrink-0 overflow-hidden bg-amber-50">
-                      <Image
-                        src={item.avatar}
-                        alt={item.name}
-                        width={56}
-                        height={56}
-                        className="w-full h-full rounded-full object-cover"
-                      />
+                    <div
+                      className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr ${item.avatarBg} text-white flex items-center justify-center font-extrabold text-sm sm:text-base shadow-md shrink-0 font-[family-name:var(--font-yantramanav)] tracking-wider border-2 border-white ring-2 ring-[#FDA31B]/40`}
+                    >
+                      <span>{item.initials}</span>
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-base md:text-xl font-semibold text-[#19232B] font-[family-name:var(--font-yantramanav)] leading-snug truncate">
+                      <h4 className="text-base md:text-lg font-bold text-[#19232B] font-[family-name:var(--font-yantramanav)] leading-snug truncate">
                         {item.name}
                       </h4>
-                      <span className="text-xs sm:text-sm text-[#FDA31B] block truncate font-medium">
+                      <span className="text-xs sm:text-sm text-[#116E63] block truncate font-bold">
                         {item.role}
                       </span>
                     </div>

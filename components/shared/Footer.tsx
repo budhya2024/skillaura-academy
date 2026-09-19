@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import {
-  MapPin,
   Mail,
   Phone,
   ChevronRight,
@@ -14,7 +13,6 @@ import {
 import {
   FaFacebookF,
   FaInstagram,
-  FaYoutube,
   FaWhatsapp,
   FaPaperPlane,
 } from "react-icons/fa6";
@@ -79,23 +77,15 @@ export default function Footer() {
                 <span className="font-semibold">+91 91442 88641</span>
               </a>
 
-              {/* Address */}
-              <div className="flex items-center gap-3 group text-sm text-slate-200">
-                <div className="w-9 h-9 rounded-lg bg-[#FDA31B] text-white flex items-center justify-center shrink-0 shadow-sm">
-                  <MapPin className="w-4 h-4" />
-                </div>
-                <span className="font-semibold">TechShift Tower, HSR Layout, Bengaluru, Karnataka, India</span>
-              </div>
-
               {/* Email */}
               <a
-                href="mailto:info@example.com"
+                href="mailto:skillauraacademy.in@gmail.com"
                 className="flex items-center gap-3 group text-sm text-slate-200 hover:text-[#FDA31B] transition-colors"
               >
                 <div className="w-9 h-9 rounded-lg bg-[#FDA31B] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
                   <Mail className="w-4 h-4" />
                 </div>
-                <span className="font-semibold">info@example.com</span>
+                <span className="font-semibold">skillauraacademy.in@gmail.com</span>
               </a>
             </div>
           </div>
@@ -149,11 +139,13 @@ export default function Footer() {
 
             <ul className="space-y-2.5 text-sm">
               {[
-                { label: "AI Mastery", href: "/courses/1" },
-                { label: "Poster & Logo Design Mastery", href: "/courses/2" },
-                { label: "Attraction Mastery", href: "/courses/3" },
-                { label: "Content Creation Mastery", href: "/courses/4" },
-                { label: "Video Editing Mastery", href: "/courses/5" },
+                { label: "Video Editing Mastery", href: "/courses/1" },
+                { label: "Poster & Logo Design", href: "/courses/2" },
+                { label: "Content Creation Mastery", href: "/courses/3" },
+                { label: "Knowledge Mastery", href: "/courses/4" },
+                { label: "Business Mastery", href: "/courses/5" },
+                { label: "Facebook Ads Mastery", href: "/courses/6" },
+                { label: "Google Ads Mastery", href: "/courses/7" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link
@@ -198,7 +190,7 @@ export default function Footer() {
 
               <button
                 type="submit"
-                className="w-full bg-[#FDA31B] hover:bg-[#e6900f] text-white font-extrabold text-xs tracking-wider uppercase py-3.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                className="w-full bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-xs tracking-wider uppercase py-2.5 px-5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>SUBSCRIBE NOW</span>
                 <FaPaperPlane className="w-3.5 h-3.5" />
@@ -239,7 +231,7 @@ export default function Footer() {
           {/* Right: Social Icons Rounded White Buttons */}
           <div className="flex items-center justify-center gap-2.5">
             <a
-              href="https://www.facebook.com/share/1Jraz1G15N/"
+              href="https://www.facebook.com/share/1EQZ7zHQaZ/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -248,7 +240,7 @@ export default function Footer() {
               <FaFacebookF className="w-4 h-4" />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/skillaura.academy_?stkn=c3N5eW1uamp1bndu"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -257,19 +249,10 @@ export default function Footer() {
               <FaInstagram className="w-4 h-4" />
             </a>
             <a
-              href="https://youtube.com"
+              href="https://whatsapp.com/channel/0029Vb8yz5uG8l55QwjXzE0w"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="YouTube"
-              className="w-9 h-9 rounded-lg bg-white text-[#012758] flex items-center justify-center hover:bg-[#FDA31B] hover:text-white transition-all duration-200 shadow-sm"
-            >
-              <FaYoutube className="w-4 h-4" />
-            </a>
-            <a
-              href="https://wa.me/919144288641"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
+              aria-label="WhatsApp Channel"
               className="w-9 h-9 rounded-lg bg-white text-[#012758] flex items-center justify-center hover:bg-[#FDA31B] hover:text-white transition-all duration-200 shadow-sm"
             >
               <FaWhatsapp className="w-4 h-4" />

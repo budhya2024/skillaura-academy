@@ -11,27 +11,27 @@ export interface CounterItem {
 const COUNTERS: CounterItem[] = [
   {
     id: 1,
-    icon: BookOpen,
-    count: "500",
-    label: "+ Total Courses",
+    icon: GraduationCap,
+    count: "25,000+",
+    label: "Students Guided",
   },
   {
     id: 2,
-    icon: GraduationCap,
-    count: "1800",
-    label: "+ Our Students",
+    icon: BookOpen,
+    count: "7+",
+    label: "Practical Masterclasses",
   },
   {
     id: 3,
     icon: UserCheck,
-    count: "700",
-    label: "+ Skilled Lecturers",
+    count: "100%",
+    label: "Online Practical System",
   },
   {
     id: 4,
     icon: Trophy,
-    count: "30",
-    label: "+ Win Awards",
+    count: "98%",
+    label: "Client Work Success Rate",
   },
 ];
 

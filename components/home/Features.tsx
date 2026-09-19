@@ -1,37 +1,42 @@
 import React from "react";
-import { Award, UserCheck, BookOpen, GraduationCap } from "lucide-react";
+import { Briefcase, Laptop, UserCheck, Globe } from "lucide-react";
 
 export interface FeatureItem {
   number: string;
   icon: React.ElementType;
   title: string;
+  subtitle: string;
   description: string;
 }
 
 const FEATURES: FeatureItem[] = [
   {
     number: "01",
-    icon: GraduationCap,
-    title: "Scholarship Facility",
-    description: "Merit-based scholarships & financial aid options for high-performing students.",
+    icon: Briefcase,
+    title: "Freelancing Job Opportunities",
+    subtitle: "Client Project Support",
+    description: "Every student who completes their course and masters skills is provided with direct live client freelance project opportunities.",
   },
   {
     number: "02",
-    icon: UserCheck,
-    title: "Skilled Instructors",
-    description: "Learn directly from senior industry leaders, AI engineers, and domain experts.",
+    icon: Laptop,
+    title: "100% Practical Training",
+    subtitle: "Hands-on Live Projects",
+    description: "Master industry tools like CapCut, Premiere Pro, Photoshop, Illustrator, and Meta Ads through real-world workflows.",
   },
   {
     number: "03",
-    icon: BookOpen,
-    title: "Practical Masterclasses",
-    description: "Master real-world tools with step-by-step practical projects & downloadable assets.",
+    icon: UserCheck,
+    title: "Direct Founder Mentorship",
+    subtitle: "1-on-1 Guidance",
+    description: "Personal guidance and dedicated problem-solving mentorship directly from Founder Subha Kumar Mahata.",
   },
   {
     number: "04",
-    icon: Award,
-    title: "Accredited Certification",
-    description: "Earn globally verified credentials to boost your resume and professional portfolio.",
+    icon: Globe,
+    title: "100% Online System",
+    subtitle: "Lifetime Community Access",
+    description: "Learn flexibly from home on phone or computer with lifetime access to all learning materials and community channels.",
   },
 ];
 

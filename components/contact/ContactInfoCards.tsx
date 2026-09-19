@@ -1,5 +1,5 @@
 import React from "react";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Phone, Mail, Clock } from "lucide-react";
 
 export interface ContactCardItem {
   id: number;
@@ -11,27 +11,21 @@ export interface ContactCardItem {
 const CARDS: ContactCardItem[] = [
   {
     id: 1,
-    icon: MapPin,
-    title: "Office Address",
-    subtitle: "TechShift Tower, HSR Layout, Bengaluru, India",
-  },
-  {
-    id: 2,
     icon: Phone,
     title: "Call Us",
     subtitle: "+91 91442 88641",
   },
   {
-    id: 3,
+    id: 2,
     icon: Mail,
     title: "Email Us",
-    subtitle: "info@example.com",
+    subtitle: "skillauraacademy.in@gmail.com",
   },
   {
-    id: 4,
+    id: 3,
     icon: Clock,
-    title: "Open Time",
-    subtitle: "Mon - Sat (10.00AM - 05.30PM)",
+    title: "Support Hours",
+    subtitle: "Mon - Sat (10.00 AM - 06.00 PM)",
   },
 ];
 
@@ -39,7 +33,7 @@ export default function ContactInfoCards() {
   return (
     <section className="py-8 md:py-16 bg-[#F2F3F5] font-sans">
       <div className="container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {CARDS.map((card) => {
             const Icon = card.icon;
             return (

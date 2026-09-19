@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Star, BookOpen, Users, Clock, ChevronRight, Link2 } from "lucide-react";
+import { Star, BookOpen, Users, Clock, ChevronRight, Link2, Briefcase } from "lucide-react";
 import EnrollModal from "@/components/shared/EnrollModal";
 
 export interface CourseCard {
@@ -22,68 +22,94 @@ export interface CourseCard {
 const COURSES_DATA: CourseCard[] = [
   {
     id: 1,
-    category: "Artificial Intelligence",
-    image: "/images/course-ai.jpg",
-    lessons: "85 Lessons",
+    category: "Video Editing",
+    image: "/images/course-video.jpg",
+    lessons: "80 Lessons",
     rating: 5,
-    title: "AI Mastery",
+    title: "Video Editing Mastery",
     description:
-      "Master ChatGPT, Midjourney, AI automation, LLMs, prompt engineering, and modern AI tools for business and productivity.",
+      "Master InShot, CapCut, Alight Motion, Premiere Pro, and VN Editor for viral reels, cinematic YouTube videos, and high-paying client projects.",
     seats: "120 Enrolled",
-    duration: "06 Months",
+    duration: "05 Months",
     price: "₹4,999",
   },
   {
     id: 2,
     category: "Graphic Design",
     image: "/images/course-design.jpg",
-    lessons: "64 Lessons",
+    lessons: "65 Lessons",
     rating: 5,
-    title: "Poster & Logo Design Mastery",
+    title: "Poster & Logo Design",
     description:
-      "Create high-converting brand identity logos, cinematic posters, Photoshop & Illustrator masterclass from beginner to pro.",
-    seats: "100 Enrolled",
+      "Craft professional brand logos, movie posters, and marketing graphics with Canva, Adobe Photoshop, Illustrator, PixelLab, and PhotoRoom.",
+    seats: "110 Enrolled",
     duration: "04 Months",
     price: "₹3,499",
   },
   {
     id: 3,
-    category: "Personal Branding",
-    image: "/images/course-attraction.jpg",
-    lessons: "50 Lessons",
-    rating: 5,
-    title: "Attraction Mastery",
-    description:
-      "Unlock high-status communication, personal branding, public speaking charisma, and client attraction psychology.",
-    seats: "90 Enrolled",
-    duration: "03 Months",
-    price: "₹3,999",
-  },
-  {
-    id: 4,
     category: "Social Media",
     image: "/images/course-content.jpg",
-    lessons: "72 Lessons",
+    lessons: "60 Lessons",
     rating: 5,
     title: "Content Creation Mastery",
     description:
-      "Build viral reels, podcasts, copywriting scripts, audience growth strategies across Instagram, YouTube, and LinkedIn.",
-    seats: "150 Enrolled",
+      "Master Instagram growth, YouTube channel scaling, limitless viral content ideation frameworks, and high-retention scriptwriting.",
+    seats: "140 Enrolled",
     duration: "04 Months",
     price: "₹4,499",
   },
   {
-    id: 5,
-    category: "Media Production",
-    image: "/images/course-video.jpg",
-    lessons: "90 Lessons",
+    id: 4,
+    category: "Personal & Financial Growth",
+    image: "/images/course1.jpg",
+    lessons: "45 Lessons",
     rating: 5,
-    title: "Video Editing Mastery",
+    title: "Knowledge Mastery",
     description:
-      "Master Adobe Premiere Pro, DaVinci Resolve, sound design, motion graphics, color grading, and commercial cinematic editing.",
-    seats: "110 Enrolled",
-    duration: "05 Months",
+      "Build high-ticket Affiliate Marketing revenue streams and unlock magnetic confidence through advanced Personality Development.",
+    seats: "95 Enrolled",
+    duration: "03 Months",
+    price: "₹3,499",
+  },
+  {
+    id: 5,
+    category: "Business & Sales",
+    image: "/images/course2.jpg",
+    lessons: "55 Lessons",
+    rating: 5,
+    title: "Business Mastery",
+    description:
+      "Master critical problem solving, psychological selling techniques to sell anything, high-ticket sales closing, and elite objection handling.",
+    seats: "105 Enrolled",
+    duration: "04 Months",
     price: "₹4,999",
+  },
+  {
+    id: 6,
+    category: "Performance Marketing",
+    image: "/images/course3.jpg",
+    lessons: "50 Lessons",
+    rating: 5,
+    title: "Facebook Ads Mastery",
+    description:
+      "Run highly profitable Meta & Facebook Ads. Master pixel setup, custom & lookalike audience targeting, ad creatives, and ROAS scaling.",
+    seats: "130 Enrolled",
+    duration: "03 Months",
+    price: "₹3,999",
+  },
+  {
+    id: 7,
+    category: "PPC Advertising",
+    image: "/images/course-ai.jpg",
+    lessons: "50 Lessons",
+    rating: 5,
+    title: "Google Ads Mastery",
+    description:
+      "Dominate Google Search, YouTube Video Ads, and Performance Max campaigns with intent keyword targeting and conversion tracking.",
+    seats: "115 Enrolled",
+    duration: "03 Months",
+    price: "₹3,999",
   },
 ];
 
@@ -108,7 +134,7 @@ export default function CoursesSection() {
           </h2>
 
           <p className="section-details">
-            Discover industry-accredited practical courses designed to help you master AI, Graphic Design, Video Editing, Content Creation, and Personal Branding.
+            Discover industry-accredited practical masterclasses in Video Editing, Graphic Design, Content Creation, Affiliate Marketing, Business Sales, Facebook Ads, and Google Ads with guaranteed client work assistance.
           </p>
         </div>
 
@@ -128,6 +154,7 @@ export default function CoursesSection() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
+
                   {/* Hover Overlay with White Blur & Centered Zooming Link Icon */}
                   <Link
                     href={`/courses/${course.id}`}
@@ -164,9 +191,15 @@ export default function CoursesSection() {
                 </h3>
 
                 {/* Short Description */}
-                <p className="text-[#757F95] text-sm sm:text-base leading-relaxed line-clamp-3">
+                <p className="text-[#757F95] text-sm sm:text-base leading-relaxed line-clamp-3 mb-3">
                   {course.description}
                 </p>
+
+                {/* Professional Bottom Freelancing Guarantee Tag with Yellow BG & Shine Animation */}
+                <div className="animate-shine relative overflow-hidden flex items-center justify-center bg-primary text-white  px-2.5 py-1.5 text-xs sm:text-sm  font-medium tracking-wide">
+
+                  <span>100% Freelancing & Client Project Opportunity</span>
+                </div>
               </div>
 
               {/* Bottom Metadata, Price Tag & Action Buttons */}
@@ -192,21 +225,21 @@ export default function CoursesSection() {
                   </div>
                 </div>
 
-                {/* Details & Enroll Action Buttons */}
+                {/* Details & Enroll Action Buttons (Size SM) */}
                 <div className="flex items-center gap-2 pt-1">
                   <Link
                     href={`/courses/${course.id}`}
-                    className="flex-1 bg-slate-100 hover:bg-[#116E63] text-[#19232B] hover:text-white font-bold text-xs sm:text-sm uppercase tracking-wider py-3 rounded-full transition-all text-center cursor-pointer"
+                    className="flex-1 bg-slate-100 hover:bg-[#116E63] text-[#19232B] hover:text-white font-bold text-xs uppercase tracking-wider py-2.5 px-3 rounded-full transition-all text-center cursor-pointer"
                   >
                     DETAILS
                   </Link>
 
                   <button
                     onClick={() => handleOpenEnroll(course.id)}
-                    className="flex-1 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider py-3 rounded-full shadow-sm hover:shadow-md transition-all duration-300 text-center flex items-center justify-center gap-1 cursor-pointer"
+                    className="flex-1 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-xs uppercase tracking-wider py-2.5 px-3 rounded-full shadow-sm hover:shadow-md transition-all duration-300 text-center flex items-center justify-center gap-1 cursor-pointer"
                   >
                     <span>ENROLL NOW</span>
-                    <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+                    <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
                   </button>
                 </div>
               </div>

@@ -87,12 +87,12 @@ export default function AboutSection() {
           <div className="lg:col-span-6 space-y-5 pt-4 lg:pt-0">
             {/* Headline */}
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#19232B] font-[family-name:var(--font-yantramanav)] leading-[1.15] tracking-tight">
-              Our Education System <span className="text-[#FDA31B]">Inspires</span> You More.
+              Learn High-Income Skills. <span className="text-[#FDA31B]">Get Freelance Work.</span>
             </h2>
 
             {/* Subtext Paragraph */}
             <p className="text-[#6C757D] text-sm md:text-base leading-relaxed font-normal">
-              Skill Aura Academy provides world-class educational opportunities through practical hands-on learning, career-focused degree pathways, and industry-accredited certifications.
+              Skill Aura Academy is a 100% online practical academy. Our mission is simple: teach in-demand digital skills and provide direct freelancing job & client project opportunities for every dedicated student.
             </p>
 
             {/* Features Row & Quote Callout Grid */}
@@ -106,10 +106,10 @@ export default function AboutSection() {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-bold text-[#19232B] font-[family-name:var(--font-yantramanav)]">
-                      Edukation Services
+                      100% Practical Curriculum
                     </h3>
                     <p className="text-[#6C757D] text-sm md:text-base leading-relaxed mt-0.5">
-                      Comprehensive academic curriculum designed by industry experts and veteran university professors.
+                      Hands-on projects with CapCut, Photoshop, Illustrator, Premiere Pro, and Meta Ads.
                     </p>
                   </div>
                 </div>
@@ -121,10 +121,10 @@ export default function AboutSection() {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-bold text-[#19232B] font-[family-name:var(--font-yantramanav)]">
-                      International Hubs
+                      Direct Client & Job Support
                     </h3>
                     <p className="text-[#6C757D] text-sm md:text-base leading-relaxed mt-0.5">
-                      Worldwide recognized pathways, global student community, and 1-on-1 career mentorship.
+                      Personalized assistance with client acquisition, portfolio building, and live freelancing gigs.
                     </p>
                   </div>
                 </div>
@@ -132,8 +132,8 @@ export default function AboutSection() {
 
               {/* Right Column: Soft Mint Teal Quote Callout Box (md:col-span-5) */}
               <div className="md:col-span-5 bg-[#EAF5F3] rounded-2xl p-5 relative flex flex-col justify-between border border-[#116E63]/15 shadow-sm min-h-[160px]">
-                <p className="text-[#3A4E5E] font-medium text-sm md:text-base leading-relaxed relative z-10">
-                  It is a long established fact that a reader will be distracted by the content of a page when looking at its reader for the long words layout.
+                <p className="text-[#3A4E5E] font-medium text-xs sm:text-sm leading-relaxed relative z-10">
+                  &ldquo;Every student who enrolls, completes their masterclass, and learns in-demand skills will be provided with direct freelance client work and income opportunities.&rdquo;
                 </p>
 
                 {/* Green 99 Watermark in Bottom Right */}
@@ -145,33 +145,15 @@ export default function AboutSection() {
               </div>
             </div>
 
-            {/* Bottom Action Row: DISCOVER MORE Button + Call Now Widget */}
+            {/* Bottom Action Row: DISCOVER MORE Button (Size SM) */}
             <div className="pt-3 flex flex-wrap items-center gap-6">
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-sm md:text-base tracking-wider uppercase px-7 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
+                className="inline-flex items-center gap-1.5 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-xs sm:text-sm tracking-wider uppercase px-5 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
               >
                 <span>DISCOVER MORE</span>
-                <ChevronRight className="w-4 h-4 stroke-[3]" />
+                <ChevronRight className="w-3.5 h-3.5 stroke-[3]" />
               </Link>
-
-              {/* Call Now Widget */}
-              <a
-                href="tel:+919144288641"
-                className="flex items-center gap-3 group hover:opacity-90 transition-opacity"
-              >
-                <div className="w-11 h-11 rounded-full bg-[#116E63] text-white flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
-                  <Headphones className="w-5 h-5 stroke-[2.5]" />
-                </div>
-                <div>
-                  <span className="block text-sm md:text-base font-extrabold text-[#FDA31B] leading-none uppercase tracking-wide">
-                    Call Now
-                  </span>
-                  <span className="block text-sm sm:text-base font-black text-[#19232B] font-[family-name:var(--font-yantramanav)] mt-1">
-                    +91 91442 88641
-                  </span>
-                </div>
-              </a>
             </div>
           </div>
         </div>

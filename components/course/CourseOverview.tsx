@@ -110,6 +110,18 @@ export default function CourseOverview({
             </div>
           ))}
         </div>
+
+        {/* Guaranteed Freelancing Job Opportunity Callout */}
+        <div className="p-4  bg-primary">
+          <h3 className="text-sm md:text-base  text-white uppercase ">
+            100% Freelancing & Client Job Opportunity Guarantee
+          </h3>
+          <p className="text-xs md:text-sm  text-white ">
+            Every enrolled student who completes the training and masters the skills will receive direct live freelancing client work and earning opportunities.
+          </p>
+
+
+        </div>
       </div>
 
       {/* 2. Course Description */}
@@ -139,7 +151,7 @@ export default function CourseOverview({
             return (
               <div
                 key={module.id}
-                className="border border-slate-200 rounded-2xl overflow-hidden"
+                className="border border-slate-200 rounded-sm overflow-hidden"
               >
                 <button
                   onClick={() => toggleCurriculum(module.id)}
