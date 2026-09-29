@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Mail,
   Phone,
@@ -180,24 +181,15 @@ export default function Header() {
       >
         <div className="container h-20 flex items-center justify-between">
           {/* Logo Section */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative flex items-center justify-center">
-              {/* Logo Icon Graphic */}
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#116E63] to-[#189b8b] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-200">
-                <BookOpen className="w-6 h-6 text-white" />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-[#FDA31B] rounded-full border-2 border-white"></span>
-              </div>
-            </div>
-            {/* Logo Text: Skill Aura Academy */}
-            <div className="flex flex-col leading-none font-[family-name:var(--font-yantramanav)]">
-              <div className="flex items-baseline font-black tracking-tight text-2xl sm:text-3xl">
-                <span className="text-[#116E63]">Skill</span>
-                <span className="text-[#FDA31B]">Aura</span>
-              </div>
-              <span className="text-[10px] sm:text-[11px] font-bold text-[#757F95] tracking-[0.2em] uppercase mt-0.5">
-                Academy
-              </span>
-            </div>
+          <Link href="/" className="flex items-center group py-1">
+            <Image
+              src="/images/brand-logo.png"
+              alt="Skill Aura Academy Logo"
+              width={200}
+              height={55}
+              className="h-8 sm:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.03]"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -250,10 +242,10 @@ export default function Header() {
               <Search className="w-5 h-5 stroke-[2.5]" />
             </button>
 
-            {/* ENROLL NOW Button (Size SM) */}
+            {/* ENROLL NOW Button (Desktop & Tablet only) */}
             <button
               onClick={() => setIsEnrollModalOpen(true)}
-              className="flex items-center gap-1.5 sm:gap-2 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-[11px] sm:text-xs tracking-wider uppercase px-3 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 sm:gap-2 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-[11px] sm:text-xs tracking-wider uppercase px-3 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
             >
               <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white/20 stroke-[2.5]" />
               <span>ENROLL NOW</span>
@@ -295,15 +287,15 @@ export default function Header() {
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex flex-col leading-none font-[family-name:var(--font-yantramanav)]"
+              className="flex items-center"
             >
-              <div className="flex items-baseline font-black tracking-tight text-xl">
-                <span className="text-[#116E63]">Skill</span>
-                <span className="text-[#FDA31B]">Aura</span>
-              </div>
-              <span className="text-[9px] font-bold text-[#757F95] tracking-[0.2em] uppercase mt-0.5">
-                Academy
-              </span>
+              <Image
+                src="/images/brand-logo.png"
+                alt="Skill Aura Academy Logo"
+                width={160}
+                height={45}
+                className="h-9 w-auto object-contain"
+              />
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
@@ -365,19 +357,6 @@ export default function Header() {
               </div>
             ))}
 
-            {/* Mobile Enroll Now Button (Size SM) */}
-            <div className="pt-4">
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  setIsEnrollModalOpen(true);
-                }}
-                className="w-full flex items-center justify-center gap-2 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-xs uppercase tracking-wider py-2.5 px-4 rounded-full shadow-md cursor-pointer"
-              >
-                <GraduationCap className="w-4 h-4 fill-white/20 stroke-[2.5]" />
-                <span>ENROLL NOW</span>
-              </button>
-            </div>
           </div>
         </div>
       )}

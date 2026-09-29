@@ -2,12 +2,11 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Mail,
   Phone,
   ChevronRight,
-  Send,
-  BookOpen,
   CheckCircle2,
 } from "lucide-react";
 import {
@@ -37,79 +36,76 @@ export default function Footer() {
     >
       {/* Dark Royal Navy Blue Background Tint Overlay */}
       <div className="absolute inset-0 bg-[#012758]/95 backdrop-blur-[1px]"></div>
-
-
       <div className="container relative z-10">
         {/* Main Footer Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12">
-          {/* Column 1: Brand Info & Contacts (lg:col-span-4) */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-gradient-to-tr from-[#116E63] to-[#189b8b] flex items-center justify-center text-white shadow-md">
-                <BookOpen className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex flex-col leading-none font-[family-name:var(--font-yantramanav)]">
-                <div className="flex items-baseline font-black tracking-tight text-2xl sm:text-3xl">
-                  <span className="text-white">Skill</span>
-                  <span className="text-[#FDA31B]">Aura</span>
-                </div>
-                <span className="text-[10px] font-bold text-slate-300 tracking-[0.2em] uppercase mt-0.5">
-                  Academy
-                </span>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-12">
+          {/* Column 1: Brand Info & Contacts (lg:col-span-3) */}
+          <div className="lg:col-span-3 space-y-5">
+            {/* White Logo rendered using CSS brightness-0 invert */}
+            <Link href="/" className="inline-block group py-1">
+              <Image
+                src="/images/brand-logo.png"
+                alt="Skill Aura Academy Logo"
+                width={190}
+                height={50}
+                className="h-8 sm:h-10 w-auto object-contain brightness-0 invert transition-transform duration-200 group-hover:scale-[1.03]"
+              />
             </Link>
 
-            <p className="text-slate-300 text-sm leading-relaxed max-w-sm">
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
               We offer world-class educational programs, practical skill masterclasses, and globally accredited degree pathways.
             </p>
 
-            {/* Contact Items */}
-            <div className="space-y-3.5 pt-1">
-              {/* Phone */}
+            {/* Social Media Icons (Left Side under Logo Text) */}
+            <div className="flex items-center gap-2.5 pt-1">
               <a
-                href="tel:+919144288641"
-                className="flex items-center gap-3 group text-sm text-slate-200 hover:text-[#FDA31B] transition-colors"
+                href="https://www.facebook.com/share/1EQZ7zHQaZ/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-9 h-9 rounded-lg bg-white/10 text-white flex items-center justify-center hover:bg-[#FDA31B] transition-all duration-200 shadow-sm"
               >
-                <div className="w-9 h-9 rounded-lg bg-[#FDA31B] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                  <Phone className="w-4 h-4 fill-white/20" />
-                </div>
-                <span className="font-semibold">+91 91442 88641</span>
+                <FaFacebookF className="w-4 h-4" />
               </a>
-
-              {/* Email */}
               <a
-                href="mailto:skillauraacademy.in@gmail.com"
-                className="flex items-center gap-3 group text-sm text-slate-200 hover:text-[#FDA31B] transition-colors"
+                href="https://www.instagram.com/skillaura.academy_?stkn=c3N5eW1uamp1bndu"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 rounded-lg bg-white/10 text-white flex items-center justify-center hover:bg-[#FDA31B] transition-all duration-200 shadow-sm"
               >
-                <div className="w-9 h-9 rounded-lg bg-[#FDA31B] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                  <Mail className="w-4 h-4" />
-                </div>
-                <span className="font-semibold">skillauraacademy.in@gmail.com</span>
+                <FaInstagram className="w-4 h-4" />
+              </a>
+              <a
+                href="https://whatsapp.com/channel/0029Vb8yz5uG8l55QwjXzE0w"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp Channel"
+                className="w-9 h-9 rounded-lg bg-white/10 text-white flex items-center justify-center hover:bg-[#FDA31B] transition-all duration-200 shadow-sm"
+              >
+                <FaWhatsapp className="w-4 h-4" />
               </a>
             </div>
           </div>
 
           {/* Column 2: Quick Links (lg:col-span-2) */}
-          <div className="lg:col-span-2 space-y-5">
-            <div className="space-y-2">
-              <h3 className="text-lg font-bold text-white font-[family-name:var(--font-yantramanav)]">
+          <div className="lg:col-span-2 space-y-4">
+            <div className="space-y-1.5">
+              <h3 className="text-base font-bold text-white font-[family-name:var(--font-yantramanav)]">
                 Quick Links
               </h3>
-              {/* Double Color Underline Bar */}
-              <div className="flex items-center h-0.5 w-14">
-                <span className="bg-[#FDA31B] h-full w-7"></span>
-                <span className="bg-slate-600 h-full w-7"></span>
+              <div className="flex items-center h-0.5 w-12">
+                <span className="bg-[#FDA31B] h-full w-6"></span>
+                <span className="bg-slate-600 h-full w-6"></span>
               </div>
             </div>
 
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 text-xs sm:text-sm">
               {[
                 { label: "Home", href: "/" },
                 { label: "About Us", href: "/about" },
                 { label: "Top Courses", href: "#courses" },
                 { label: "Testimonials", href: "#testimonials" },
-                { label: "FAQ", href: "#faq" },
                 { label: "Contact Us", href: "/contact" },
               ].map((link) => (
                 <li key={link.label}>
@@ -117,7 +113,7 @@ export default function Footer() {
                     href={link.href}
                     className="flex items-center gap-1.5 text-slate-300 hover:text-[#FDA31B] font-medium transition-colors group"
                   >
-                    <ChevronRight className="w-3.5 h-3.5 text-[#FDA31B] group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-3.5 h-3.5 text-[#FDA31B] group-hover:translate-x-1 transition-transform shrink-0" />
                     <span>{link.label}</span>
                   </Link>
                 </li>
@@ -125,34 +121,31 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Our Courses (lg:col-span-3) */}
-          <div className="lg:col-span-3 space-y-5">
-            <div className="space-y-2">
-              <h3 className="text-lg font-bold text-white font-[family-name:var(--font-yantramanav)]">
-                Our Courses
+          {/* Column 3: Legal & Policies (lg:col-span-2) */}
+          <div className="lg:col-span-2 space-y-4">
+            <div className="space-y-1.5">
+              <h3 className="text-base font-bold text-white font-[family-name:var(--font-yantramanav)]">
+                Legal & Policies
               </h3>
-              <div className="flex items-center h-0.5 w-14">
-                <span className="bg-[#FDA31B] h-full w-7"></span>
-                <span className="bg-slate-600 h-full w-7"></span>
+              <div className="flex items-center h-0.5 w-12">
+                <span className="bg-[#FDA31B] h-full w-6"></span>
+                <span className="bg-slate-600 h-full w-6"></span>
               </div>
             </div>
 
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 text-xs sm:text-sm">
               {[
-                { label: "Video Editing Mastery", href: "/courses/1" },
-                { label: "Poster & Logo Design", href: "/courses/2" },
-                { label: "Content Creation Mastery", href: "/courses/3" },
-                { label: "Knowledge Mastery", href: "/courses/4" },
-                { label: "Business Mastery", href: "/courses/5" },
-                { label: "Facebook Ads Mastery", href: "/courses/6" },
-                { label: "Google Ads Mastery", href: "/courses/7" },
+                { label: "Terms & Conditions", href: "/terms" },
+                { label: "Privacy Policy", href: "/privacy" },
+                { label: "Refund Policy", href: "/refund-policy" },
+                { label: "Affiliate Terms", href: "/affiliate-terms" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
                     className="flex items-center gap-1.5 text-slate-300 hover:text-[#FDA31B] font-medium transition-colors group"
                   >
-                    <ChevronRight className="w-3.5 h-3.5 text-[#FDA31B] group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-3.5 h-3.5 text-[#FDA31B] group-hover:translate-x-1 transition-transform shrink-0" />
                     <span>{link.label}</span>
                   </Link>
                 </li>
@@ -160,20 +153,53 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Newsletter (lg:col-span-3) */}
-          <div className="lg:col-span-3 space-y-5">
-            <div className="space-y-2">
-              <h3 className="text-lg font-bold text-white font-[family-name:var(--font-yantramanav)]">
-                Newsletter
+          {/* Column 4: Top Courses (lg:col-span-2) */}
+          <div className="lg:col-span-2 space-y-4">
+            <div className="space-y-1.5">
+              <h3 className="text-base font-bold text-white font-[family-name:var(--font-yantramanav)]">
+                Our Courses
               </h3>
-              <div className="flex items-center h-0.5 w-14">
-                <span className="bg-[#FDA31B] h-full w-7"></span>
-                <span className="bg-slate-600 h-full w-7"></span>
+              <div className="flex items-center h-0.5 w-12">
+                <span className="bg-[#FDA31B] h-full w-6"></span>
+                <span className="bg-slate-600 h-full w-6"></span>
               </div>
             </div>
 
-            <p className="text-slate-300 text-sm leading-relaxed">
-              Subscribe Our Newsletter To Get Latest Update And News
+            <ul className="space-y-2 text-xs sm:text-sm">
+              {[
+                { label: "Video Editing", href: "/courses/1" },
+                { label: "Poster & Logo Design", href: "/courses/2" },
+                { label: "Content Creation", href: "/courses/3" },
+                { label: "Knowledge Mastery", href: "/courses/4" },
+                { label: "Facebook & Google Ads", href: "/courses/6" },
+              ].map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="flex items-center gap-1.5 text-slate-300 hover:text-[#FDA31B] font-medium transition-colors group"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5 text-[#FDA31B] group-hover:translate-x-1 transition-transform shrink-0" />
+                    <span>{link.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 5: Newsletter (lg:col-span-3) */}
+          <div className="lg:col-span-3 space-y-4">
+            <div className="space-y-1.5">
+              <h3 className="text-base font-bold text-white font-[family-name:var(--font-yantramanav)]">
+                Newsletter
+              </h3>
+              <div className="flex items-center h-0.5 w-12">
+                <span className="bg-[#FDA31B] h-full w-6"></span>
+                <span className="bg-slate-600 h-full w-6"></span>
+              </div>
+            </div>
+
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+              Subscribe to get the latest updates, course announcements, and educational news.
             </p>
 
             <form onSubmit={handleSubscribe} className="space-y-3">
@@ -184,13 +210,14 @@ export default function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your Email"
                   required
-                  className="w-full bg-white text-slate-800 placeholder-slate-400 font-medium px-4 py-3.5 rounded-full focus:outline-none focus:ring-2 focus:ring-[#FDA31B] text-sm shadow-sm"
+                  className="w-full bg-white/10 border border-white/20 text-white placeholder-slate-400 font-medium px-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-[#FDA31B] text-xs sm:text-sm shadow-sm transition-all"
                 />
               </div>
 
+              {/* Increased Y-axis padding for Subscribe button */}
               <button
                 type="submit"
-                className="w-full bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-xs tracking-wider uppercase py-2.5 px-5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-xs tracking-wider uppercase py-3.5 sm:py-4 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>SUBSCRIBE NOW</span>
                 <FaPaperPlane className="w-3.5 h-3.5" />
@@ -207,7 +234,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright & Social Bar */}
-        <div className="border-t border-white/10 pt-6 flex flex-col lg:flex-row items-center justify-between gap-4 text-sm sm:text-base text-slate-300 text-center lg:text-left">
+        <div className="border-t border-white/10 pt-6 flex flex-col gap-1 text-center  text-xs sm:text-sm text-slate-300 text-center ">
           {/* Left: Copyright */}
           <p className="font-normal">
             © Copyright 2026{" "}
@@ -215,48 +242,22 @@ export default function Footer() {
             All Rights Reserved.
           </p>
 
-          {/* Center: Developed by TechShift Technology */}
-          <p className="font-normal text-center">
-            Developed by{" "}
-            <a
-              href="https://www.facebook.com/profile.php?id=61557874367373"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#FDA31B] font-bold hover:underline hover:text-white transition-all"
-            >
-              TechShift Technology
-            </a>
-          </p>
 
-          {/* Right: Social Icons Rounded White Buttons */}
-          <div className="flex items-center justify-center gap-2.5">
-            <a
-              href="https://www.facebook.com/share/1EQZ7zHQaZ/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="w-9 h-9 rounded-lg bg-white text-[#012758] flex items-center justify-center hover:bg-[#FDA31B] hover:text-white transition-all duration-200 shadow-sm"
-            >
-              <FaFacebookF className="w-4 h-4" />
-            </a>
-            <a
-              href="https://www.instagram.com/skillaura.academy_?stkn=c3N5eW1uamp1bndu"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="w-9 h-9 rounded-lg bg-white text-[#012758] flex items-center justify-center hover:bg-[#FDA31B] hover:text-white transition-all duration-200 shadow-sm"
-            >
-              <FaInstagram className="w-4 h-4" />
-            </a>
-            <a
-              href="https://whatsapp.com/channel/0029Vb8yz5uG8l55QwjXzE0w"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp Channel"
-              className="w-9 h-9 rounded-lg bg-white text-[#012758] flex items-center justify-center hover:bg-[#FDA31B] hover:text-white transition-all duration-200 shadow-sm"
-            >
-              <FaWhatsapp className="w-4 h-4" />
-            </a>
+          {/* Right: Developed by TechShift Technology & Social Icons */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 mx-auto">
+            <p className="font-normal text-xs text-slate-400">
+              Developed by{" "}
+              <a
+                href="https://www.facebook.com/profile.php?id=61557874367373"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FDA31B] font-bold hover:underline hover:text-white transition-all"
+              >
+                TechShift Technology
+              </a>
+            </p>
+
+
           </div>
         </div>
       </div>
