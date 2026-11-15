@@ -42,7 +42,7 @@ const FEATURES: FeatureItem[] = [
 
 export default function Features() {
   return (
-    <section className="relative z-30 -mt-16 sm:-mt-20 md:-mt-24 lg:-mt-28 mb-8 md:mb-16 font-sans">
+    <section className="relative z-30 mt-6 sm:-mt-20 md:-mt-24 lg:-mt-28 mb-8 md:mb-16 font-sans">
       <div className="container">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
           {FEATURES.map((feature, idx) => {

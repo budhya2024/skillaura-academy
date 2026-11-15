@@ -118,7 +118,7 @@ export default function HeroSlider() {
                 </p>
 
                 {/* CTA Action Buttons Always in Flex Row (Size SM) */}
-                <div className="flex flex-row items-center justify-start gap-2.5 sm:gap-3 pt-2">
+                <div className="flex flex-wrap items-center justify-start gap-2.5 sm:gap-3 pt-2">
                   {/* Primary Orange Button */}
                   <Link
                     href={slide.primaryBtnHref}
@@ -161,7 +161,7 @@ export default function HeroSlider() {
       </button>
 
       {/* Pagination Indicators */}
-      <div className="absolute bottom-24 sm:bottom-32 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2.5">
+      <div className="absolute bottom-5 sm:bottom-28 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2.5">
         {SLIDES.map((_, index) => (
           <button
             key={index}

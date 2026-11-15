@@ -11,7 +11,7 @@ export default function AboutSection() {
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           {/* Left Column: Image Collage (lg:col-span-6) */}
-          <div className="lg:col-span-6 relative pb-6 sm:pb-8">
+          <div className="lg:col-span-6 relative pb-16 sm:pb-20 lg:pb-8 mb-4 lg:mb-0">
             <div className="grid grid-cols-2 gap-4 sm:gap-6 items-center">
               {/* 1. Tall Left Image with Custom Asymmetric Corner Radius */}
               <div
@@ -84,7 +84,7 @@ export default function AboutSection() {
           </div>
 
           {/* Right Column: Information & Feature Cards (lg:col-span-6) */}
-          <div className="lg:col-span-6 space-y-5 pt-4 lg:pt-0">
+          <div className="lg:col-span-6 space-y-5 pt-6 lg:pt-0">
             {/* Headline */}
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#19232B] font-[family-name:var(--font-yantramanav)] leading-[1.15] tracking-tight">
               Learn High-Income Skills. <span className="text-[#FDA31B]">Get Freelance Work.</span>

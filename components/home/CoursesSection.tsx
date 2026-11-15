@@ -23,7 +23,7 @@ const COURSES_DATA: CourseCard[] = [
   {
     id: 1,
     category: "Video Editing",
-    image: "/images/course-video.jpg",
+    image: "/images/video.jpeg",
     lessons: "80 Lessons",
     rating: 5,
     title: "Video Editing Mastery",
