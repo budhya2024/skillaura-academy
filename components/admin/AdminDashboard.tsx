@@ -58,6 +58,21 @@ export default function AdminDashboard() {
   const [copiedLink, setCopiedLink] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
+  // Dynamic Greeting & Student Name
+  const [greeting, setGreeting] = useState("Good Morning");
+  const studentName = "Aman Singhania";
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      setGreeting("Good Morning");
+    } else if (hour < 17) {
+      setGreeting("Good Afternoon");
+    } else {
+      setGreeting("Good Evening");
+    }
+  }, []);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
@@ -220,7 +235,7 @@ export default function AdminDashboard() {
               </div>
               <div className="hidden md:block text-left text-xs">
                 <span className="font-bold text-slate-900 dark:text-white block leading-tight">
-                  Student Member
+                  {studentName}
                 </span>
                 <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-medium">
                   SKA-ROOT88
@@ -246,14 +261,15 @@ export default function AdminDashboard() {
                       <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
                         ID: <strong className="text-slate-800 dark:text-slate-200">SKA-ROOT88</strong>
                       </span>
-                      <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1">
+                      <span className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-1">
                         <Activity className="w-3.5 h-3.5" /> Active Learner &amp; Affiliate
                       </span>
                     </div>
-                    <h2 className="text-base sm:text-xl font-bold text-slate-900 uppercase tracking-wide font-[family-name:var(--font-yantramanav)]">
-                      Welcome back, Student
+                    <h2 className="text-base sm:text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wide font-[family-name:var(--font-yantramanav)] flex items-center gap-2 flex-wrap">
+                      <span>Hi, {greeting}!</span>
+                      <span className="text-[#116E63] dark:text-emerald-400 font-extrabold">{studentName}</span>
                     </h2>
-                    <p className="text-xs text-slate-500 max-w-xl">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl">
                       Access your enrolled course lessons, personal referral income, and wallet earnings.
                     </p>
                   </div>
