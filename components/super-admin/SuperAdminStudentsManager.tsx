@@ -837,14 +837,16 @@ export default function SuperAdminStudentsManager() {
 
         {/* Master Student Roster Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs min-w-[980px]">
+          <table className="w-full text-left border-collapse text-xs min-w-[1040px]">
             <thead>
               <tr className="bg-slate-100/80 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] tracking-wider">
                 <th className="py-3 px-3 w-12 text-center">SL No.</th>
                 <th className="py-3 px-3">Student &amp; Contact</th>
                 <th className="py-3 px-3">Course Purchased</th>
                 <th className="py-3 px-3">Referred By (Sponsor)</th>
-                <th className="py-3 px-3 text-center">Student&apos;s Referrals</th>
+                <th className="py-3 px-3 text-center">Students Added</th>
+                <th className="py-3 px-3 text-center">Income Generated</th>
+                <th className="py-3 px-3 text-center">Company Profit</th>
                 <th className="py-3 px-3 text-center">KYC Status</th>
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
@@ -852,134 +854,163 @@ export default function SuperAdminStudentsManager() {
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80 font-medium text-slate-800 dark:text-slate-200">
               {filteredStudents.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-500">
+                  <td colSpan={9} className="py-12 text-center text-slate-500">
                     No students matched your search filter.
                   </td>
                 </tr>
               ) : (
-                filteredStudents.map((student, idx) => (
-                  <tr
-                    key={student.id}
-                    className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
-                  >
-                    {/* 1. SL No. */}
-                    <td className="py-3 px-3 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
-                      {idx + 1}
-                    </td>
+                filteredStudents.map((student, idx) => {
+                  const directSalesTotal =
+                    student.referrals.directStudents.reduce((acc, d) => acc + d.feePaid, 0) ||
+                    student.referrals.totalDirects * 4999;
+                  const companyProfitGenerated =
+                    Math.round(directSalesTotal * 0.35 + student.purchasedCourse.courseFee * 0.35);
 
-                    {/* 2. Student Identity & Contact */}
-                    <td className="py-3 px-3">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-9 h-9 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 relative shrink-0 bg-slate-100 dark:bg-slate-800 shadow-2xs">
-                          <Image
-                            src={student.avatarImage || "/images/founder.jpeg"}
-                            alt={student.name}
-                            fill
-                            sizes="36px"
-                            className="object-cover object-top"
-                          />
-                        </div>
-                        <div className="min-w-0">
-                          <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm truncate leading-tight">
-                            {student.name}
-                          </div>
-                          <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
-                            <span className="font-bold text-[#116E63] dark:text-emerald-400">
-                              {student.id}
-                            </span>
-                            <span>&bull;</span>
-                            <span>{student.phone}</span>
-                          </div>
-                          <div className="text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[170px]">
-                            {student.email}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
+                  return (
+                    <tr
+                      key={student.id}
+                      className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+                    >
+                      {/* 1. SL No. */}
+                      <td className="py-3 px-3 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                        {idx + 1}
+                      </td>
 
-                    {/* 3. Course Purchased & Price */}
-                    <td className="py-3 px-3">
-                      <div className="font-bold text-slate-900 dark:text-white truncate max-w-[210px]">
-                        {student.purchasedCourse.courseName}
-                      </div>
-                      <div className="flex items-center gap-2 mt-0.5 text-[11px]">
-                        <span className="font-mono font-black text-emerald-700 dark:text-emerald-400">
-                          ₹{student.purchasedCourse.courseFee.toLocaleString()}
-                        </span>
-                        <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
-                          <CheckCircle2 className="w-3 h-3" /> Paid
-                        </span>
-                        <span className="text-[10px] text-slate-400 font-mono">
-                          {student.purchasedCourse.purchaseDate}
-                        </span>
-                      </div>
-                    </td>
-
-                    {/* 4. Referred By (Sponsor Info) */}
-                    <td className="py-3 px-3">
-                      <div className="flex items-start gap-1.5">
-                        <Share2 className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400 shrink-0 mt-0.5" />
-                        <div className="min-w-0">
-                          <div className="font-bold text-slate-900 dark:text-white text-xs truncate max-w-[170px]">
-                            {student.sponsor.sponsorName}
+                      {/* 2. Student Identity & Contact */}
+                      <td className="py-3 px-3">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-9 h-9 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 relative shrink-0 bg-slate-100 dark:bg-slate-800 shadow-2xs">
+                            <Image
+                              src={student.avatarImage || "/images/founder.jpeg"}
+                              alt={student.name}
+                              fill
+                              sizes="36px"
+                              className="object-cover object-top"
+                            />
                           </div>
-                          <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
-                            Sponsor: <strong className="text-slate-700 dark:text-slate-300">{student.sponsor.sponsorId}</strong>
+                          <div className="min-w-0">
+                            <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm truncate leading-tight">
+                              {student.name}
+                            </div>
+                            <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
+                              <span className="font-bold text-[#116E63] dark:text-emerald-400">
+                                {student.id}
+                              </span>
+                              <span>&bull;</span>
+                              <span>{student.phone}</span>
+                            </div>
+                            <div className="text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[170px]">
+                              {student.email}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
 
-                    {/* 5. Referrals Made (Their Team Size & Commissions) */}
-                    <td className="py-3 px-3 text-center">
-                      <div className="font-mono font-bold text-slate-900 dark:text-white text-xs">
-                        {student.referrals.totalDirects} Students
-                      </div>
-                      <div className="text-[10px] text-emerald-700 dark:text-emerald-400 font-mono font-semibold">
-                        ₹{student.referrals.totalCommissionEarned.toLocaleString()} Earned
-                      </div>
-                    </td>
+                      {/* 3. Course Purchased & Price */}
+                      <td className="py-3 px-3">
+                        <div className="font-bold text-slate-900 dark:text-white truncate max-w-[210px]">
+                          {student.purchasedCourse.courseName}
+                        </div>
+                        <div className="flex items-center gap-2 mt-0.5 text-[11px]">
+                          <span className="font-mono font-black text-emerald-700 dark:text-emerald-400">
+                            ₹{student.purchasedCourse.courseFee.toLocaleString()}
+                          </span>
+                          <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
+                            <CheckCircle2 className="w-3 h-3" /> Paid
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-mono">
+                            {student.purchasedCourse.purchaseDate}
+                          </span>
+                        </div>
+                      </td>
 
-                    {/* 6. KYC Status (Toggle) */}
-                    <td className="py-3 px-3 text-center">
-                      <button
-                        onClick={() => handleToggleKyc(student.id)}
-                        className={`inline-flex items-center gap-1 text-[11px] font-bold cursor-pointer transition-colors ${
-                          student.kycVerified
-                            ? "text-emerald-700 dark:text-emerald-400 hover:text-emerald-900"
-                            : "text-amber-700 dark:text-amber-400 hover:text-amber-900"
-                        }`}
-                        title="Click to toggle KYC status"
-                      >
-                        {student.kycVerified ? (
-                          <>
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                            <span>Verified</span>
-                          </>
-                        ) : (
-                          <>
-                            <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                            <span>Pending</span>
-                          </>
-                        )}
-                      </button>
-                    </td>
+                      {/* 4. Referred By (Sponsor Info) */}
+                      <td className="py-3 px-3">
+                        <div className="flex items-start gap-1.5">
+                          <Share2 className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400 shrink-0 mt-0.5" />
+                          <div className="min-w-0">
+                            <div className="font-bold text-slate-900 dark:text-white text-xs truncate max-w-[170px]">
+                              {student.sponsor.sponsorName}
+                            </div>
+                            <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
+                              Sponsor: <strong className="text-slate-700 dark:text-slate-300">{student.sponsor.sponsorId}</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
 
-                    {/* 7. Action: Inspect */}
-                    <td className="py-3 px-4 text-right">
-                      <button
-                        onClick={() => {
-                          setSelectedStudent(student);
-                          setDrawerTab("details");
-                        }}
-                        className="px-2.5 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[4px] transition-colors cursor-pointer inline-flex items-center gap-1"
-                      >
-                        <Eye className="w-3.5 h-3.5" />
-                        <span>Inspect</span>
-                      </button>
-                    </td>
-                  </tr>
-                ))
+                      {/* 5. Students Added */}
+                      <td className="py-3 px-3 text-center">
+                        <div className="font-mono font-bold text-slate-900 dark:text-white text-xs">
+                          {student.referrals.totalDirects} Directs
+                        </div>
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                          Active Learners
+                        </div>
+                      </td>
+
+                      {/* 6. Income Generated for Student */}
+                      <td className="py-3 px-3 text-center">
+                        <div className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm">
+                          ₹{student.referrals.totalCommissionEarned.toLocaleString()}
+                        </div>
+                        <span className="text-[10px] text-emerald-600 dark:text-emerald-400/80 font-semibold">
+                          65% Commission
+                        </span>
+                      </td>
+
+                      {/* 7. Platform Company Profit Generated */}
+                      <td className="py-3 px-3 text-center">
+                        <div className="font-mono font-bold text-[#116E63] dark:text-teal-300 text-xs sm:text-sm flex items-center justify-center gap-0.5">
+                          <TrendingUp className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                          <span>+₹{companyProfitGenerated.toLocaleString()}</span>
+                        </div>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                          35% Net Margin
+                        </span>
+                      </td>
+
+                      {/* 8. KYC Status (Toggle) */}
+                      <td className="py-3 px-3 text-center">
+                        <button
+                          onClick={() => handleToggleKyc(student.id)}
+                          className={`inline-flex items-center gap-1 text-[11px] font-bold cursor-pointer transition-colors ${
+                            student.kycVerified
+                              ? "text-emerald-700 dark:text-emerald-400 hover:text-emerald-900"
+                              : "text-amber-700 dark:text-amber-400 hover:text-amber-900"
+                          }`}
+                          title="Click to toggle KYC status"
+                        >
+                          {student.kycVerified ? (
+                            <>
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                              <span>Verified</span>
+                            </>
+                          ) : (
+                            <>
+                              <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                              <span>Pending</span>
+                            </>
+                          )}
+                        </button>
+                      </td>
+
+                      {/* 9. Action: Inspect */}
+                      <td className="py-3 px-4 text-right">
+                        <button
+                          onClick={() => {
+                            setSelectedStudent(student);
+                            setDrawerTab("details");
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[4px] transition-colors cursor-pointer inline-flex items-center gap-1"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>Inspect</span>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>
