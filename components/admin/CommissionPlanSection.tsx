@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import {
   MOCK_COMMISSIONS,
   MOCK_PAYOUTS,
-  COMMISSION_PLAN_TIERS,
+  MOCK_LEADERBOARD,
   PayoutRequest,
 } from "../../lib/networkData";
 import {
@@ -24,6 +25,9 @@ import {
   CreditCard,
   ArrowRight,
   Check,
+  Trophy,
+  Crown,
+  Users,
 } from "lucide-react";
 
 interface PackageSalesStat {
@@ -72,7 +76,7 @@ const PACKAGE_STATS: PackageSalesStat[] = [
 
 export default function CommissionPlanSection() {
   const [payouts, setPayouts] = useState<PayoutRequest[]>(MOCK_PAYOUTS);
-  const [activeTab, setActiveTab] = useState<"chart" | "ledger" | "payouts" | "tiers">("chart");
+  const [activeTab, setActiveTab] = useState<"leaderboard" | "ledger" | "payouts">("leaderboard");
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("10000");
 
@@ -151,28 +155,28 @@ export default function CommissionPlanSection() {
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
                 Last 30 Days
               </span>
-              <span className="text-[9px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.2 rounded-[3px] border border-amber-200">
-                18 Sales
+              <span className="text-[9px] font-bold text-indigo-800 bg-indigo-50 px-1.5 py-0.2 rounded-[3px] border border-indigo-200">
+                24 Sales
               </span>
             </div>
             <div className="text-xl sm:text-2xl font-black text-slate-900 font-mono">
-              ₹78,400
+              ₹76,500
             </div>
           </div>
           <p className="text-[10px] text-slate-500 mt-2 font-medium">
-            Monthly active direct sales
+            Monthly active direct income
           </p>
         </div>
 
-        {/* Metric 4: Total Lifetime Earnings */}
+        {/* Metric 4: Total Commission Earned */}
         <div className="bg-white p-3.5 sm:p-4 border border-slate-200 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-slate-500 mb-1">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
-                Total Earnings
+                Total Earned
               </span>
-              <span className="text-[9px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.2 rounded-[3px] border border-emerald-200">
-                100% Active
+              <span className="text-[9px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.2 rounded-[3px] border border-amber-200">
+                All Time
               </span>
             </div>
             <div className="text-xl sm:text-2xl font-black text-emerald-700 font-mono">
@@ -180,18 +184,18 @@ export default function CommissionPlanSection() {
             </div>
           </div>
           <p className="text-[10px] text-slate-500 mt-2 font-medium">
-            Across 118 direct students
+            100% active direct payout
           </p>
         </div>
 
-        {/* Metric 5: Available Balance */}
-        <div className="bg-white p-3.5 sm:p-4 border border-[#116E63]/30 shadow-xs rounded-[4px] flex flex-col justify-between col-span-2 sm:col-span-1 bg-teal-50/20">
+        {/* Metric 5: Available Wallet Balance */}
+        <div className="bg-gradient-to-br from-teal-50/70 to-emerald-50/50 p-3.5 sm:p-4 border border-teal-200 shadow-xs rounded-[4px] flex flex-col justify-between col-span-2 sm:col-span-1">
           <div>
-            <div className="flex items-center justify-between text-slate-500 mb-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#116E63]">
+            <div className="flex items-center justify-between text-teal-800 mb-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider">
                 Available Balance
               </span>
-              <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.2 rounded-[3px]">
+              <span className="text-[9px] font-bold text-teal-800 bg-white px-1.5 py-0.2 rounded-[3px] border border-teal-200">
                 Instant
               </span>
             </div>
@@ -352,20 +356,21 @@ export default function CommissionPlanSection() {
       </div>
 
       {/* =========================================================================
-          3. TABS: COMMISSION LEDGER, PAYOUT REQUESTS, AND DIRECT INCOME TIERS
+          3. TABS: LEADERBOARD (EARN MONEY & REFERRALS), INCOME LEDGER, PAYOUTS
          ========================================================================= */}
       <div className="bg-white border border-slate-200 rounded-[4px] overflow-hidden shadow-xs">
         {/* Tab Headers */}
         <div className="flex items-center border-b border-slate-200 bg-slate-50 overflow-x-auto">
           <button
-            onClick={() => setActiveTab("chart")}
-            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
-              activeTab === "chart"
+            onClick={() => setActiveTab("leaderboard")}
+            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 flex items-center gap-1.5 ${
+              activeTab === "leaderboard"
                 ? "border-[#116E63] text-[#116E63] bg-white"
                 : "border-transparent text-slate-600 hover:text-slate-900"
             }`}
           >
-            Direct Sales Matrix
+            <Trophy className="w-3.5 h-3.5" />
+            <span>Leaderboard</span>
           </button>
           <button
             onClick={() => setActiveTab("ledger")}
@@ -389,56 +394,96 @@ export default function CommissionPlanSection() {
           </button>
         </div>
 
-        {/* Tab Content 1: Direct Sales Commission Matrix */}
-        {activeTab === "chart" && (
+        {/* Tab Content 1: Leaderboard (Earn Money & Referrals) */}
+        {activeTab === "leaderboard" && (
           <div className="p-4 sm:p-5 space-y-4">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
               <div>
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  Direct Commission Payout Matrix
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                  <Trophy className="w-4 h-4 text-amber-500" />
+                  <span>Leaderboard &bull; Earn Money &amp; Direct Referrals</span>
                 </h4>
-                <p className="text-[11px] text-slate-500">
-                  Earn 50% to 70% active direct commission on every student enrollment through your sponsor link.
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  Top performing partners ranked by total income earned and direct student referrals
                 </p>
               </div>
               <span className="text-xs bg-emerald-50 text-emerald-800 font-mono font-bold px-2.5 py-1 rounded-[4px] border border-emerald-200">
-                Rate: 50% - 70% Direct
+                Live Earnings Leaderboard
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {COMMISSION_PLAN_TIERS.map((tier) => (
-                <div
-                  key={tier.level}
-                  className="p-3.5 border border-slate-200 bg-white rounded-[4px] flex flex-col justify-between space-y-2 hover:border-[#116E63]/40 transition-colors"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                        {tier.level}
-                      </span>
-                      <span
-                        className={`text-[10px] font-bold text-white px-2 py-0.5 rounded-[4px] ${tier.badgeColor}`}
-                      >
-                        {tier.percentage}
-                      </span>
-                    </div>
-                    <h5 className="font-bold text-slate-900 text-xs uppercase">
-                      {tier.name}
-                    </h5>
-                    <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
-                      {tier.description}
-                    </p>
-                  </div>
+            {/* Quick Leaderboard Table */}
+            <div className="overflow-x-auto border border-slate-200 rounded-[4px]">
+              <table className="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
+                    <th className="py-2.5 px-3 w-16">Rank</th>
+                    <th className="py-2.5 px-3">Member</th>
+                    <th className="py-2.5 px-3 text-right">Direct Referrals</th>
+                    <th className="py-2.5 px-4 text-right">Earn Money</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
+                  {MOCK_LEADERBOARD.map((user) => (
+                    <tr
+                      key={user.id}
+                      className={`hover:bg-slate-50 transition-colors ${
+                        user.rankPosition === 1 ? "bg-amber-50/20" : ""
+                      }`}
+                    >
+                      <td className="py-2.5 px-3">
+                        <span
+                          className={`font-black font-mono text-xs px-2 py-0.5 border rounded-[3px] inline-block ${
+                            user.rankPosition === 1
+                              ? "bg-[#FDA31B] text-slate-950 border-amber-600"
+                              : user.rankPosition === 2
+                              ? "bg-slate-300 text-slate-900 border-slate-400"
+                              : user.rankPosition === 3
+                              ? "bg-amber-100 text-amber-900 border-amber-300"
+                              : "bg-slate-100 text-slate-700 border-slate-200"
+                          }`}
+                        >
+                          #{user.rankPosition}
+                        </span>
+                      </td>
 
-                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold">
-                    <span className="text-slate-500 text-[11px]">Payout Example:</span>
-                    <span className="text-[#116E63] font-bold font-mono">
-                      {tier.sampleOnCourse}
-                    </span>
-                  </div>
-                </div>
-              ))}
+                      <td className="py-2.5 px-3">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 relative shrink-0 bg-slate-100 shadow-2xs">
+                            <Image
+                              src={user.avatarImage || "/images/founder.jpeg"}
+                              alt={user.name}
+                              fill
+                              sizes="32px"
+                              className="object-cover object-top"
+                            />
+                          </div>
+                          <div>
+                            <div className="font-bold text-slate-900 leading-tight">
+                              {user.name}
+                            </div>
+                            <div className="text-[10px] font-mono text-slate-500">
+                              {user.id}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="py-2.5 px-3 text-right">
+                        <span className="font-bold font-mono text-slate-900 bg-slate-100 px-2 py-0.5 rounded-[3px] border border-slate-200">
+                          {user.directs} Referrals
+                        </span>
+                      </td>
+
+                      <td className="py-2.5 px-4 text-right">
+                        <span className="font-mono font-black text-emerald-700 text-xs sm:text-sm">
+                          ₹{user.totalEarnings.toLocaleString()}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         )}
