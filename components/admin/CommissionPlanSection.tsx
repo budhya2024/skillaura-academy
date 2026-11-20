@@ -112,10 +112,10 @@ export default function CommissionPlanSection() {
         <div className="bg-white p-3.5 sm:p-4 border border-slate-200 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-slate-500 mb-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-600">
                 Today&apos;s Income
               </span>
-              <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded-[3px] border border-emerald-200">
+              <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-[3px] border border-emerald-200">
                 +1 Sale
               </span>
             </div>
@@ -123,7 +123,7 @@ export default function CommissionPlanSection() {
               ₹3,250
             </div>
           </div>
-          <p className="text-[10px] text-slate-500 mt-2 font-medium">
+          <p className="text-xs sm:text-sm text-slate-500 mt-2 font-medium">
             Credited today at 10:45 AM
           </p>
         </div>
@@ -132,10 +132,10 @@ export default function CommissionPlanSection() {
         <div className="bg-white p-3.5 sm:p-4 border border-slate-200 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-slate-500 mb-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-600">
                 Last 7 Days
               </span>
-              <span className="text-[9px] font-bold text-teal-800 bg-teal-50 px-1.5 py-0.2 rounded-[3px] border border-teal-200">
+              <span className="text-xs font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-[3px] border border-teal-200">
                 5 Sales
               </span>
             </div>
@@ -143,7 +143,7 @@ export default function CommissionPlanSection() {
               ₹18,400
             </div>
           </div>
-          <p className="text-[10px] text-slate-500 mt-2 font-medium">
+          <p className="text-xs sm:text-sm text-slate-500 mt-2 font-medium">
             Weekly active earnings
           </p>
         </div>
@@ -152,10 +152,10 @@ export default function CommissionPlanSection() {
         <div className="bg-white p-3.5 sm:p-4 border border-slate-200 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-slate-500 mb-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-600">
                 Last 30 Days
               </span>
-              <span className="text-[9px] font-bold text-indigo-800 bg-indigo-50 px-1.5 py-0.2 rounded-[3px] border border-indigo-200">
+              <span className="text-xs font-bold text-indigo-800 bg-indigo-50 px-2 py-0.5 rounded-[3px] border border-indigo-200">
                 24 Sales
               </span>
             </div>
@@ -163,7 +163,7 @@ export default function CommissionPlanSection() {
               ₹76,500
             </div>
           </div>
-          <p className="text-[10px] text-slate-500 mt-2 font-medium">
+          <p className="text-xs sm:text-sm text-slate-500 mt-2 font-medium">
             Monthly active direct income
           </p>
         </div>
@@ -172,10 +172,10 @@ export default function CommissionPlanSection() {
         <div className="bg-white p-3.5 sm:p-4 border border-slate-200 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between text-slate-500 mb-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-600">
                 Total Earned
               </span>
-              <span className="text-[9px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.2 rounded-[3px] border border-amber-200">
+              <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-[3px] border border-amber-200">
                 All Time
               </span>
             </div>
@@ -183,7 +183,7 @@ export default function CommissionPlanSection() {
               ₹3,48,650
             </div>
           </div>
-          <p className="text-[10px] text-slate-500 mt-2 font-medium">
+          <p className="text-xs sm:text-sm text-slate-500 mt-2 font-medium">
             100% active direct payout
           </p>
         </div>
@@ -192,10 +192,10 @@ export default function CommissionPlanSection() {
         <div className="bg-gradient-to-br from-teal-50/70 to-emerald-50/50 p-3.5 sm:p-4 border border-teal-200 shadow-xs rounded-[4px] flex flex-col justify-between col-span-2 sm:col-span-1">
           <div>
             <div className="flex items-center justify-between text-teal-800 mb-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider">
                 Available Balance
               </span>
-              <span className="text-[9px] font-bold text-teal-800 bg-white px-1.5 py-0.2 rounded-[3px] border border-teal-200">
+              <span className="text-xs font-bold text-teal-800 bg-white px-2 py-0.5 rounded-[3px] border border-teal-200">
                 Instant
               </span>
             </div>
@@ -204,10 +204,10 @@ export default function CommissionPlanSection() {
             </div>
           </div>
           <div className="mt-2 pt-2 border-t border-teal-100 flex items-center justify-between">
-            <span className="text-[10px] text-slate-500 font-medium">Ready</span>
+            <span className="text-xs text-slate-500 font-medium">Ready</span>
             <button
               onClick={() => setWithdrawModalOpen(true)}
-              className="text-xs font-bold text-[#116E63] hover:text-[#0c5c53] uppercase tracking-wider flex items-center gap-1 cursor-pointer"
+              className="text-xs sm:text-sm font-bold text-[#116E63] hover:text-[#0c5c53] uppercase tracking-wider flex items-center gap-1 cursor-pointer"
             >
               <span>Withdraw</span>
               <ArrowRight className="w-3 h-3" />
@@ -224,17 +224,17 @@ export default function CommissionPlanSection() {
           <div>
             <div className="flex items-center gap-2">
               <PieChart className="w-4 h-4 text-[#116E63]" />
-              <h3 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
+              <h3 className="text-xs sm:text-base font-bold text-slate-900 uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
                 Package-Wise Income &amp; Total Sales Count Distribution
               </h3>
             </div>
-            <p className="text-[11px] text-slate-500 mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
               Breakdown of 118 total direct sales and ₹3,48,650 income generated across course packages
             </p>
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="text-xs font-mono font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-[4px] border border-slate-200">
+            <span className="text-xs sm:text-sm font-mono font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-[4px] border border-slate-200">
               Total Sales: <strong className="text-slate-900">{totalSalesCount} Courses</strong>
             </span>
           </div>
@@ -281,18 +281,18 @@ export default function CommissionPlanSection() {
 
               {/* Center Donut Label */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500">
                   Total Sales
                 </span>
-                <span className="text-2xl sm:text-3xl font-black text-slate-900 font-mono leading-none my-0.5">
+                <span className="text-2xl sm:text-3xl font-black text-slate-900 font-mono leading-none my-1">
                   {totalSalesCount}
                 </span>
-                <span className="text-[11px] font-bold text-emerald-700 font-mono">
+                <span className="text-xs sm:text-sm font-bold text-emerald-700 font-mono">
                   ₹3,48,650
                 </span>
               </div>
             </div>
-            <span className="text-[11px] text-slate-500 mt-2 font-medium">
+            <span className="text-xs sm:text-sm text-slate-500 mt-2 font-medium">
               Circle Chart: Proportion by Sales Count &amp; Income
             </span>
           </div>
@@ -311,10 +311,10 @@ export default function CommissionPlanSection() {
                       style={{ backgroundColor: pkg.color }}
                     ></span>
                     <div className="truncate">
-                      <div className="text-xs font-bold text-slate-900 truncate">
+                      <div className="text-xs sm:text-sm font-bold text-slate-900 truncate">
                         {pkg.name}
                       </div>
-                      <div className="text-[10px] text-slate-500">
+                      <div className="text-xs text-slate-500">
                         {pkg.category} &bull; {pkg.percentage}% of total
                       </div>
                     </div>
@@ -322,19 +322,19 @@ export default function CommissionPlanSection() {
 
                   <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pl-6 sm:pl-0">
                     <div className="text-right">
-                      <span className="text-xs font-bold text-slate-900 font-mono block">
+                      <span className="text-xs sm:text-sm font-bold text-slate-900 font-mono block">
                         {pkg.salesCount} Sales
                       </span>
-                      <span className="text-[10px] text-slate-500 font-medium">
+                      <span className="text-xs text-slate-500 font-medium">
                         Units Sold
                       </span>
                     </div>
 
                     <div className="text-right min-w-[85px]">
-                      <span className="text-xs font-bold text-emerald-700 font-mono block">
+                      <span className="text-xs sm:text-sm font-bold text-emerald-700 font-mono block">
                         ₹{pkg.totalIncome.toLocaleString()}
                       </span>
-                      <span className="text-[10px] text-slate-500 font-medium">
+                      <span className="text-xs text-slate-500 font-medium">
                         Income Earned
                       </span>
                     </div>
@@ -344,7 +344,7 @@ export default function CommissionPlanSection() {
             </div>
 
             {/* Total Summary Strip */}
-            <div className="p-3 bg-slate-100/80 border border-slate-200 rounded-[4px] flex items-center justify-between text-xs font-bold">
+            <div className="p-3 bg-slate-100/80 border border-slate-200 rounded-[4px] flex items-center justify-between text-xs sm:text-sm font-bold">
               <span className="uppercase text-slate-700">Combined Direct Portfolio Total</span>
               <div className="flex items-center gap-4 font-mono">
                 <span className="text-slate-900">{totalSalesCount} Courses Sold</span>
@@ -414,13 +414,13 @@ export default function CommissionPlanSection() {
 
             {/* Quick Leaderboard Table */}
             <div className="overflow-x-auto border border-slate-200 rounded-[4px]">
-              <table className="w-full text-left border-collapse text-xs">
+              <table className="w-full text-left border-collapse text-xs sm:text-sm">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
-                    <th className="py-2.5 px-3 w-16">Rank</th>
-                    <th className="py-2.5 px-3">Member</th>
-                    <th className="py-2.5 px-3 text-right">Direct Referrals</th>
-                    <th className="py-2.5 px-4 text-right">Earn Money</th>
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 uppercase font-bold text-xs tracking-wider">
+                    <th className="py-2.5 sm:py-3 px-3 sm:px-4 w-16">Rank</th>
+                    <th className="py-2.5 sm:py-3 px-3 sm:px-4">Member</th>
+                    <th className="py-2.5 sm:py-3 px-3 sm:px-4 text-right">Direct Referrals</th>
+                    <th className="py-2.5 sm:py-3 px-4 sm:px-5 text-right">Earn Money</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
@@ -431,9 +431,9 @@ export default function CommissionPlanSection() {
                         user.rankPosition === 1 ? "bg-amber-50/20" : ""
                       }`}
                     >
-                      <td className="py-2.5 px-3">
+                      <td className="py-2.5 sm:py-3 px-3 sm:px-4">
                         <span
-                          className={`font-black font-mono text-xs px-2 py-0.5 border rounded-[3px] inline-block ${
+                          className={`font-black font-mono text-xs sm:text-sm px-2 py-0.5 border rounded-[3px] inline-block ${
                             user.rankPosition === 1
                               ? "bg-[#FDA31B] text-slate-950 border-amber-600"
                               : user.rankPosition === 2
@@ -447,36 +447,36 @@ export default function CommissionPlanSection() {
                         </span>
                       </td>
 
-                      <td className="py-2.5 px-3">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 relative shrink-0 bg-slate-100 shadow-2xs">
+                      <td className="py-2.5 sm:py-3 px-3 sm:px-4">
+                        <div className="flex items-center gap-2.5 sm:gap-3">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-slate-200 relative shrink-0 bg-slate-100 shadow-2xs">
                             <Image
                               src={user.avatarImage || "/images/founder.jpeg"}
                               alt={user.name}
                               fill
-                              sizes="32px"
+                              sizes="40px"
                               className="object-cover object-top"
                             />
                           </div>
                           <div>
-                            <div className="font-bold text-slate-900 leading-tight">
+                            <div className="font-bold text-slate-900 leading-tight text-xs sm:text-sm">
                               {user.name}
                             </div>
-                            <div className="text-[10px] font-mono text-slate-500">
+                            <div className="text-xs font-mono text-slate-500">
                               {user.id}
                             </div>
                           </div>
                         </div>
                       </td>
 
-                      <td className="py-2.5 px-3 text-right">
-                        <span className="font-bold font-mono text-slate-900 bg-slate-100 px-2 py-0.5 rounded-[3px] border border-slate-200">
+                      <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-right">
+                        <span className="font-bold font-mono text-slate-900 bg-slate-100 px-2.5 py-1 rounded-[3px] border border-slate-200 text-xs sm:text-sm">
                           {user.directs} Referrals
                         </span>
                       </td>
 
-                      <td className="py-2.5 px-4 text-right">
-                        <span className="font-mono font-black text-emerald-700 text-xs sm:text-sm">
+                      <td className="py-2.5 sm:py-3 px-4 sm:px-5 text-right">
+                        <span className="font-mono font-black text-emerald-700 text-sm sm:text-base">
                           ₹{user.totalEarnings.toLocaleString()}
                         </span>
                       </td>
@@ -491,47 +491,47 @@ export default function CommissionPlanSection() {
         {/* Tab Content 2: Income Ledger Table */}
         {activeTab === "ledger" && (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs min-w-[580px]">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[580px]">
               <thead>
-                <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
-                  <th className="py-2.5 px-4">Transaction / Time</th>
-                  <th className="py-2.5 px-3">Student Name</th>
-                  <th className="py-2.5 px-3">Course Package</th>
-                  <th className="py-2.5 px-3">Package Fee</th>
-                  <th className="py-2.5 px-3">Income Credited</th>
-                  <th className="py-2.5 px-4 text-right">Status</th>
+                <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-xs tracking-wider">
+                  <th className="py-2.5 sm:py-3 px-4">Transaction / Time</th>
+                  <th className="py-2.5 sm:py-3 px-3">Student Name</th>
+                  <th className="py-2.5 sm:py-3 px-3">Course Package</th>
+                  <th className="py-2.5 sm:py-3 px-3">Package Fee</th>
+                  <th className="py-2.5 sm:py-3 px-3">Income Credited</th>
+                  <th className="py-2.5 sm:py-3 px-4 text-right">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
                 {MOCK_COMMISSIONS.map((rec) => (
                   <tr key={rec.id} className="hover:bg-slate-50">
-                    <td className="py-2.5 px-4">
-                      <div className="font-bold text-slate-900 font-mono">
+                    <td className="py-2.5 sm:py-3 px-4">
+                      <div className="font-bold text-slate-900 font-mono text-xs sm:text-sm">
                         {rec.id}
                       </div>
-                      <div className="text-[10px] text-slate-500">
+                      <div className="text-xs text-slate-500">
                         {rec.date}
                       </div>
                     </td>
-                    <td className="py-2.5 px-3">
-                      <div className="font-bold text-slate-900">
+                    <td className="py-2.5 sm:py-3 px-3">
+                      <div className="font-bold text-slate-900 text-xs sm:text-sm">
                         {rec.fromMemberName}
                       </div>
-                      <div className="text-[10px] font-mono text-slate-500">
+                      <div className="text-xs font-mono text-slate-500">
                         {rec.fromMemberId}
                       </div>
                     </td>
-                    <td className="py-2.5 px-3 text-slate-800">
+                    <td className="py-2.5 sm:py-3 px-3 text-slate-800 text-xs sm:text-sm">
                       {rec.courseName}
                     </td>
-                    <td className="py-2.5 px-3 font-mono font-bold text-slate-700">
+                    <td className="py-2.5 sm:py-3 px-3 font-mono font-bold text-slate-700 text-xs sm:text-sm">
                       {rec.coursePrice > 0 ? `₹${rec.coursePrice.toLocaleString()}` : "Milestone Target"}
                     </td>
-                    <td className="py-2.5 px-3 font-mono font-bold text-emerald-700 text-sm">
+                    <td className="py-2.5 sm:py-3 px-3 font-mono font-bold text-emerald-700 text-sm sm:text-base">
                       +₹{rec.commissionAmount.toLocaleString()}
                     </td>
-                    <td className="py-2.5 px-4 text-right">
-                      <span className="inline-block text-[10px] font-bold uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 border border-emerald-200 rounded-[3px]">
+                    <td className="py-2.5 sm:py-3 px-4 text-right">
+                      <span className="inline-block text-xs font-bold uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 border border-emerald-200 rounded-[3px]">
                         Credited
                       </span>
                     </td>
@@ -545,49 +545,49 @@ export default function CommissionPlanSection() {
         {/* Tab Content 3: Payout History */}
         {activeTab === "payouts" && (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs min-w-[560px]">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[560px]">
               <thead>
-                <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
-                  <th className="py-2.5 px-4">Payout ID / Date</th>
-                  <th className="py-2.5 px-3">Amount</th>
-                  <th className="py-2.5 px-3">Mode</th>
-                  <th className="py-2.5 px-3">Account / VPA</th>
-                  <th className="py-2.5 px-3">Reference / UTR</th>
-                  <th className="py-2.5 px-4 text-right">Status</th>
+                <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-xs tracking-wider">
+                  <th className="py-2.5 sm:py-3 px-4">Payout ID / Date</th>
+                  <th className="py-2.5 sm:py-3 px-3">Amount</th>
+                  <th className="py-2.5 sm:py-3 px-3">Mode</th>
+                  <th className="py-2.5 sm:py-3 px-3">Account / VPA</th>
+                  <th className="py-2.5 sm:py-3 px-3">Reference / UTR</th>
+                  <th className="py-2.5 sm:py-3 px-4 text-right">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
                 {payouts.map((pay) => (
                   <tr key={pay.id} className="hover:bg-slate-50">
-                    <td className="py-2.5 px-4">
-                      <div className="font-bold text-slate-900 font-mono">
+                    <td className="py-2.5 sm:py-3 px-4">
+                      <div className="font-bold text-slate-900 font-mono text-xs sm:text-sm">
                         {pay.id}
                       </div>
-                      <div className="text-[10px] text-slate-500">
+                      <div className="text-xs text-slate-500">
                         {pay.requestedDate}
                       </div>
                     </td>
-                    <td className="py-2.5 px-3 font-mono font-bold text-slate-900 text-sm">
+                    <td className="py-2.5 sm:py-3 px-3 font-mono font-bold text-slate-900 text-sm sm:text-base">
                       ₹{pay.amount.toLocaleString()}
                     </td>
-                    <td className="py-2.5 px-3">
-                      <span className="inline-block px-1.5 py-0.2 text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200 uppercase rounded-[3px]">
+                    <td className="py-2.5 sm:py-3 px-3">
+                      <span className="inline-block px-2 py-0.5 text-xs font-bold bg-slate-100 text-slate-800 border border-slate-200 uppercase rounded-[3px]">
                         {pay.method}
                       </span>
                     </td>
-                    <td className="py-2.5 px-3 font-mono text-slate-700">
+                    <td className="py-2.5 sm:py-3 px-3 font-mono text-slate-700 text-xs sm:text-sm">
                       {pay.accountDetails}
                     </td>
-                    <td className="py-2.5 px-3 font-mono text-[11px] text-slate-500">
+                    <td className="py-2.5 sm:py-3 px-3 font-mono text-xs text-slate-500">
                       {pay.payoutRef || "—"}
                     </td>
-                    <td className="py-2.5 px-4 text-right">
+                    <td className="py-2.5 sm:py-3 px-4 text-right">
                       {pay.status === "approved" ? (
-                        <span className="inline-block text-[10px] font-bold uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 border border-emerald-200 rounded-[3px]">
+                        <span className="inline-block text-xs font-bold uppercase text-emerald-800 bg-emerald-50 px-2.5 py-0.5 border border-emerald-200 rounded-[3px]">
                           PAID
                         </span>
                       ) : (
-                        <span className="inline-block text-[10px] font-bold uppercase text-amber-800 bg-amber-50 px-2 py-0.5 border border-amber-200 rounded-[3px]">
+                        <span className="inline-block text-xs font-bold uppercase text-amber-800 bg-amber-50 px-2.5 py-0.5 border border-amber-200 rounded-[3px]">
                           PROCESSING
                         </span>
                       )}

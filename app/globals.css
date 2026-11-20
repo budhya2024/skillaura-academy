@@ -404,3 +404,22 @@ a:hover {
 .dark .text-amber-800 {
   color: #fbbf24 !important;
 }
+
+/* =========================================================
+   DESKTOP LEGIBILITY: SCALE UP SUB-12PX TEXT ON LARGE SCREENS
+   ========================================================= */
+@media (min-width: 1024px) {
+  .text-\[9px\] {
+    font-size: 0.75rem !important; /* 12px on desktop */
+    line-height: 1rem !important;
+  }
+  .text-\[10px\] {
+    font-size: 0.8125rem !important; /* 13px on desktop */
+    line-height: 1.15rem !important;
+  }
+  .text-\[11px\] {
+    font-size: 0.875rem !important; /* 14px on desktop */
+    line-height: 1.25rem !important;
+  }
+}
+

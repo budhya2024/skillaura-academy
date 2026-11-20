@@ -44,37 +44,37 @@ export default function LeaderboardSection() {
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-[4px]">
+                <span className="text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-[4px]">
                   Rank #1 Overall
                 </span>
-                <span className="text-xs text-slate-500 font-mono font-bold">
+                <span className="text-xs sm:text-sm text-slate-500 font-mono font-bold">
                   SKA-ROOT88
                 </span>
               </div>
-              <h2 className="text-base sm:text-lg font-bold font-[family-name:var(--font-yantramanav)] uppercase text-slate-900 leading-tight">
+              <h2 className="text-base sm:text-xl font-bold font-[family-name:var(--font-yantramanav)] uppercase text-slate-900 leading-tight">
                 SkillAura Master
               </h2>
-              <p className="text-[11px] text-slate-500 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
                 Top Earn Money &amp; Direct Referral Performer
               </p>
             </div>
           </div>
 
           {/* Quick Metrics: Earn Money & Referrals */}
-          <div className="w-full md:w-auto grid grid-cols-2 gap-3 bg-slate-50 border border-slate-200 p-3 sm:p-3.5 rounded-[4px]">
+          <div className="w-full md:w-auto grid grid-cols-2 gap-3 bg-slate-50 border border-slate-200 p-3 sm:p-4 rounded-[4px]">
             <div>
-              <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
                 Earn Money
               </span>
-              <span className="text-lg sm:text-xl font-black text-emerald-700 font-mono block mt-0.5">
+              <span className="text-xl sm:text-2xl font-black text-emerald-700 font-mono block mt-0.5">
                 ₹3,48,500
               </span>
             </div>
-            <div className="border-l border-slate-200 pl-3">
-              <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">
+            <div className="border-l border-slate-200 pl-3.5">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
                 Direct Referrals
               </span>
-              <span className="text-lg sm:text-xl font-black text-slate-900 font-mono block mt-0.5">
+              <span className="text-xl sm:text-2xl font-black text-slate-900 font-mono block mt-0.5">
                 28 Referrals
               </span>
             </div>
@@ -87,7 +87,7 @@ export default function LeaderboardSection() {
         <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={() => setTimeframe("all")}
-            className={`py-2.5 px-3 sm:px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
+            className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
               timeframe === "all"
                 ? "border-[#116E63] text-[#116E63]"
                 : "border-transparent text-slate-600 hover:text-slate-900"
@@ -97,7 +97,7 @@ export default function LeaderboardSection() {
           </button>
           <button
             onClick={() => setTimeframe("month")}
-            className={`py-2.5 px-3 sm:px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
+            className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
               timeframe === "month"
                 ? "border-[#116E63] text-[#116E63]"
                 : "border-transparent text-slate-600 hover:text-slate-900"
@@ -107,7 +107,7 @@ export default function LeaderboardSection() {
           </button>
           <button
             onClick={() => setTimeframe("directs")}
-            className={`py-2.5 px-3 sm:px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
+            className={`py-2.5 px-3 sm:px-4 text-xs sm:text-sm font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
               timeframe === "directs"
                 ? "border-[#116E63] text-[#116E63]"
                 : "border-transparent text-slate-600 hover:text-slate-900"
@@ -117,7 +117,7 @@ export default function LeaderboardSection() {
           </button>
         </div>
 
-        <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider hidden sm:block">
+        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:block">
           Auto-Updated Hourly
         </span>
       </div>
@@ -145,40 +145,40 @@ export default function LeaderboardSection() {
                     </div>
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 block">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-600 block">
                       Rank #2 &bull; Silver
                     </span>
-                    <h4 className="font-bold text-slate-900 text-xs sm:text-sm uppercase leading-tight mt-0.5">
+                    <h4 className="font-bold text-slate-900 text-sm sm:text-base uppercase leading-tight mt-0.5">
                       {topThree[1].name}
                     </h4>
-                    <span className="text-[11px] font-mono text-slate-500">
+                    <span className="text-xs font-mono text-slate-500">
                       {topThree[1].id}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="my-3 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 bg-slate-50/70 p-2.5 rounded-[4px]">
+              <div className="my-3 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 bg-slate-50/70 p-2.5 sm:p-3 rounded-[4px]">
                 <div>
-                  <span className="text-[10px] text-slate-500 uppercase block font-bold">
+                  <span className="text-xs text-slate-500 uppercase block font-bold">
                     Earn Money
                   </span>
-                  <span className="font-black text-emerald-700 text-sm sm:text-base font-mono">
+                  <span className="font-black text-emerald-700 text-base sm:text-lg font-mono">
                     ₹{topThree[1].totalEarnings.toLocaleString()}
                   </span>
                 </div>
-                <div className="border-l border-slate-200 pl-2.5">
-                  <span className="text-[10px] text-slate-500 uppercase block font-bold">
+                <div className="border-l border-slate-200 pl-3">
+                  <span className="text-xs text-slate-500 uppercase block font-bold">
                     Referrals
                   </span>
-                  <span className="font-black text-slate-900 text-sm sm:text-base font-mono">
+                  <span className="font-black text-slate-900 text-base sm:text-lg font-mono">
                     {topThree[1].directs}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm">
               <span className="text-slate-500 font-medium">Monthly Growth</span>
               <span className="text-emerald-700 font-bold font-mono">{topThree[1].growth}</span>
             </div>
@@ -207,40 +207,40 @@ export default function LeaderboardSection() {
                     </div>
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-2 py-0.5 border border-amber-300 rounded-[4px] inline-flex items-center gap-1">
-                      <Crown className="w-3 h-3 text-amber-700" /> Champion #1
+                    <span className="text-xs font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-2 py-0.5 border border-amber-300 rounded-[4px] inline-flex items-center gap-1">
+                      <Crown className="w-3.5 h-3.5 text-amber-700" /> Champion #1
                     </span>
-                    <h4 className="font-black text-slate-950 text-sm sm:text-base uppercase leading-tight mt-1">
+                    <h4 className="font-black text-slate-950 text-base sm:text-lg uppercase leading-tight mt-1">
                       {topThree[0].name}
                     </h4>
-                    <span className="text-[11px] font-mono text-slate-600">
+                    <span className="text-xs font-mono text-slate-600">
                       {topThree[0].id}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="my-3 pt-3 border-t border-amber-100 grid grid-cols-2 gap-2 bg-amber-50/50 p-2.5 rounded-[4px]">
+              <div className="my-3 pt-3 border-t border-amber-100 grid grid-cols-2 gap-2 bg-amber-50/50 p-2.5 sm:p-3 rounded-[4px]">
                 <div>
-                  <span className="text-[10px] text-amber-900 uppercase block font-bold">
+                  <span className="text-xs text-amber-900 uppercase block font-bold">
                     Earn Money
                   </span>
-                  <span className="font-black text-emerald-800 text-base sm:text-lg font-mono">
+                  <span className="font-black text-emerald-800 text-lg sm:text-xl font-mono">
                     ₹{topThree[0].totalEarnings.toLocaleString()}
                   </span>
                 </div>
-                <div className="border-l border-amber-200/70 pl-2.5">
-                  <span className="text-[10px] text-amber-900 uppercase block font-bold">
+                <div className="border-l border-amber-200/70 pl-3">
+                  <span className="text-xs text-amber-900 uppercase block font-bold">
                     Referrals
                   </span>
-                  <span className="font-black text-slate-950 text-base sm:text-lg font-mono">
+                  <span className="font-black text-slate-950 text-lg sm:text-xl font-mono">
                     {topThree[0].directs}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm">
               <span className="text-slate-600 font-medium">Monthly Growth</span>
               <span className="text-emerald-700 font-bold font-mono">{topThree[0].growth}</span>
             </div>
@@ -268,40 +268,40 @@ export default function LeaderboardSection() {
                     </div>
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 block">
+                    <span className="text-xs font-bold uppercase tracking-wider text-amber-900 block">
                       Rank #3 &bull; Bronze
                     </span>
-                    <h4 className="font-bold text-slate-900 text-xs sm:text-sm uppercase leading-tight mt-0.5">
+                    <h4 className="font-bold text-slate-900 text-sm sm:text-base uppercase leading-tight mt-0.5">
                       {topThree[2].name}
                     </h4>
-                    <span className="text-[11px] font-mono text-slate-500">
+                    <span className="text-xs font-mono text-slate-500">
                       {topThree[2].id}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="my-3 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 bg-slate-50/70 p-2.5 rounded-[4px]">
+              <div className="my-3 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 bg-slate-50/70 p-2.5 sm:p-3 rounded-[4px]">
                 <div>
-                  <span className="text-[10px] text-slate-500 uppercase block font-bold">
+                  <span className="text-xs text-slate-500 uppercase block font-bold">
                     Earn Money
                   </span>
-                  <span className="font-bold text-emerald-700 text-sm sm:text-base font-mono">
+                  <span className="font-bold text-emerald-700 text-base sm:text-lg font-mono">
                     ₹{topThree[2].totalEarnings.toLocaleString()}
                   </span>
                 </div>
-                <div className="border-l border-slate-200 pl-2.5">
-                  <span className="text-[10px] text-slate-500 uppercase block font-bold">
+                <div className="border-l border-slate-200 pl-3">
+                  <span className="text-xs text-slate-500 uppercase block font-bold">
                     Referrals
                   </span>
-                  <span className="font-bold text-slate-900 text-sm sm:text-base font-mono">
+                  <span className="font-bold text-slate-900 text-base sm:text-lg font-mono">
                     {topThree[2].directs}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm">
               <span className="text-slate-500 font-medium">Monthly Growth</span>
               <span className="text-emerald-700 font-bold font-mono">{topThree[2].growth}</span>
             </div>
