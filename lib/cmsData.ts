@@ -89,7 +89,7 @@ export interface WebsiteCmsData {
 
 export const DEFAULT_CMS_DATA: WebsiteCmsData = {
   announcement: {
-    active: true,
+    active: false,
     headline: "🔥 Special Launch Offer: Earn up to 70% Direct Commission on All Student Enrollments — Start Learning Today!",
     actionText: "ENROLL NOW",
     actionHref: "/#courses",

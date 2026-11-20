@@ -123,26 +123,6 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-[60] w-full font-sans bg-white shadow-xs border-b border-slate-100">
-      {/* ================= TOP ANNOUNCEMENT BANNER (Dynamic via CMS) ================= */}
-      {cms.announcement.active && (
-        <div className="w-full bg-[#0d554c] text-white text-[11px] sm:text-xs py-1.5 px-3 border-b border-emerald-900/40">
-          <div className="container flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5 truncate">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FDA31B] animate-pulse shrink-0"></span>
-              <span className="truncate font-medium">{cms.announcement.headline}</span>
-            </div>
-            {cms.announcement.actionText && (
-              <Link
-                href={cms.announcement.actionHref || "/#courses"}
-                className="text-[10px] font-extrabold uppercase bg-[#FDA31B] hover:bg-amber-400 text-slate-950 px-2 py-0.5 rounded-[3px] shrink-0 transition-colors"
-              >
-                {cms.announcement.actionText}
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
-
       {/* ================= TOP BAR (Desktop Only) ================= */}
       <div
         className={`hidden md:block w-full bg-[#116E63] text-white text-xs sm:text-sm transition-all duration-300 overflow-hidden ${
