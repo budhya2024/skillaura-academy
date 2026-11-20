@@ -85,17 +85,17 @@ export default function CommissionPlanSection() {
   return (
     <div className="space-y-4 font-sans">
       {/* =========================================================================
-          1. SIX INCOME METRIC CARDS (3x2 GRID WITH DISTINCT BACKGROUND COLORS)
+          1. SIX INCOME METRIC CARDS (3x2 GRID WITH FULL SOLID BACKGROUND COLORS)
          ========================================================================= */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
-        {/* Metric 1: Today's Income - Soft Emerald */}
-        <div className="bg-gradient-to-br from-emerald-50 via-teal-50/50 to-emerald-50/30 dark:from-emerald-950/40 dark:via-slate-900 dark:to-emerald-950/20 p-4 border border-emerald-200/90 dark:border-emerald-800/70 shadow-xs rounded-[4px] flex flex-col justify-between">
+        {/* Metric 1: Today's Income - Full Emerald Background */}
+        <div className="bg-emerald-100/80 dark:bg-emerald-950/80 p-4 border border-emerald-300 dark:border-emerald-700/80 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-900 dark:text-emerald-300">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-900 dark:text-emerald-200">
                 Today&apos;s Income
               </span>
-              <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-100/80 dark:bg-emerald-900/60 px-2 py-0.5 rounded-[3px] border border-emerald-300 dark:border-emerald-700">
+              <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-emerald-300 dark:border-emerald-700 shadow-2xs">
                 +1 Sale
               </span>
             </div>
@@ -103,20 +103,20 @@ export default function CommissionPlanSection() {
               ₹3,250
             </div>
           </div>
-          <p className="text-xs text-emerald-800/80 dark:text-emerald-400/80 mt-2.5 font-medium flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+          <p className="text-xs text-emerald-800 dark:text-emerald-300 mt-2.5 font-medium flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 shrink-0 text-emerald-700 dark:text-emerald-400" />
             <span>Credited today at 10:45 AM</span>
           </p>
         </div>
 
-        {/* Metric 2: Last 7 Days Income - Soft Sky Blue */}
-        <div className="bg-gradient-to-br from-sky-50 via-blue-50/50 to-sky-50/30 dark:from-sky-950/40 dark:via-slate-900 dark:to-sky-950/20 p-4 border border-sky-200/90 dark:border-sky-800/70 shadow-xs rounded-[4px] flex flex-col justify-between">
+        {/* Metric 2: Last 7 Days Income - Full Sky Blue Background */}
+        <div className="bg-sky-100/80 dark:bg-sky-950/80 p-4 border border-sky-300 dark:border-sky-700/80 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-sky-900 dark:text-sky-300">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-sky-900 dark:text-sky-200">
                 Last 7 Days
               </span>
-              <span className="text-xs font-bold text-sky-800 dark:text-sky-300 bg-sky-100/80 dark:bg-sky-900/60 px-2 py-0.5 rounded-[3px] border border-sky-300 dark:border-sky-700">
+              <span className="text-xs font-bold text-sky-800 dark:text-sky-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-sky-300 dark:border-sky-700 shadow-2xs">
                 5 Sales
               </span>
             </div>
@@ -124,20 +124,20 @@ export default function CommissionPlanSection() {
               ₹18,400
             </div>
           </div>
-          <p className="text-xs text-sky-800/80 dark:text-sky-400/80 mt-2.5 font-medium flex items-center gap-1.5">
-            <TrendingUp className="w-3.5 h-3.5 shrink-0 text-sky-600 dark:text-sky-400" />
+          <p className="text-xs text-sky-800 dark:text-sky-300 mt-2.5 font-medium flex items-center gap-1.5">
+            <TrendingUp className="w-3.5 h-3.5 shrink-0 text-sky-700 dark:text-sky-400" />
             <span>Weekly active direct earnings</span>
           </p>
         </div>
 
-        {/* Metric 3: Last 30 Days Income - Soft Indigo/Purple */}
-        <div className="bg-gradient-to-br from-indigo-50 via-purple-50/50 to-indigo-50/30 dark:from-indigo-950/40 dark:via-slate-900 dark:to-indigo-950/20 p-4 border border-indigo-200/90 dark:border-indigo-800/70 shadow-xs rounded-[4px] flex flex-col justify-between">
+        {/* Metric 3: Last 30 Days Income - Full Indigo/Purple Background */}
+        <div className="bg-indigo-100/80 dark:bg-indigo-950/80 p-4 border border-indigo-300 dark:border-indigo-700/80 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-indigo-900 dark:text-indigo-300">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-indigo-900 dark:text-indigo-200">
                 Last 30 Days
               </span>
-              <span className="text-xs font-bold text-indigo-800 dark:text-indigo-300 bg-indigo-100/80 dark:bg-indigo-900/60 px-2 py-0.5 rounded-[3px] border border-indigo-300 dark:border-indigo-700">
+              <span className="text-xs font-bold text-indigo-800 dark:text-indigo-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-indigo-300 dark:border-indigo-700 shadow-2xs">
                 24 Sales
               </span>
             </div>
@@ -145,20 +145,20 @@ export default function CommissionPlanSection() {
               ₹76,500
             </div>
           </div>
-          <p className="text-xs text-indigo-800/80 dark:text-indigo-400/80 mt-2.5 font-medium flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 shrink-0 text-indigo-600 dark:text-indigo-400" />
+          <p className="text-xs text-indigo-800 dark:text-indigo-300 mt-2.5 font-medium flex items-center gap-1.5">
+            <Calendar className="w-3.5 h-3.5 shrink-0 text-indigo-700 dark:text-indigo-400" />
             <span>Monthly active direct income</span>
           </p>
         </div>
 
-        {/* Metric 4: Total Commission Earned - Soft Amber/Gold */}
-        <div className="bg-gradient-to-br from-amber-50 via-yellow-50/50 to-amber-50/30 dark:from-amber-950/40 dark:via-slate-900 dark:to-amber-950/20 p-4 border border-amber-200/90 dark:border-amber-800/70 shadow-xs rounded-[4px] flex flex-col justify-between">
+        {/* Metric 4: Total Commission Earned - Full Amber/Gold Background */}
+        <div className="bg-amber-100/80 dark:bg-amber-950/80 p-4 border border-amber-300 dark:border-amber-700/80 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-900 dark:text-amber-300">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-900 dark:text-amber-200">
                 Total Earned
               </span>
-              <span className="text-xs font-bold text-amber-900 dark:text-amber-300 bg-amber-100/90 dark:bg-amber-900/60 px-2 py-0.5 rounded-[3px] border border-amber-300 dark:border-amber-700">
+              <span className="text-xs font-bold text-amber-900 dark:text-amber-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-amber-300 dark:border-amber-700 shadow-2xs">
                 All Time (118 Sales)
               </span>
             </div>
@@ -166,20 +166,20 @@ export default function CommissionPlanSection() {
               ₹3,48,650
             </div>
           </div>
-          <p className="text-xs text-amber-800/80 dark:text-amber-400/80 mt-2.5 font-medium flex items-center gap-1.5">
-            <Award className="w-3.5 h-3.5 shrink-0 text-amber-600 dark:text-amber-400" />
+          <p className="text-xs text-amber-900 dark:text-amber-300 mt-2.5 font-medium flex items-center gap-1.5">
+            <Award className="w-3.5 h-3.5 shrink-0 text-amber-700 dark:text-amber-400" />
             <span>100% active direct performance</span>
           </p>
         </div>
 
-        {/* Metric 5: Total Withdrawn - Soft Rose/Pink */}
-        <div className="bg-gradient-to-br from-rose-50 via-pink-50/50 to-rose-50/30 dark:from-rose-950/40 dark:via-slate-900 dark:to-rose-950/20 p-4 border border-rose-200/90 dark:border-rose-800/70 shadow-xs rounded-[4px] flex flex-col justify-between">
+        {/* Metric 5: Total Withdrawn - Full Rose/Pink Background */}
+        <div className="bg-rose-100/80 dark:bg-rose-950/80 p-4 border border-rose-300 dark:border-rose-700/80 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-900 dark:text-rose-300">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-900 dark:text-rose-200">
                 Total Withdrawn
               </span>
-              <span className="text-xs font-bold text-rose-800 dark:text-rose-300 bg-rose-100/80 dark:bg-rose-900/60 px-2 py-0.5 rounded-[3px] border border-rose-300 dark:border-rose-700">
+              <span className="text-xs font-bold text-rose-800 dark:text-rose-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-rose-300 dark:border-rose-700 shadow-2xs">
                 Bank Transferred
               </span>
             </div>
@@ -187,20 +187,20 @@ export default function CommissionPlanSection() {
               ₹3,00,000
             </div>
           </div>
-          <p className="text-xs text-rose-800/80 dark:text-rose-400/80 mt-2.5 font-medium flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-rose-600 dark:text-rose-400" />
+          <p className="text-xs text-rose-800 dark:text-rose-300 mt-2.5 font-medium flex items-center gap-1.5">
+            <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-rose-700 dark:text-rose-400" />
             <span>Verified direct NEFT/UPI payouts</span>
           </p>
         </div>
 
-        {/* Metric 6: Available Wallet Balance - Rich Mint/Teal */}
-        <div className="bg-gradient-to-br from-teal-50 via-emerald-100/60 to-teal-50 dark:from-teal-950/60 dark:via-slate-900 dark:to-emerald-950/40 p-4 border-2 border-[#116E63] dark:border-emerald-500/80 shadow-xs rounded-[4px] flex flex-col justify-between">
+        {/* Metric 6: Available Wallet Balance - Full Teal/Mint Background */}
+        <div className="bg-teal-100/90 dark:bg-teal-950/90 p-4 border-2 border-[#116E63] dark:border-emerald-500 shadow-xs rounded-[4px] flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-400">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-300">
                 Available Balance
               </span>
-              <span className="text-xs font-bold text-white bg-[#116E63] dark:bg-emerald-600 px-2.5 py-0.5 rounded-[3px]">
+              <span className="text-xs font-bold text-white bg-[#116E63] dark:bg-emerald-600 px-2.5 py-0.5 rounded-[4px] shadow-2xs">
                 Instant
               </span>
             </div>
@@ -208,11 +208,11 @@ export default function CommissionPlanSection() {
               ₹48,650
             </div>
           </div>
-          <div className="mt-2.5 pt-2 border-t border-teal-200/80 dark:border-teal-800/60 flex items-center justify-between">
-            <span className="text-xs text-teal-800/90 dark:text-teal-300/90 font-medium">Ready in wallet</span>
+          <div className="mt-2.5 pt-2 border-t border-teal-300/80 dark:border-teal-800/80 flex items-center justify-between">
+            <span className="text-xs text-teal-900 dark:text-teal-200 font-bold">Ready in wallet</span>
             <button
               onClick={() => setWithdrawModalOpen(true)}
-              className="text-xs font-bold text-white bg-[#116E63] hover:bg-[#0d5950] dark:bg-emerald-600 dark:hover:bg-emerald-500 uppercase tracking-wider px-3 py-1 rounded-[3px] flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+              className="text-xs font-bold text-white bg-[#116E63] hover:bg-[#0d5950] dark:bg-emerald-600 dark:hover:bg-emerald-500 uppercase tracking-wider px-3.5 py-1 rounded-[4px] flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
             >
               <span>Withdraw</span>
               <ArrowRight className="w-3.5 h-3.5" />
