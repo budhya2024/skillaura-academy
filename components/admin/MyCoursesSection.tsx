@@ -24,64 +24,7 @@ export default function MyCoursesSection() {
 
   return (
     <div className="space-y-4 font-sans">
-      {/* Top Header Bar */}
-      <div className="bg-white border border-slate-200 p-4 rounded-[4px] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wide text-slate-900 font-[family-name:var(--font-yantramanav)]">
-            My Courses
-          </h2>
-          <p className="text-xs text-slate-500">
-            Click on any course to open its video lessons page.
-          </p>
-        </div>
 
-        {/* Filter Pills & Search */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => setFilter("all")}
-              className={`px-2.5 py-1 text-xs font-bold uppercase tracking-wider rounded-[4px] border cursor-pointer ${
-                filter === "all"
-                  ? "bg-[#116E63] text-white border-[#116E63]"
-                  : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
-              }`}
-            >
-              All ({courses.length})
-            </button>
-            <button
-              onClick={() => setFilter("in-progress")}
-              className={`px-2.5 py-1 text-xs font-bold uppercase tracking-wider rounded-[4px] border cursor-pointer ${
-                filter === "in-progress"
-                  ? "bg-[#116E63] text-white border-[#116E63]"
-                  : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
-              }`}
-            >
-              In Progress
-            </button>
-            <button
-              onClick={() => setFilter("completed")}
-              className={`px-2.5 py-1 text-xs font-bold uppercase tracking-wider rounded-[4px] border cursor-pointer ${
-                filter === "completed"
-                  ? "bg-emerald-600 text-white border-emerald-600"
-                  : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
-              }`}
-            >
-              Completed
-            </button>
-          </div>
-
-          <div className="relative">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search courses..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 pr-3 py-1 text-xs bg-slate-50 border border-slate-200 rounded-[4px] focus:outline-none focus:ring-1 focus:ring-[#116E63] w-full sm:w-44 text-slate-800"
-            />
-          </div>
-        </div>
-      </div>
 
       {/* Courses Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

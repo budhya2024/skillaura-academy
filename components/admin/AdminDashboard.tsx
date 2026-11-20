@@ -186,23 +186,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-            {/* Quick Copy Sponsor Link on Tablet/Desktop */}
-            <button
-              onClick={handleCopyLink}
-              className="hidden sm:flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 px-2.5 sm:px-3 py-1.5 text-xs font-bold border border-slate-200 transition-colors cursor-pointer rounded-[4px]"
-            >
-              {copiedLink ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5 text-slate-500" />
-                  <span>Sponsor Link</span>
-                </>
-              )}
-            </button>
+
 
             {/* Notifications */}
             <button
