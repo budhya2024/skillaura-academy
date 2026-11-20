@@ -5,7 +5,6 @@ import Image from "next/image";
 import {
   MOCK_COMMISSIONS,
   MOCK_PAYOUTS,
-  MOCK_LEADERBOARD,
   PayoutRequest,
 } from "../../lib/networkData";
 import {
@@ -25,11 +24,9 @@ import {
   CreditCard,
   ArrowRight,
   Check,
-  Trophy,
   Crown,
   Users,
 } from "lucide-react";
-import TopEarnersCards from "./TopEarnersCards";
 
 interface PackageSalesStat {
   name: string;
@@ -77,7 +74,7 @@ const PACKAGE_STATS: PackageSalesStat[] = [
 
 export default function CommissionPlanSection() {
   const [payouts, setPayouts] = useState<PayoutRequest[]>(MOCK_PAYOUTS);
-  const [activeTab, setActiveTab] = useState<"leaderboard" | "ledger" | "payouts">("leaderboard");
+  const [activeTab, setActiveTab] = useState<"ledger" | "payouts">("ledger");
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("10000");
 
@@ -358,22 +355,11 @@ export default function CommissionPlanSection() {
       </div>
 
       {/* =========================================================================
-          3. TABS: LEADERBOARD (EARN MONEY & REFERRALS), INCOME LEDGER, PAYOUTS
+          3. TABS: INCOME LEDGER & PAYOUT HISTORY
          ========================================================================= */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[4px] overflow-hidden shadow-xs">
         {/* Tab Headers */}
         <div className="flex items-center border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 overflow-x-auto">
-          <button
-            onClick={() => setActiveTab("leaderboard")}
-            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 flex items-center gap-1.5 ${
-              activeTab === "leaderboard"
-                ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 dark:border-emerald-500 bg-white dark:bg-slate-900"
-                : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            <Trophy className="w-3.5 h-3.5" />
-            <span>Leaderboard</span>
-          </button>
           <button
             onClick={() => setActiveTab("ledger")}
             className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
@@ -396,104 +382,7 @@ export default function CommissionPlanSection() {
           </button>
         </div>
 
-        {/* Tab Content 1: Leaderboard (Earn Money & Referrals) */}
-        {activeTab === "leaderboard" && (
-          <div className="p-4 sm:p-5 space-y-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-2.5">
-              <div>
-                <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                  <Trophy className="w-4 h-4 text-amber-500" />
-                  <span>Leaderboard &bull; Earn Money &amp; Direct Referrals</span>
-                </h4>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                  Top performing partners ranked by total income earned and direct student referrals
-                </p>
-              </div>
-              <span className="text-xs bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-mono font-bold px-2.5 py-1 rounded-[4px] border border-emerald-200 dark:border-emerald-800/60">
-                Live Earnings Leaderboard
-              </span>
-            </div>
-
-            {/* 3-Box Top Earners Showcase */}
-            <TopEarnersCards />
-
-            {/* Quick Leaderboard Table */}
-            <div className="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-[4px]">
-              <table className="w-full text-left border-collapse text-xs sm:text-sm">
-                <thead>
-                  <tr className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-xs tracking-wider">
-                    <th className="py-2.5 sm:py-3 px-3 sm:px-4 w-16 text-center">SL / Rank</th>
-                    <th className="py-2.5 sm:py-3 px-3 sm:px-4">Member</th>
-                    <th className="py-2.5 sm:py-3 px-3 sm:px-4 text-right">Direct Referrals</th>
-                    <th className="py-2.5 sm:py-3 px-4 sm:px-5 text-right">Earn Money</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
-                  {MOCK_LEADERBOARD.map((user) => (
-                    <tr
-                      key={user.id}
-                      className={`hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors ${
-                        user.rankPosition === 1 ? "bg-amber-50/20 dark:bg-amber-950/20" : ""
-                      }`}
-                    >
-                      <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-center">
-                        <span
-                          className={`font-black font-mono text-xs sm:text-sm px-2 py-0.5 border rounded-[3px] inline-block ${
-                            user.rankPosition === 1
-                              ? "bg-[#FDA31B] text-slate-950 border-amber-600"
-                              : user.rankPosition === 2
-                              ? "bg-slate-300 dark:bg-slate-700 text-slate-900 dark:text-slate-100 border-slate-400 dark:border-slate-600"
-                              : user.rankPosition === 3
-                              ? "bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-800"
-                              : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700"
-                          }`}
-                        >
-                          #{user.rankPosition}
-                        </span>
-                      </td>
-
-                      <td className="py-2.5 sm:py-3 px-3 sm:px-4">
-                        <div className="flex items-center gap-2.5 sm:gap-3">
-                          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 relative shrink-0 bg-slate-100 dark:bg-slate-800 shadow-2xs">
-                            <Image
-                              src={user.avatarImage || "/images/founder.jpeg"}
-                              alt={user.name}
-                              fill
-                              sizes="40px"
-                              className="object-cover object-top"
-                            />
-                          </div>
-                          <div>
-                            <div className="font-bold text-slate-900 dark:text-white leading-tight text-xs sm:text-sm">
-                              {user.name}
-                            </div>
-                            <div className="text-xs font-mono text-slate-500 dark:text-slate-400">
-                              {user.id}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-right">
-                        <span className="font-bold font-mono text-slate-900 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-[3px] border border-slate-200 dark:border-slate-700 text-xs sm:text-sm">
-                          {user.directs} Referrals
-                        </span>
-                      </td>
-
-                      <td className="py-2.5 sm:py-3 px-4 sm:px-5 text-right">
-                        <span className="font-mono font-black text-emerald-700 dark:text-emerald-400 text-sm sm:text-base">
-                          ₹{user.totalEarnings.toLocaleString()}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* Tab Content 2: Income Ledger Table */}
+        {/* Tab Content 1: Income Ledger Table */}
         {activeTab === "ledger" && (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[620px]">
