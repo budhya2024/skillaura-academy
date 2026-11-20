@@ -426,7 +426,7 @@ export default function CommissionPlanSection() {
                     +₹{rec.commissionAmount.toLocaleString()}
                   </td>
                   <td className="py-2.5 sm:py-3 px-4 text-right">
-                    <span className="inline-block text-xs font-bold uppercase text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 border border-emerald-200 dark:border-emerald-800/60 rounded-[3px]">
+                    <span className="inline-block text-xs font-bold uppercase text-emerald-800 dark:text-emerald-300">
                       Credited
                     </span>
                   </td>

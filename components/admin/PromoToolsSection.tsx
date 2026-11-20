@@ -273,9 +273,6 @@ export default function PromoToolsSection() {
               <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
                 Direct Active Sales Commission Chart
               </h3>
-              <span className="text-[10px] bg-emerald-600 text-white font-bold px-2 py-0.5 rounded-[4px] uppercase tracking-wider">
-                100% Active Pay
-              </span>
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
               Exact rupees earned per course enrollment across all tier volumes (Credited instantly to your wallet)

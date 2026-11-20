@@ -539,9 +539,6 @@ export default function NetworkTreeVisualizer() {
               <h4 className="text-[11px] font-black text-slate-900 uppercase tracking-wider">
                 Direct Active Sales Ratio
               </h4>
-              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.2 border border-emerald-300 rounded-[4px]">
-                100% Active
-              </span>
             </div>
 
             <div className="space-y-2 text-xs">

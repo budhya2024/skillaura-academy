@@ -307,13 +307,8 @@ export default function AdminDashboard() {
               {/* Top 4 KPI Cards: Light & Dark Mode */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs rounded-[4px]">
-                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                      Active Income
-                    </span>
-                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold text-[10px] bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.2 border border-emerald-200 dark:border-emerald-800/60 uppercase rounded-[4px]">
-                      100% Active
-                    </span>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                    Active Income
                   </div>
                   <div className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
                     ₹3,48,500
@@ -324,13 +319,8 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs rounded-[4px]">
-                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                      Direct Students
-                    </span>
-                    <span className="text-teal-700 dark:text-teal-400 font-semibold text-[10px] bg-teal-50 dark:bg-teal-950/60 px-1.5 py-0.2 border border-teal-200 dark:border-teal-800/60 uppercase rounded-[4px]">
-                      Personal
-                    </span>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                    Direct Students
                   </div>
                   <div className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
                     28 Directs
@@ -341,13 +331,8 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs rounded-[4px]">
-                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                      Active Tier
-                    </span>
-                    <span className="text-amber-700 dark:text-amber-400 font-semibold text-[10px] bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.2 border border-amber-200 dark:border-amber-800/60 uppercase rounded-[4px]">
-                      Tier 3
-                    </span>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                    Active Tier
                   </div>
                   <div className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
                     65% Direct
@@ -358,13 +343,8 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs rounded-[4px]">
-                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                      Wallet Balance
-                    </span>
-                    <span className="text-blue-700 dark:text-blue-400 font-semibold text-[10px] bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.2 border border-blue-200 dark:border-blue-800/60 uppercase rounded-[4px]">
-                      Instant
-                    </span>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                    Wallet Balance
                   </div>
                   <div className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
                     ₹48,650
