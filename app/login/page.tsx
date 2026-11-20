@@ -97,7 +97,11 @@ export default function LoginPage() {
     setTimeout(() => {
       setSuccessMessage("Credentials authenticated! Redirecting to dashboard...");
       setTimeout(() => {
-        router.push("/admin");
+        if (loginIdentifier.toLowerCase().includes("super")) {
+          router.push("/super-admin");
+        } else {
+          router.push("/admin");
+        }
       }, 600);
     }, 500);
   };
@@ -460,6 +464,16 @@ export default function LoginPage() {
                   </>
                 )}
               </button>
+
+              <div className="pt-2 text-center border-t border-slate-100 flex items-center justify-center gap-1">
+                <Link
+                  href="/super-admin"
+                  className="text-[11px] font-bold text-slate-400 hover:text-[#116E63] uppercase tracking-wider inline-flex items-center gap-1 transition-colors"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Switch to Super Admin Console</span>
+                </Link>
+              </div>
             </form>
           ) : (
             /* ======================================================== */
