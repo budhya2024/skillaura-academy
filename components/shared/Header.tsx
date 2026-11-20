@@ -24,6 +24,7 @@ import {
 
 import HeaderSearch from "./HeaderSearch";
 import EnrollModal from "./EnrollModal";
+import ThemeToggle from "./ThemeToggle";
 
 export interface NavItem {
   label: string;
@@ -234,7 +235,10 @@ export default function Header() {
           </nav>
 
           {/* Right Action Icons */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Theme Toggle (Dark / Light) */}
+            <ThemeToggle className="rounded-full" />
+
             {/* Search Icon */}
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}

@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { ENROLLED_COURSES_DATA, EnrolledCourse } from "../../../../lib/coursesData";
 import AdminSidebar from "../../../../components/admin/AdminSidebar";
+import ThemeToggle from "../../../../components/shared/ThemeToggle";
 
 export default function CourseWatchPage({
   params,
@@ -145,7 +146,10 @@ export default function CourseWatchPage({
             </div>
           </div>
 
-          <div className="flex items-center gap-3 text-xs shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
+            {/* Dark Mode Toggle */}
+            <ThemeToggle className="border border-slate-200" />
+
             <span className="text-slate-600 font-medium hidden sm:inline">
               Progress: <strong className="text-slate-900 font-mono">{course.completedLessons}/{course.totalLessons}</strong> ({courseProgress}%)
             </span>

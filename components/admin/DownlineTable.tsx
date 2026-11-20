@@ -107,7 +107,7 @@ export default function DownlineTable() {
             <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
               <th className="py-2.5 px-4">Member Name &amp; ID</th>
               <th className="py-2.5 px-3">Enrolled Course</th>
-              <th className="py-2.5 px-3">Income Earned</th>
+              <th className="py-2.5 px-3">My Earning</th>
               <th className="py-2.5 px-3">Status</th>
               <th className="py-2.5 px-4 text-right">Action</th>
             </tr>
@@ -148,10 +148,13 @@ export default function DownlineTable() {
                     </span>
                   </td>
 
-                  {/* Income Earned */}
+                  {/* My Earning */}
                   <td className="py-3 px-3 font-mono">
-                    <span className="font-bold text-emerald-700 text-xs sm:text-sm">
-                      ₹{member.totalCommission.toLocaleString()}
+                    <span className="font-bold text-emerald-700 text-xs sm:text-sm block">
+                      +₹{member.totalCommission.toLocaleString()}
+                    </span>
+                    <span className="text-[9px] text-slate-500 font-sans uppercase font-semibold">
+                      My Commission
                     </span>
                   </td>
 
@@ -291,16 +294,16 @@ export default function DownlineTable() {
                 </div>
               </div>
 
-              {/* INCOME DISPLAY CARD (Prominently Highlighted) */}
+              {/* MY EARNING DISPLAY CARD (Prominently Highlighted) */}
               <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-[4px] text-center space-y-1">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 block">
-                  Total Active Direct Income Earned
+                  My Earning From This Student
                 </span>
                 <span className="text-2xl font-black text-emerald-700 font-mono block">
-                  ₹{selectedMember.totalCommission.toLocaleString()}
+                  +₹{selectedMember.totalCommission.toLocaleString()}
                 </span>
                 <span className="text-[10px] text-emerald-600 font-medium block">
-                  100% Direct commission credited &bull; KYC Verified
+                  Direct Referral Commission Credited &bull; KYC Verified
                 </span>
               </div>
 

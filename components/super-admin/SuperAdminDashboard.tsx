@@ -11,6 +11,7 @@ import SuperAdminPayoutsManager from "./SuperAdminPayoutsManager";
 import SuperAdminCMS from "./SuperAdminCMS";
 import { ENROLLED_COURSES_DATA } from "../../lib/coursesData";
 import { MOCK_DOWNLINE_LIST, MOCK_PAYOUTS } from "../../lib/networkData";
+import ThemeToggle from "../shared/ThemeToggle";
 import {
   Menu,
   ShieldCheck,
@@ -102,6 +103,9 @@ export default function SuperAdminDashboard() {
               <span>Website</span>
               <ExternalLink className="w-3 h-3 text-slate-400" />
             </Link>
+
+            {/* Theme Toggle (Dark / Light) */}
+            <ThemeToggle className="border border-slate-200" />
 
             {/* Notifications */}
             <button

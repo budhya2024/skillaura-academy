@@ -40,6 +40,7 @@ import ProfileSection from "./ProfileSection";
 import PromoToolsSection from "./PromoToolsSection";
 import MyCoursesSection from "./MyCoursesSection";
 import AdminSidebar from "./AdminSidebar";
+import ThemeToggle from "../shared/ThemeToggle";
 
 export type AdminTab =
   | "overview"
@@ -187,6 +188,9 @@ export default function AdminDashboard() {
 
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
 
+
+            {/* Dark / Light Mode Toggle */}
+            <ThemeToggle className="border border-slate-200" />
 
             {/* Notifications */}
             <button
