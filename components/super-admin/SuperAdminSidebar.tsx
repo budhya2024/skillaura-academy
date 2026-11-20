@@ -12,7 +12,6 @@ import {
   Megaphone,
   ShieldCheck,
   LogOut,
-  ExternalLink,
   ChevronRight,
   X,
 } from "lucide-react";
@@ -105,33 +104,8 @@ export default function SuperAdminSidebar({
         </button>
       </div>
 
-      {/* Super Admin User Profile Card - Identical to Student Dashboard */}
-      <div className="p-3 mx-3 my-3 border bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 rounded-[4px] shrink-0 transition-colors">
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 relative overflow-hidden rounded-full border border-slate-200 dark:border-slate-700 shrink-0 bg-slate-100 dark:bg-slate-800 shadow-xs">
-            <Image
-              src="/images/founder.jpeg"
-              alt="Super Admin"
-              fill
-              className="object-cover object-top"
-            />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5">
-              <h4 className="font-bold text-sm text-slate-900 dark:text-white truncate uppercase tracking-wider">
-                System Admin
-              </h4>
-              <ShieldCheck className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400 shrink-0" />
-            </div>
-            <div className="text-xs font-mono text-slate-500 dark:text-slate-400 font-medium truncate mt-0.5">
-              superadmin@skillaura.in
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Navigation Links - Matching Student Admin font size, padding, and colors */}
-      <nav className="flex-1 py-1 space-y-1 overflow-y-auto">
+      <nav className="flex-1 py-3 space-y-1 overflow-y-auto">
         <div className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
           Management Controls
         </div>
@@ -171,32 +145,6 @@ export default function SuperAdminSidebar({
             </button>
           );
         })}
-
-        <div className="pt-4 px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-          Quick Portals
-        </div>
-        <Link
-          href="/admin"
-          target="_blank"
-          className="w-[calc(100%-16px)] mx-2 flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 rounded-[4px] transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <Users className="w-5 h-5 text-[#116E63] dark:text-emerald-400" />
-            <span>Student Dashboard</span>
-          </div>
-          <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
-        </Link>
-        <Link
-          href="/"
-          target="_blank"
-          className="w-[calc(100%-16px)] mx-2 flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 rounded-[4px] transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <BookOpen className="w-5 h-5 text-[#FDA31B]" />
-            <span>Public Website</span>
-          </div>
-          <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
-        </Link>
       </nav>
 
       {/* Footer System Status */}

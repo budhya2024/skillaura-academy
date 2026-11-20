@@ -18,9 +18,6 @@ import {
   ShieldCheck,
   Bell,
   Search,
-  ExternalLink,
-  BookOpen,
-  Users,
   Wallet,
   Megaphone,
 } from "lucide-react";
@@ -91,28 +88,6 @@ export default function SuperAdminDashboard() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Quick Link to Student Panel */}
-            <Link
-              href="/admin"
-              target="_blank"
-              className="hidden md:flex items-center gap-1 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-[#116E63] dark:hover:text-emerald-400 uppercase tracking-wider transition-colors"
-            >
-              <Users className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
-              <span>Student Panel</span>
-              <ExternalLink className="w-3 h-3 text-slate-400" />
-            </Link>
-
-            {/* Quick Link to Website */}
-            <Link
-              href="/"
-              target="_blank"
-              className="hidden sm:flex items-center gap-1 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-[#116E63] dark:hover:text-emerald-400 uppercase tracking-wider transition-colors"
-            >
-              <BookOpen className="w-3.5 h-3.5 text-[#FDA31B]" />
-              <span>Website</span>
-              <ExternalLink className="w-3 h-3 text-slate-400" />
-            </Link>
-
             {/* Theme Toggle (Dark / Light) */}
             <ThemeToggle className="border border-slate-200 dark:border-slate-700" />
 
