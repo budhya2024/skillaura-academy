@@ -97,7 +97,7 @@ export default function AdminSidebar({
                 Skill Aura
               </span>
               <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono tracking-tight block -mt-1 font-semibold">
-                Student &amp; Affiliate Hub
+                Student Dashboard
               </span>
             </div>
           </Link>

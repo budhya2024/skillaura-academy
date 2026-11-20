@@ -195,7 +195,7 @@ export default function AdminDashboard() {
                 </h1>
               </div>
               <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 hidden md:block font-medium">
-                Skill Aura Academy Direct Sales &amp; Active Income Center
+                Skill Aura Academy Student Portal &amp; Learning Center
               </p>
             </div>
           </div>
