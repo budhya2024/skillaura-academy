@@ -9,6 +9,7 @@ import SuperAdminCoursesManager from "./SuperAdminCoursesManager";
 import SuperAdminStudentsManager from "./SuperAdminStudentsManager";
 import SuperAdminPayoutsManager from "./SuperAdminPayoutsManager";
 import SuperAdminCMS from "./SuperAdminCMS";
+import SuperAdminKYCManager from "./SuperAdminKYCManager";
 import { ENROLLED_COURSES_DATA } from "../../lib/coursesData";
 import { MOCK_DOWNLINE_LIST, MOCK_PAYOUTS } from "../../lib/networkData";
 import ThemeToggle from "../shared/ThemeToggle";
@@ -37,7 +38,9 @@ export default function SuperAdminDashboard() {
       case "courses":
         return "Courses & Video Lesson Studio";
       case "students":
-        return "Student Database & KYC Registry";
+        return "Student Database & Referral Roster";
+      case "kyc":
+        return "KYC & Identity Verification Console";
       case "payouts":
         return "Payout Approvals & Banking Disbursements";
       case "cms":
@@ -56,6 +59,7 @@ export default function SuperAdminDashboard() {
         isMobileOpen={isMobileSidebarOpen}
         setIsMobileOpen={setIsMobileSidebarOpen}
         pendingPayoutCount={pendingPayoutCount}
+        pendingKycCount={3}
       />
 
       {/* 2. Main Workspace (Offset for Left Sidebar with lg:pl-64) */}
@@ -161,6 +165,8 @@ export default function SuperAdminDashboard() {
           {activeTab === "courses" && <SuperAdminCoursesManager />}
 
           {activeTab === "students" && <SuperAdminStudentsManager />}
+
+          {activeTab === "kyc" && <SuperAdminKYCManager />}
 
           {activeTab === "payouts" && <SuperAdminPayoutsManager />}
 

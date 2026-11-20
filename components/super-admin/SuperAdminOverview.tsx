@@ -300,7 +300,7 @@ export default function SuperAdminOverview({
       </div>
 
       {/* 4. Operational Quick Action Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div
           onClick={() => onNavigate("students")}
           className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs hover:border-[#116E63] dark:hover:border-emerald-500 cursor-pointer transition-colors group space-y-2"
@@ -312,10 +312,29 @@ export default function SuperAdminOverview({
             Student &amp; Referral Genealogy
           </h4>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
-            Inspect all enrolled students, verify KYC documents, and monitor multi-tier student referral earnings.
+            Inspect all enrolled students, multi-tier referral lines, and track individual course progress.
           </p>
           <span className="text-xs font-bold text-[#116E63] dark:text-emerald-400 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform pt-1">
             <span>Inspect Students</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </span>
+        </div>
+
+        <div
+          onClick={() => onNavigate("kyc")}
+          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs hover:border-[#116E63] dark:hover:border-emerald-500 cursor-pointer transition-colors group space-y-2"
+        >
+          <div className="w-8 h-8 rounded-[4px] bg-teal-50 dark:bg-teal-950/60 text-[#116E63] dark:text-emerald-400 flex items-center justify-center">
+            <ShieldCheck className="w-4 h-4" />
+          </div>
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white group-hover:text-[#116E63] dark:group-hover:text-emerald-400 transition-colors">
+            KYC Verification Console
+          </h4>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+            Verify Aadhaar, PAN, voter ID cards and inspect student bank passbooks &amp; UPI handles for payouts.
+          </p>
+          <span className="text-xs font-bold text-[#116E63] dark:text-emerald-400 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform pt-1">
+            <span>Manage KYC</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </span>
         </div>

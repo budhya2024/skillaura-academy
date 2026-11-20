@@ -17,7 +17,7 @@ import {
   X,
 } from "lucide-react";
 
-export type SuperAdminTab = "overview" | "courses" | "students" | "payouts" | "cms";
+export type SuperAdminTab = "overview" | "courses" | "students" | "kyc" | "payouts" | "cms";
 
 interface SuperAdminSidebarProps {
   activeTab: SuperAdminTab;
@@ -25,6 +25,7 @@ interface SuperAdminSidebarProps {
   isMobileOpen: boolean;
   setIsMobileOpen: (open: boolean) => void;
   pendingPayoutCount?: number;
+  pendingKycCount?: number;
 }
 
 export const SUPER_ADMIN_NAV_ITEMS = [
@@ -44,6 +45,11 @@ export const SUPER_ADMIN_NAV_ITEMS = [
     icon: Users,
   },
   {
+    id: "kyc" as SuperAdminTab,
+    label: "KYC Verifications",
+    icon: ShieldCheck,
+  },
+  {
     id: "payouts" as SuperAdminTab,
     label: "Payout Approvals",
     icon: Wallet,
@@ -61,6 +67,7 @@ export default function SuperAdminSidebar({
   isMobileOpen,
   setIsMobileOpen,
   pendingPayoutCount = 2,
+  pendingKycCount = 3,
 }: SuperAdminSidebarProps) {
   const handleTabClick = (tab: SuperAdminTab) => {
     setActiveTab(tab);
@@ -154,6 +161,11 @@ export default function SuperAdminSidebar({
               {item.id === "payouts" && pendingPayoutCount > 0 && (
                 <span className="text-xs font-mono font-bold text-amber-700 dark:text-amber-400">
                   ({pendingPayoutCount})
+                </span>
+              )}
+              {item.id === "kyc" && pendingKycCount !== undefined && pendingKycCount > 0 && (
+                <span className="text-xs font-mono font-bold text-amber-700 dark:text-amber-400">
+                  ({pendingKycCount})
                 </span>
               )}
             </button>
