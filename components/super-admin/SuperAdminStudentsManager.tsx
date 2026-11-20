@@ -906,16 +906,22 @@ export default function SuperAdminStudentsManager() {
                         </div>
                       </td>
 
-                      {/* 3. Course Purchased & Fee (Minimized: Title & Amount only) */}
+                      {/* 3. Course Purchased: Course Name, Purchase Date, and Amount (Extra Content Removed) */}
                       <td className="py-3 px-3">
                         <div
-                          className="font-semibold text-slate-900 dark:text-white text-xs truncate max-w-[200px]"
+                          className="font-bold text-slate-900 dark:text-white text-xs truncate max-w-[210px]"
                           title={student.purchasedCourse.courseName}
                         >
                           {student.purchasedCourse.courseName}
                         </div>
-                        <div className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-xs mt-0.5">
-                          ₹{student.purchasedCourse.courseFee.toLocaleString()}
+                        <div className="flex items-center gap-1.5 mt-0.5 text-xs">
+                          <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">
+                            ₹{student.purchasedCourse.courseFee.toLocaleString()}
+                          </span>
+                          <span className="text-slate-300 dark:text-slate-600">&bull;</span>
+                          <span className="text-slate-500 dark:text-slate-400 text-[11px] font-mono">
+                            {student.purchasedCourse.purchaseDate}
+                          </span>
                         </div>
                       </td>
 
@@ -1098,24 +1104,31 @@ export default function SuperAdminStudentsManager() {
                   </div>
                 </div>
 
-                {/* Course Purchase Quick Highlight Banner */}
-                <div className="p-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-[4px] flex items-center justify-between">
-                  <div className="min-w-0 pr-2">
-                    <span className="text-[10px] uppercase font-bold text-emerald-800 dark:text-emerald-400 tracking-wider block">
-                      Enrolled Course
-                    </span>
-                    <div className="font-bold text-slate-900 dark:text-white text-xs truncate">
-                      {selectedStudent.purchasedCourse.courseName}
+                {/* Course Name, Purchase Date & Amount (Extra Content Removed) */}
+                <div className="p-3 bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-[4px] space-y-1.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider block">
+                        Course Name
+                      </span>
+                      <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">
+                        {selectedStudent.purchasedCourse.courseName}
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider block">
+                        Amount
+                      </span>
+                      <div className="font-mono font-black text-emerald-700 dark:text-emerald-400 text-sm sm:text-base">
+                        ₹{selectedStudent.purchasedCourse.courseFee.toLocaleString()}
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right shrink-0">
-                    <span className="text-[10px] uppercase font-bold text-emerald-800 dark:text-emerald-400 tracking-wider block">
-                      Amount Paid
+                  <div className="pt-1.5 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-[11px]">
+                    <span className="text-slate-500 dark:text-slate-400 font-medium">Purchase Date:</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">
+                      {selectedStudent.purchasedCourse.purchaseDate}
                     </span>
-                    <div className="font-mono font-black text-emerald-700 dark:text-emerald-300 text-sm sm:text-base flex items-center justify-end gap-1">
-                      <span>₹{selectedStudent.purchasedCourse.courseFee.toLocaleString()}</span>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    </div>
                   </div>
                 </div>
 
