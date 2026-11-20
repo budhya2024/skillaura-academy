@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SuperAdminSidebar, { SuperAdminTab } from "./SuperAdminSidebar";
@@ -13,6 +13,7 @@ import SuperAdminKYCManager from "./SuperAdminKYCManager";
 import SuperAdminProfileSettings from "./SuperAdminProfileSettings";
 import { ENROLLED_COURSES_DATA } from "../../lib/coursesData";
 import { MOCK_DOWNLINE_LIST, MOCK_PAYOUTS } from "../../lib/networkData";
+import { getKycRecords } from "../../lib/kycData";
 import ThemeToggle from "../shared/ThemeToggle";
 import {
   Menu,
@@ -26,6 +27,22 @@ import {
 export default function SuperAdminDashboard() {
   const [activeTab, setActiveTab] = useState<SuperAdminTab>("overview");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [pendingKycCount, setPendingKycCount] = useState(4);
+
+  useEffect(() => {
+    const updateCount = () => {
+      const records = getKycRecords();
+      setPendingKycCount(records.filter((k) => k.status === "pending").length);
+    };
+
+    updateCount();
+    window.addEventListener("skillaura_kyc_updated", updateCount);
+    window.addEventListener("storage", updateCount);
+    return () => {
+      window.removeEventListener("skillaura_kyc_updated", updateCount);
+      window.removeEventListener("storage", updateCount);
+    };
+  }, []);
 
   const pendingPayoutCount = MOCK_PAYOUTS.filter((p) => p.status === "pending").length;
   const totalStudents = MOCK_DOWNLINE_LIST.length;
@@ -59,7 +76,7 @@ export default function SuperAdminDashboard() {
         isMobileOpen={isMobileSidebarOpen}
         setIsMobileOpen={setIsMobileSidebarOpen}
         pendingPayoutCount={pendingPayoutCount}
-        pendingKycCount={3}
+        pendingKycCount={pendingKycCount}
       />
 
       {/* 2. Main Workspace (Offset for Left Sidebar with lg:pl-64) */}

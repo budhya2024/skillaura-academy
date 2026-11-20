@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   ShieldCheck,
@@ -28,169 +28,32 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
-
-export interface KycRecord {
-  id: string;
-  studentId: string;
-  studentName: string;
-  studentEmail: string;
-  studentPhone: string;
-  avatarImage: string;
-  docType: "Aadhaar Card" | "PAN Card" | "Voter ID" | "Passport";
-  docNumber: string;
-  frontDocUrl: string;
-  backDocUrl?: string;
-  bankName: string;
-  accountNumber: string;
-  ifscCode: string;
-  upiId: string;
-  accountHolderName: string;
-  submittedDate: string;
-  status: "pending" | "verified" | "rejected";
-  reviewedDate?: string;
-  rejectionReason?: string;
-}
-
-export const INITIAL_KYC_RECORDS: KycRecord[] = [
-  {
-    id: "KYC-2026-001",
-    studentId: "SKA-ROOT88",
-    studentName: "Subha Kumar Mahata",
-    studentEmail: "subha@skillauraacademy.in",
-    studentPhone: "+91 98765 43210",
-    avatarImage: "/images/founder.jpeg",
-    docType: "Aadhaar Card",
-    docNumber: "XXXX-XXXX-4819",
-    frontDocUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600",
-    backDocUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600",
-    bankName: "State Bank of India",
-    accountNumber: "XXXXXXXX4920",
-    ifscCode: "SBIN0001244",
-    upiId: "subha@oksbi",
-    accountHolderName: "Subha Kumar Mahata",
-    submittedDate: "12-Nov-2026, 11:20 AM",
-    status: "verified",
-    reviewedDate: "12-Nov-2026, 14:05 PM",
-  },
-  {
-    id: "KYC-2026-002",
-    studentId: "SKA-1024",
-    studentName: "Himanshu Sharma",
-    studentEmail: "himanshu@gmail.com",
-    studentPhone: "+91 98765 11111",
-    avatarImage: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200",
-    docType: "PAN Card",
-    docNumber: "ABCDE1234F",
-    frontDocUrl: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600",
-    bankName: "HDFC Bank",
-    accountNumber: "XXXXXXXX5521",
-    ifscCode: "HDFC0000281",
-    upiId: "himanshu@okhdfcbank",
-    accountHolderName: "Himanshu Sharma",
-    submittedDate: "19-Nov-2026, 09:45 AM",
-    status: "pending",
-  },
-  {
-    id: "KYC-2026-003",
-    studentId: "SKA-1025",
-    studentName: "Ishrat Jahan",
-    studentEmail: "ishrat.j@gmail.com",
-    studentPhone: "+91 98765 22222",
-    avatarImage: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80&w=200",
-    docType: "Aadhaar Card",
-    docNumber: "XXXX-XXXX-9182",
-    frontDocUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600",
-    backDocUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600",
-    bankName: "ICICI Bank",
-    accountNumber: "XXXXXXXX8834",
-    ifscCode: "ICIC0000047",
-    upiId: "ishrat@icici",
-    accountHolderName: "Ishrat Jahan",
-    submittedDate: "18-Nov-2026, 16:15 PM",
-    status: "verified",
-    reviewedDate: "19-Nov-2026, 10:30 AM",
-  },
-  {
-    id: "KYC-2026-004",
-    studentId: "SKA-1026",
-    studentName: "Ankit Sharma",
-    studentEmail: "ankit.tg@gmail.com",
-    studentPhone: "+91 98765 33333",
-    avatarImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200",
-    docType: "Aadhaar Card",
-    docNumber: "XXXX-XXXX-6741",
-    frontDocUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600",
-    backDocUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600",
-    bankName: "Axis Bank",
-    accountNumber: "XXXXXXXX9012",
-    ifscCode: "UTIB0000132",
-    upiId: "ankit@axisbank",
-    accountHolderName: "Ankit Sharma",
-    submittedDate: "20-Nov-2026, 08:30 AM",
-    status: "pending",
-  },
-  {
-    id: "KYC-2026-005",
-    studentId: "SKA-1027",
-    studentName: "Fatima Khan",
-    studentEmail: "fatima.k@gmail.com",
-    studentPhone: "+91 98765 44444",
-    avatarImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-    docType: "PAN Card",
-    docNumber: "FGHIJ5678K",
-    frontDocUrl: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600",
-    bankName: "Punjab National Bank",
-    accountNumber: "XXXXXXXX1190",
-    ifscCode: "PUNB0024900",
-    upiId: "fatima@okpnb",
-    accountHolderName: "Fatima Khan",
-    submittedDate: "15-Nov-2026, 12:10 PM",
-    status: "rejected",
-    reviewedDate: "16-Nov-2026, 09:20 AM",
-    rejectionReason: "Photo ID blurred and name on bank account differs from registered student name.",
-  },
-  {
-    id: "KYC-2026-006",
-    studentId: "SKA-1028",
-    studentName: "Shania Perween",
-    studentEmail: "shania.p@gmail.com",
-    studentPhone: "+91 98765 55555",
-    avatarImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200",
-    docType: "Aadhaar Card",
-    docNumber: "XXXX-XXXX-3349",
-    frontDocUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600",
-    backDocUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600",
-    bankName: "Kotak Mahindra Bank",
-    accountNumber: "XXXXXXXX6723",
-    ifscCode: "KKBK0000180",
-    upiId: "shania@kotak",
-    accountHolderName: "Shania Perween",
-    submittedDate: "17-Nov-2026, 15:40 PM",
-    status: "verified",
-    reviewedDate: "18-Nov-2026, 11:00 AM",
-  },
-  {
-    id: "KYC-2026-007",
-    studentId: "SKA-1029",
-    studentName: "Alka Singh",
-    studentEmail: "alka.singh@gmail.com",
-    studentPhone: "+91 98765 66666",
-    avatarImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
-    docType: "Voter ID",
-    docNumber: "VOT-IND-77891",
-    frontDocUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=600",
-    bankName: "Bank of Baroda",
-    accountNumber: "XXXXXXXX4411",
-    ifscCode: "BARB0KOLKAT",
-    upiId: "alka@barodampay",
-    accountHolderName: "Alka Singh",
-    submittedDate: "20-Nov-2026, 10:15 AM",
-    status: "pending",
-  },
-];
+import {
+  KycRecord,
+  INITIAL_KYC_RECORDS,
+  getKycRecords,
+  saveKycRecords,
+  updateKycStatus,
+} from "../../lib/kycData";
 
 export default function SuperAdminKYCManager() {
   const [records, setRecords] = useState<KycRecord[]>(INITIAL_KYC_RECORDS);
+
+  useEffect(() => {
+    // Load persisted KYC registry
+    setRecords(getKycRecords());
+
+    const handleSync = () => {
+      setRecords(getKycRecords());
+    };
+
+    window.addEventListener("skillaura_kyc_updated", handleSync);
+    window.addEventListener("storage", handleSync);
+    return () => {
+      window.removeEventListener("skillaura_kyc_updated", handleSync);
+      window.removeEventListener("storage", handleSync);
+    };
+  }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "pending" | "verified" | "rejected">("all");
   const [docFilter, setDocFilter] = useState<string>("all");
@@ -228,41 +91,15 @@ export default function SuperAdminKYCManager() {
 
   // Action: Approve
   const handleApprove = (recordId: string) => {
-    const now = new Date().toLocaleString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    setRecords((prev) =>
-      prev.map((r) =>
-        r.id === recordId
-          ? {
-              ...r,
-              status: "verified",
-              reviewedDate: now,
-              rejectionReason: undefined,
-            }
-          : r
-      )
-    );
-
-    if (selectedRecord && selectedRecord.id === recordId) {
-      setSelectedRecord((prev) =>
-        prev
-          ? {
-              ...prev,
-              status: "verified",
-              reviewedDate: now,
-              rejectionReason: undefined,
-            }
-          : null
-      );
+    const updated = updateKycStatus(recordId, "verified");
+    if (updated) {
+      setRecords(getKycRecords());
+      if (selectedRecord && selectedRecord.id === recordId) {
+        setSelectedRecord(updated);
+      }
     }
 
-    setNotificationMsg("KYC verification approved successfully!");
+    setNotificationMsg("KYC verification approved successfully & synchronized with Student Portal!");
     setTimeout(() => setNotificationMsg(null), 3500);
   };
 
@@ -277,45 +114,19 @@ export default function SuperAdminKYCManager() {
     e.preventDefault();
     if (!rejectingRecord) return;
 
-    const now = new Date().toLocaleString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
     const finalReason =
       customRejectReason.trim() ||
       "Document unreadable or bank account details mismatch with registered identity.";
 
-    setRecords((prev) =>
-      prev.map((r) =>
-        r.id === rejectingRecord.id
-          ? {
-              ...r,
-              status: "rejected",
-              reviewedDate: now,
-              rejectionReason: finalReason,
-            }
-          : r
-      )
-    );
-
-    if (selectedRecord && selectedRecord.id === rejectingRecord.id) {
-      setSelectedRecord((prev) =>
-        prev
-          ? {
-              ...prev,
-              status: "rejected",
-              reviewedDate: now,
-              rejectionReason: finalReason,
-            }
-          : null
-      );
+    const updated = updateKycStatus(rejectingRecord.id, "rejected", finalReason);
+    if (updated) {
+      setRecords(getKycRecords());
+      if (selectedRecord && selectedRecord.id === rejectingRecord.id) {
+        setSelectedRecord(updated);
+      }
     }
 
-    setNotificationMsg("KYC application rejected with student feedback note.");
+    setNotificationMsg("KYC application rejected with student feedback note & synchronized!");
     setRejectingRecord(null);
     setTimeout(() => setNotificationMsg(null), 3500);
   };

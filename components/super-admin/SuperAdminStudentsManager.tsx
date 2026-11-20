@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Users,
@@ -26,6 +26,7 @@ import {
   UserCheck,
   Award,
 } from "lucide-react";
+import { getKycRecords } from "../../lib/kycData";
 
 export interface SuperAdminStudent {
   id: string;
@@ -468,6 +469,33 @@ const AVAILABLE_COURSES = [
 
 export default function SuperAdminStudentsManager() {
   const [students, setStudents] = useState<SuperAdminStudent[]>(INITIAL_SUPER_ADMIN_STUDENTS);
+
+  // Synchronize KYC status from unified KYC registry
+  useEffect(() => {
+    const syncKyc = () => {
+      const kycRecords = getKycRecords();
+      setStudents((prev) =>
+        prev.map((s) => {
+          const matchingKyc = kycRecords.find((k) => k.studentId === s.id);
+          if (matchingKyc) {
+            return {
+              ...s,
+              kycVerified: matchingKyc.status === "verified",
+            };
+          }
+          return s;
+        })
+      );
+    };
+
+    syncKyc();
+    window.addEventListener("skillaura_kyc_updated", syncKyc);
+    window.addEventListener("storage", syncKyc);
+    return () => {
+      window.removeEventListener("skillaura_kyc_updated", syncKyc);
+      window.removeEventListener("storage", syncKyc);
+    };
+  }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [kycFilter, setKycFilter] = useState<"all" | "verified" | "pending">("all");
   const [courseFilter, setCourseFilter] = useState<string>("all");
