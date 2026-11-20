@@ -25,6 +25,9 @@ import {
   ChevronRight,
   UserCheck,
   Award,
+  Receipt,
+  FileText,
+  CreditCard,
 } from "lucide-react";
 import { getKycRecords } from "../../lib/kycData";
 
@@ -500,8 +503,15 @@ export default function SuperAdminStudentsManager() {
   const [kycFilter, setKycFilter] = useState<"all" | "verified" | "pending">("all");
   const [courseFilter, setCourseFilter] = useState<string>("all");
   const [selectedStudent, setSelectedStudent] = useState<SuperAdminStudent | null>(null);
-  const [drawerTab, setDrawerTab] = useState<"details" | "referrals">("details");
+  const [drawerTab, setDrawerTab] = useState<"purchase" | "details" | "referrals">("purchase");
   const [copiedId, setCopiedId] = useState(false);
+  const [copiedInvoice, setCopiedInvoice] = useState(false);
+
+  const handleCopyInvoice = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedInvoice(true);
+    setTimeout(() => setCopiedInvoice(false), 2000);
+  };
 
   // Enroll Student Modal State
   const [isAddStudentOpen, setIsAddStudentOpen] = useState(false);
@@ -906,13 +916,20 @@ export default function SuperAdminStudentsManager() {
                         </div>
                       </td>
 
-                      {/* 3. Course Purchased & Price */}
-                      <td className="py-3 px-3">
-                        <div className="font-bold text-slate-900 dark:text-white truncate max-w-[210px]">
+                      {/* 3. Course Purchased & Price (Clickable to Inspect Course Purchase & Amount) */}
+                      <td
+                        className="py-3 px-3 cursor-pointer group"
+                        onClick={() => {
+                          setSelectedStudent(student);
+                          setDrawerTab("purchase");
+                        }}
+                        title="Click to inspect course purchase invoice & amount details"
+                      >
+                        <div className="font-bold text-slate-900 dark:text-white truncate max-w-[210px] group-hover:text-[#116E63] dark:group-hover:text-emerald-400 transition-colors">
                           {student.purchasedCourse.courseName}
                         </div>
                         <div className="flex items-center gap-2 mt-0.5 text-[11px]">
-                          <span className="font-mono font-black text-emerald-700 dark:text-emerald-400">
+                          <span className="font-mono font-black text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm">
                             ₹{student.purchasedCourse.courseFee.toLocaleString()}
                           </span>
                           <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
@@ -1000,7 +1017,7 @@ export default function SuperAdminStudentsManager() {
                         <button
                           onClick={() => {
                             setSelectedStudent(student);
-                            setDrawerTab("details");
+                            setDrawerTab("purchase");
                           }}
                           className="px-2.5 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[4px] transition-colors cursor-pointer inline-flex items-center gap-1"
                         >
@@ -1094,8 +1111,39 @@ export default function SuperAdminStudentsManager() {
                   </div>
                 </div>
 
-                {/* Drawer Tab Switcher: Details vs Referrals */}
+                {/* Course Purchase Quick Highlight Banner */}
+                <div className="p-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-[4px] flex items-center justify-between">
+                  <div className="min-w-0 pr-2">
+                    <span className="text-[10px] uppercase font-bold text-emerald-800 dark:text-emerald-400 tracking-wider block">
+                      Enrolled Course
+                    </span>
+                    <div className="font-bold text-slate-900 dark:text-white text-xs truncate">
+                      {selectedStudent.purchasedCourse.courseName}
+                    </div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <span className="text-[10px] uppercase font-bold text-emerald-800 dark:text-emerald-400 tracking-wider block">
+                      Amount Paid
+                    </span>
+                    <div className="font-mono font-black text-emerald-700 dark:text-emerald-300 text-sm sm:text-base flex items-center justify-end gap-1">
+                      <span>₹{selectedStudent.purchasedCourse.courseFee.toLocaleString()}</span>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Drawer Tab Switcher: Course & Purchase vs Details vs Referrals */}
                 <div className="flex border-b border-slate-200 dark:border-slate-800">
+                  <button
+                    onClick={() => setDrawerTab("purchase")}
+                    className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-colors ${
+                      drawerTab === "purchase"
+                        ? "border-[#116E63] text-[#116E63] dark:border-emerald-400 dark:text-emerald-400 font-extrabold"
+                        : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white"
+                    }`}
+                  >
+                    Course &amp; Purchase
+                  </button>
                   <button
                     onClick={() => setDrawerTab("details")}
                     className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-colors ${
@@ -1104,7 +1152,7 @@ export default function SuperAdminStudentsManager() {
                         : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white"
                     }`}
                   >
-                    Course &amp; Details
+                    Profile &amp; Sponsor
                   </button>
                   <button
                     onClick={() => setDrawerTab("referrals")}
@@ -1118,12 +1166,190 @@ export default function SuperAdminStudentsManager() {
                   </button>
                 </div>
 
-                {drawerTab === "details" ? (
+                {drawerTab === "purchase" ? (
+                  /* TAB 1: DETAILED COURSE PURCHASE & AMOUNT BREAKDOWN */
                   <div className="space-y-4 text-xs">
-                    {/* SECTION: PURCHASED COURSE */}
+                    {/* Invoice & Order Card */}
+                    <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-[4px] space-y-3">
+                      <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700">
+                        <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                          <Receipt className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
+                          <span>Tax Invoice &amp; Payment Receipt</span>
+                        </div>
+                        <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" /> Paid in Full
+                        </span>
+                      </div>
+
+                      {/* Invoice Details Grid */}
+                      <div className="grid grid-cols-2 gap-2 text-[11px]">
+                        <div>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase block">
+                            Invoice Number:
+                          </span>
+                          <div className="font-mono font-bold text-slate-900 dark:text-white flex items-center gap-1 mt-0.5">
+                            <span>INV-SA-2026-{selectedStudent.id.replace("SKA-", "")}</span>
+                            <button
+                              onClick={() => handleCopyInvoice(`INV-SA-2026-${selectedStudent.id.replace("SKA-", "")}`)}
+                              className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer"
+                              title="Copy Invoice"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+
+                        <div>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase block">
+                            Transaction Ref:
+                          </span>
+                          <div className="font-mono font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1 mt-0.5 truncate">
+                            <span>TXN-2026-{selectedStudent.id.replace("SKA-", "")}89</span>
+                            <button
+                              onClick={() => handleCopyInvoice(`TXN-2026-${selectedStudent.id.replace("SKA-", "")}89`)}
+                              className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer"
+                              title="Copy Txn Ref"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+
+                        <div>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase block">
+                            Payment Date:
+                          </span>
+                          <span className="font-mono text-slate-800 dark:text-slate-200">
+                            {selectedStudent.purchasedCourse.purchaseDate}, 11:30 AM
+                          </span>
+                        </div>
+
+                        <div>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase block">
+                            Payment Method:
+                          </span>
+                          <span className="font-mono text-slate-800 dark:text-slate-200">
+                            UPI / Razorpay Instant
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Course Itemization & Financial Amount Card */}
+                    <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-[4px] space-y-2.5">
+                      <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider pb-1 border-b border-slate-200 dark:border-slate-700">
+                        <BookOpen className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
+                        <span>Course Pricing &amp; Amount Breakdown</span>
+                      </div>
+
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <span className="font-bold text-slate-900 dark:text-white block text-sm">
+                              {selectedStudent.purchasedCourse.courseName}
+                            </span>
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                              Lifetime Masterclass Full Curriculum &bull; HD Video Sessions
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-slate-200 dark:border-slate-700 space-y-1.5">
+                          <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                            <span>Base Course Price (Excl. Tax):</span>
+                            <span className="font-mono font-medium text-slate-800 dark:text-slate-200">
+                              ₹{Math.round(selectedStudent.purchasedCourse.courseFee / 1.18).toLocaleString()}
+                            </span>
+                          </div>
+                          <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                            <span>Goods &amp; Services Tax (GST 18%):</span>
+                            <span className="font-mono font-medium text-slate-800 dark:text-slate-200">
+                              ₹{(selectedStudent.purchasedCourse.courseFee - Math.round(selectedStudent.purchasedCourse.courseFee / 1.18)).toLocaleString()}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center pt-2 border-t border-slate-200 dark:border-slate-700 text-sm">
+                            <span className="font-bold text-slate-900 dark:text-white uppercase">
+                              Total Course Fee Paid:
+                            </span>
+                            <span className="font-mono font-black text-emerald-700 dark:text-emerald-400 text-lg">
+                              ₹{selectedStudent.purchasedCourse.courseFee.toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Financial Distribution on This Purchase */}
                     <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-[4px] space-y-2">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
-                        Purchased Course Details
+                        Platform Revenue &amp; Commission Allocation (On This Course)
+                      </span>
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="p-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[4px]">
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block uppercase">
+                            Direct Sponsor (65%)
+                          </span>
+                          <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-sm block mt-0.5">
+                            ₹{Math.round(selectedStudent.purchasedCourse.courseFee * 0.65).toLocaleString()}
+                          </span>
+                          <span className="text-[10px] text-slate-400 truncate block">
+                            Paid to: {selectedStudent.sponsor.sponsorName}
+                          </span>
+                        </div>
+
+                        <div className="p-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[4px]">
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block uppercase">
+                            Company Profit (35%)
+                          </span>
+                          <span className="font-mono font-bold text-[#116E63] dark:text-teal-300 text-sm block mt-0.5">
+                            +₹{Math.round(selectedStudent.purchasedCourse.courseFee * 0.35).toLocaleString()}
+                          </span>
+                          <span className="text-[10px] text-slate-400 block">
+                            SkillAura Platform Net
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Learning Access & Progress */}
+                    <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-[4px] space-y-2">
+                      <div className="flex justify-between items-center text-xs font-semibold">
+                        <span className="text-slate-600 dark:text-slate-400">
+                          Course Learning Progress:
+                        </span>
+                        <span className="text-[#116E63] dark:text-emerald-400 font-mono font-bold">
+                          {selectedStudent.purchasedCourse.progressPercent}% Completed
+                        </span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-[#116E63] dark:bg-emerald-500 rounded-full transition-all"
+                          style={{
+                            width: `${selectedStudent.purchasedCourse.progressPercent}%`,
+                          }}
+                        />
+                      </div>
+                      <div className="flex items-center justify-between pt-1 text-[11px] text-slate-500 dark:text-slate-400">
+                        <span>Access Status: <strong>Lifetime Unlimited</strong></span>
+                        <span>Certificate: <strong>SkillAura Certified</strong></span>
+                      </div>
+                    </div>
+
+                    {/* Quick Copy Feedback */}
+                    {copiedInvoice && (
+                      <div className="p-2 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 text-xs font-bold rounded-[4px] text-center flex items-center justify-center gap-1.5 animate-in fade-in">
+                        <Check className="w-3.5 h-3.5" />
+                        <span>Invoice Reference Copied to Clipboard!</span>
+                      </div>
+                    )}
+                  </div>
+                ) : drawerTab === "details" ? (
+                  /* TAB 2: PROFILE & SPONSOR DETAILS */
+                  <div className="space-y-4 text-xs">
+                    {/* SECTION: PURCHASED COURSE SUMMARY */}
+                    <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-[4px] space-y-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
+                        Course Enrollment Summary
                       </span>
                       <div className="flex items-start justify-between gap-2">
                         <div>
@@ -1141,26 +1367,6 @@ export default function SuperAdminStudentsManager() {
                           <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
                             Paid ✓
                           </span>
-                        </div>
-                      </div>
-
-                      {/* Course Completion Progress */}
-                      <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
-                        <div className="flex justify-between text-[11px] mb-1 font-semibold">
-                          <span className="text-slate-600 dark:text-slate-400">
-                            Learning Progress:
-                          </span>
-                          <span className="text-[#116E63] dark:text-emerald-400 font-mono">
-                            {selectedStudent.purchasedCourse.progressPercent}% Completed
-                          </span>
-                        </div>
-                        <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-[#116E63] dark:bg-emerald-500 rounded-full transition-all"
-                            style={{
-                              width: `${selectedStudent.purchasedCourse.progressPercent}%`,
-                            }}
-                          />
                         </div>
                       </div>
                     </div>
