@@ -29,6 +29,7 @@ import {
   Crown,
   Users,
 } from "lucide-react";
+import TopEarnersCards from "./TopEarnersCards";
 
 interface PackageSalesStat {
   name: string;
@@ -411,6 +412,9 @@ export default function CommissionPlanSection() {
                 Live Earnings Leaderboard
               </span>
             </div>
+
+            {/* 3-Box Top Earners Showcase */}
+            <TopEarnersCards />
 
             {/* Quick Leaderboard Table */}
             <div className="overflow-x-auto border border-slate-200 rounded-[4px]">

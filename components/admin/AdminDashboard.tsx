@@ -36,6 +36,7 @@ import {
 import DownlineTable from "./DownlineTable";
 import CommissionPlanSection from "./CommissionPlanSection";
 import LeaderboardSection from "./LeaderboardSection";
+import TopEarnersCards from "./TopEarnersCards";
 import ProfileSection from "./ProfileSection";
 import PromoToolsSection from "./PromoToolsSection";
 import MyCoursesSection from "./MyCoursesSection";
@@ -427,6 +428,29 @@ export default function AdminDashboard() {
                     <span>25 Sales Goal</span>
                   </div>
                 </div>
+              </div>
+
+              {/* 3-Box Top Earners Section (Today's, Last 7 Days, Last 30 Days) */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
+                      Top Earners &bull; Leaderboard Showcase
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Live affiliate income rankings across Today&apos;s, Last 7 Days, and Last 30 Days
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setActiveTab("leaderboard")}
+                    className="text-xs font-bold text-[#116E63] hover:underline uppercase tracking-wider cursor-pointer hidden sm:flex items-center gap-1"
+                  >
+                    <span>View All Rankings</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                <TopEarnersCards />
               </div>
 
               {/* Quick Navigation Cards */}
