@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -54,6 +54,28 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<AdminTab>("overview");
   const [copiedLink, setCopiedLink] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab") as AdminTab;
+      if (
+        tabParam &&
+        [
+          "overview",
+          "courses",
+          "profile",
+          "leaderboard",
+          "downline",
+          "commissions",
+          "marketing",
+          "settings",
+        ].includes(tabParam)
+      ) {
+        setActiveTab(tabParam);
+      }
+    }
+  }, []);
 
   const referralUrl = "https://skillauraacademy.in/register?ref=SKA-ROOT88";
 
