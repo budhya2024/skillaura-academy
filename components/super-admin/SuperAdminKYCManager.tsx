@@ -368,18 +368,18 @@ export default function SuperAdminKYCManager() {
           </div>
         </div>
 
-        {/* KYC Registry Table */}
+        {/* KYC Registry Table - Minimized Clean Layout */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs">
+          <table className="w-full text-left border-collapse text-xs min-w-[880px]">
             <thead>
               <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] tracking-wider">
-                <th className="py-3 px-3 w-12 text-center">SL</th>
-                <th className="py-3 px-3">Student / Member</th>
-                <th className="py-3 px-3">Government Document</th>
-                <th className="py-3 px-3">Bank &amp; UPI Payout Info</th>
+                <th className="py-3 px-3 w-12 text-center">SL No.</th>
+                <th className="py-3 px-3">Student</th>
+                <th className="py-3 px-3">Document</th>
+                <th className="py-3 px-3">Bank / Payout</th>
                 <th className="py-3 px-3">Submission Date</th>
-                <th className="py-3 px-3 text-center">Verification Status</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th className="py-3 px-3 text-center">KYC Status</th>
+                <th className="py-3 px-4 text-center">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
@@ -395,12 +395,12 @@ export default function SuperAdminKYCManager() {
                     key={item.id}
                     className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors"
                   >
-                    {/* SL */}
-                    <td className="py-3 px-3 text-center font-mono font-bold text-slate-500 dark:text-slate-400">
+                    {/* 1. SL No. */}
+                    <td className="py-3 px-3 text-center font-mono font-semibold text-slate-500 dark:text-slate-400">
                       {idx + 1}
                     </td>
 
-                    {/* Student Info */}
+                    {/* 2. Student (Minimized: Clean Avatar, Name & ID only) */}
                     <td className="py-3 px-3">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-full overflow-hidden relative bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs">
@@ -413,123 +413,74 @@ export default function SuperAdminKYCManager() {
                           />
                         </div>
                         <div className="min-w-0">
-                          <div className="font-bold text-slate-900 dark:text-white truncate">
+                          <div className="font-bold text-slate-900 dark:text-white text-xs truncate leading-tight">
                             {item.studentName}
                           </div>
-                          <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
-                            {item.studentId} &bull; {item.studentPhone}
-                          </div>
+                          <span className="font-mono text-[10px] text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5">
+                            {item.studentId}
+                          </span>
                         </div>
                       </div>
                     </td>
 
-                    {/* Document Info */}
+                    {/* 3. Government Document (Clean: Type & Number only) */}
                     <td className="py-3 px-3">
-                      <div className="flex items-center gap-1.5">
-                        <CreditCard className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                        <div>
-                          <div className="font-bold text-slate-900 dark:text-white">
-                            {item.docType}
-                          </div>
-                          <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
-                            {item.docNumber}
-                          </div>
-                        </div>
+                      <div className="font-semibold text-slate-900 dark:text-white text-xs">
+                        {item.docType}
                       </div>
+                      <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 block mt-0.5">
+                        {item.docNumber}
+                      </span>
                     </td>
 
-                    {/* Bank & UPI Info */}
+                    {/* 4. Bank / Payout (Clean: Bank Name & UPI only) */}
                     <td className="py-3 px-3">
-                      <div className="space-y-0.5">
-                        <div className="font-bold text-slate-900 dark:text-white truncate">
-                          {item.bankName}
-                        </div>
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
-                          A/C: {item.accountNumber} &bull; IFSC: {item.ifscCode}
-                        </div>
-                        <div className="text-[10px] font-mono font-semibold text-[#116E63] dark:text-emerald-400">
-                          UPI: {item.upiId}
-                        </div>
+                      <div className="font-semibold text-slate-900 dark:text-white text-xs truncate max-w-[160px]">
+                        {item.bankName}
                       </div>
+                      <span className="font-mono text-[10px] text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5 truncate max-w-[160px]">
+                        {item.upiId}
+                      </span>
                     </td>
 
-                    {/* Submission Date */}
-                    <td className="py-3 px-3 font-mono text-[11px] text-slate-500 dark:text-slate-400">
-                      <div>{item.submittedDate}</div>
-                      {item.reviewedDate && (
-                        <div className="text-[10px] text-slate-400 dark:text-slate-500">
-                          Reviewed: {item.reviewedDate}
-                        </div>
-                      )}
+                    {/* 5. Submission Date (Clean single line) */}
+                    <td className="py-3 px-3 font-mono text-xs text-slate-600 dark:text-slate-400">
+                      {item.submittedDate}
                     </td>
 
-                    {/* Verification Status - Clean unboxed text with icon */}
+                    {/* 6. Verification Status */}
                     <td className="py-3 px-3 text-center">
                       {item.status === "verified" ? (
-                        <span className="text-emerald-700 dark:text-emerald-400 font-bold inline-flex items-center gap-1 uppercase tracking-wide">
+                        <span className="text-emerald-700 dark:text-emerald-400 font-bold inline-flex items-center gap-1 text-[11px]">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                           <span>Verified</span>
                         </span>
                       ) : item.status === "rejected" ? (
-                        <div className="space-y-0.5">
-                          <span className="text-rose-700 dark:text-rose-400 font-bold inline-flex items-center gap-1 uppercase tracking-wide">
-                            <XCircle className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
-                            <span>Rejected</span>
-                          </span>
-                          {item.rejectionReason && (
-                            <p className="text-[10px] text-rose-600 dark:text-rose-400 truncate max-w-[140px] mx-auto" title={item.rejectionReason}>
-                              {item.rejectionReason}
-                            </p>
-                          )}
-                        </div>
+                        <span className="text-rose-700 dark:text-rose-400 font-bold inline-flex items-center gap-1 text-[11px]">
+                          <XCircle className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
+                          <span>Rejected</span>
+                        </span>
                       ) : (
-                        <span className="text-amber-700 dark:text-amber-400 font-bold inline-flex items-center gap-1 uppercase tracking-wide">
+                        <span className="text-amber-700 dark:text-amber-400 font-bold inline-flex items-center gap-1 text-[11px]">
                           <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                           <span>Pending</span>
                         </span>
                       )}
                     </td>
 
-                    {/* Actions */}
-                    <td className="py-3 px-4 text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        {/* Quick Approve Button */}
-                        {item.status !== "verified" && (
-                          <button
-                            onClick={() => handleApprove(item.id)}
-                            className="px-2.5 py-1 text-[11px] font-bold text-white bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[4px] inline-flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
-                            title="Approve KYC Instantly"
-                          >
-                            <Check className="w-3 h-3" />
-                            <span>Approve</span>
-                          </button>
-                        )}
-
-                        {/* Quick Reject Button */}
-                        {item.status === "pending" && (
-                          <button
-                            onClick={() => handleOpenReject(item)}
-                            className="px-2.5 py-1 text-[11px] font-bold text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/60 border border-rose-300 dark:border-rose-800 rounded-[4px] inline-flex items-center gap-1 transition-colors cursor-pointer"
-                            title="Reject and provide student feedback"
-                          >
-                            <X className="w-3 h-3" />
-                            <span>Reject</span>
-                          </button>
-                        )}
-
-                        {/* Inspect / Review Docs Button */}
-                        <button
-                          onClick={() => {
-                            setSelectedRecord(item);
-                            setIsDrawerOpen(true);
-                          }}
-                          className="px-2.5 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-[#116E63]/10 dark:bg-[#116E63]/25 hover:bg-[#116E63] dark:hover:bg-emerald-600 rounded-[4px] inline-flex items-center gap-1 transition-colors cursor-pointer"
-                          title="Inspect Document & Bank Proof"
-                        >
-                          <Eye className="w-3 h-3" />
-                          <span>Inspect</span>
-                        </button>
-                      </div>
+                    {/* 7. Action: Inspect (Opens full document view & action drawer) */}
+                    <td className="py-3 px-4 text-center">
+                      <button
+                        onClick={() => {
+                          setSelectedRecord(item);
+                          setIsDrawerOpen(true);
+                        }}
+                        className="px-2.5 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[4px] transition-colors cursor-pointer inline-flex items-center gap-1 shadow-2xs"
+                        title="Inspect full documents, bank proofs & verification actions"
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>Inspect</span>
+                      </button>
                     </td>
                   </tr>
                 ))
