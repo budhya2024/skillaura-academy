@@ -29,7 +29,6 @@ import {
   BookOpen,
   Activity,
   ArrowDownRight,
-  MoreHorizontal,
   GraduationCap,
 } from "lucide-react";
 
@@ -592,11 +591,14 @@ export default function AdminDashboard() {
         </button>
 
         <button
-          onClick={() => setIsMobileSidebarOpen(true)}
-          className="flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer rounded-[4px] min-w-0"
+          onClick={() => setActiveTab("commissions")}
+          className={`flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 transition-colors cursor-pointer rounded-[4px] min-w-0 ${activeTab === "commissions"
+            ? "text-[#116E63] dark:text-emerald-400 font-bold"
+            : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
         >
-          <MoreHorizontal className="w-4 h-4 mb-0.5 shrink-0" />
-          <span className="text-[10px] uppercase font-bold tracking-wider truncate">More</span>
+          <Wallet className="w-4 h-4 mb-0.5 shrink-0" />
+          <span className="text-[10px] uppercase font-bold tracking-wider truncate">Payment</span>
         </button>
       </div>
     </div>
