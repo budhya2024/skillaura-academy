@@ -380,9 +380,7 @@ export default function TopEarnersCards() {
               {/* Box Header */}
               <div className="text-center pb-3 border-b border-slate-100 dark:border-slate-800/80">
                 <div className="flex items-center justify-between gap-1 mb-1.5">
-                  <span
-                    className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-[3px] border ${accentStyles.badge}`}
-                  >
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     {box.badgeLabel}
                   </span>
                   <span className="text-[10px] font-mono font-medium text-slate-500 dark:text-slate-400">
@@ -419,7 +417,7 @@ export default function TopEarnersCards() {
                       <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate w-full mt-1.5 px-0.5">
                         {rank2.name}
                       </div>
-                      <div className="mt-1 px-2.5 py-0.5 rounded-[4px] bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-mono font-bold text-xs sm:text-sm shadow-2xs">
+                      <div className="mt-1 text-slate-800 dark:text-slate-200 font-mono font-bold text-xs sm:text-sm">
                         ₹{rank2.earnings.toLocaleString()}
                       </div>
                     </div>
@@ -445,7 +443,7 @@ export default function TopEarnersCards() {
                       <div className="font-black text-xs sm:text-sm text-amber-700 dark:text-amber-400 truncate w-full mt-1.5 px-0.5 uppercase tracking-wide">
                         {rank1.name}
                       </div>
-                      <div className="mt-1 px-3 py-0.5 rounded-[4px] bg-amber-50 dark:bg-amber-950/70 border border-amber-300 dark:border-amber-700/80 text-amber-900 dark:text-amber-300 font-mono font-black text-xs sm:text-sm shadow-xs">
+                      <div className="mt-1 text-amber-900 dark:text-amber-300 font-mono font-black text-xs sm:text-sm">
                         ₹{rank1.earnings.toLocaleString()}
                       </div>
                     </div>
@@ -470,7 +468,7 @@ export default function TopEarnersCards() {
                       <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate w-full mt-1.5 px-0.5">
                         {rank3.name}
                       </div>
-                      <div className="mt-1 px-2.5 py-0.5 rounded-[4px] bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-mono font-bold text-xs sm:text-sm shadow-2xs">
+                      <div className="mt-1 text-slate-800 dark:text-slate-200 font-mono font-bold text-xs sm:text-sm">
                         ₹{rank3.earnings.toLocaleString()}
                       </div>
                     </div>
@@ -498,7 +496,7 @@ export default function TopEarnersCards() {
                       <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate max-w-[90px] mt-1.5 px-0.5">
                         {rank2.name}
                       </div>
-                      <div className="mt-1 px-2.5 py-0.5 rounded-[4px] bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-mono font-bold text-xs sm:text-sm shadow-2xs">
+                      <div className="mt-1 text-slate-800 dark:text-slate-200 font-mono font-bold text-xs sm:text-sm">
                         ₹{rank2.earnings.toLocaleString()}
                       </div>
                     </div>
@@ -524,7 +522,7 @@ export default function TopEarnersCards() {
                       <div className="font-black text-xs sm:text-sm text-amber-700 dark:text-amber-400 truncate max-w-[90px] mt-1.5 px-0.5 uppercase tracking-wide">
                         {rank1.name}
                       </div>
-                      <div className="mt-1 px-3 py-0.5 rounded-[4px] bg-amber-50 dark:bg-amber-950/70 border border-amber-300 dark:border-amber-700/80 text-amber-900 dark:text-amber-300 font-mono font-black text-xs sm:text-sm shadow-xs">
+                      <div className="mt-1 text-amber-900 dark:text-amber-300 font-mono font-black text-xs sm:text-sm">
                         ₹{rank1.earnings.toLocaleString()}
                       </div>
                     </div>
@@ -559,7 +557,7 @@ export default function TopEarnersCards() {
                       </span>
                     </div>
 
-                    <span className="font-mono font-bold text-xs text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 px-2 py-0.5 rounded-[3px] shrink-0">
+                    <span className="font-mono font-bold text-xs text-emerald-700 dark:text-emerald-400 shrink-0">
                       ₹{user.earnings.toLocaleString()}
                     </span>
                   </div>

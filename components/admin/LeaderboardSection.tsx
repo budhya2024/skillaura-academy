@@ -45,7 +45,7 @@ export default function LeaderboardSection() {
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-bold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 px-2.5 py-0.5 rounded-[4px]">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
                   Rank #1 Overall
                 </span>
               </div>
@@ -84,7 +84,7 @@ export default function LeaderboardSection() {
               Top Earners Leaderboard
             </h3>
           </div>
-          <span className="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 px-2.5 py-0.5 border border-slate-200 dark:border-slate-700 rounded-[3px]">
+          <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">
             {MOCK_LEADERBOARD.length} Top Performers
           </span>
         </div>
@@ -113,19 +113,9 @@ export default function LeaderboardSection() {
                     {idx + 1}
                   </td>
 
-                  {/* Rank Column */}
+                  {/* Rank Column - Clean Text Without Badge BG/Border */}
                   <td className="py-2.5 sm:py-3 px-3 text-center">
-                    <span
-                      className={`font-black font-mono text-[11px] sm:text-xs px-2.5 py-0.5 border rounded-[3px] inline-flex items-center justify-center ${
-                        user.rankPosition === 1
-                          ? "bg-[#FDA31B] text-slate-950 border-amber-600 shadow-2xs"
-                          : user.rankPosition === 2
-                          ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 border-slate-300 dark:border-slate-600"
-                          : user.rankPosition === 3
-                          ? "bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-800"
-                          : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700"
-                      }`}
-                    >
+                    <span className="font-mono font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-200">
                       Rank #{user.rankPosition}
                     </span>
                   </td>
@@ -164,7 +154,7 @@ export default function LeaderboardSection() {
 
                   {/* Growth Column */}
                   <td className="py-2.5 sm:py-3 px-3 text-right hidden sm:table-cell">
-                    <span className="text-emerald-700 dark:text-emerald-400 font-bold font-mono text-xs bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 px-2 py-0.5 rounded-[3px]">
+                    <span className="text-emerald-700 dark:text-emerald-400 font-bold font-mono text-xs">
                       {user.growth}
                     </span>
                   </td>

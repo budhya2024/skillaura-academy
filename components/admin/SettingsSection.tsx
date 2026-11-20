@@ -119,7 +119,7 @@ export default function SettingsSection() {
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-2.5 py-0.5 rounded-[3px]">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
             Current: {theme === "light" ? "Light" : "Dark"}
           </span>
         </div>
@@ -217,8 +217,8 @@ export default function SettingsSection() {
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 px-2 py-0.5 rounded-[3px] flex items-center gap-1">
-            <ShieldCheck className="w-3 h-3" /> Protected
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+            <ShieldCheck className="w-3.5 h-3.5" /> Protected
           </span>
         </div>
 

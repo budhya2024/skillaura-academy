@@ -135,7 +135,7 @@ export default function PromoToolsSection() {
               Share your direct sponsor link to enroll students and earn 50% to 70% direct active commissions
             </p>
           </div>
-          <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 px-2 py-0.5 rounded-[4px]">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400">
             Your Active Tier: 65% Direct Pay
           </span>
         </div>
@@ -280,7 +280,7 @@ export default function PromoToolsSection() {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 border border-slate-200 dark:border-slate-700 rounded-[4px]">
+            <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
               Current Rate: <strong className="text-emerald-700 dark:text-emerald-400">65% Direct</strong>
             </span>
           </div>

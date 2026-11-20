@@ -244,7 +244,7 @@ export default function AdminDashboard() {
                 <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-[10px] px-2 py-0.5 uppercase tracking-wider rounded-[4px] border border-slate-200 dark:border-slate-700">
+                      <span className="text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-wider">
                         Enrolled Student
                       </span>
                       <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
@@ -355,7 +355,7 @@ export default function AdminDashboard() {
                       Achieve 25 direct personal student enrollments this month to unlock a ₹15,000 cash bonus
                     </p>
                   </div>
-                  <span className="text-[11px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 border border-slate-200 dark:border-slate-700 self-start sm:self-auto rounded-[4px]">
+                  <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 self-start sm:self-auto">
                     18 / 25 Enrolled (72%)
                   </span>
                 </div>
@@ -367,7 +367,7 @@ export default function AdminDashboard() {
                       <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
                         Personal Sales This Month
                       </span>
-                      <span className="text-[10px] font-bold text-[#116E63] dark:text-emerald-400 bg-teal-50 dark:bg-teal-950/60 px-1.5 py-0.2 border border-teal-200 dark:border-teal-800/60 rounded-[4px]">
+                      <span className="text-xs font-bold text-[#116E63] dark:text-emerald-400">
                         18 Enrollments
                       </span>
                     </div>
@@ -384,7 +384,7 @@ export default function AdminDashboard() {
                       <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
                         Next Milestone Reward
                       </span>
-                      <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.2 border border-amber-200 dark:border-amber-800/60 rounded-[4px]">
+                      <span className="text-xs font-bold text-amber-700 dark:text-amber-400">
                         Target: 25 Sales
                       </span>
                     </div>

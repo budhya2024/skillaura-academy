@@ -53,7 +53,7 @@ export const NAV_ITEMS = [
   },
   {
     id: "commissions",
-    label: "Active Income & Payouts",
+    label: "Income & Payouts",
     icon: Wallet,
   },
   {
@@ -106,11 +106,10 @@ export default function AdminSidebar({
         {/* User Card */}
         <div
           onClick={() => handleItemClick("profile")}
-          className={`p-3 mx-3 my-3 border transition-all cursor-pointer rounded-[4px] shrink-0 ${
-            activeTab === "profile"
-              ? "bg-[#116E63]/10 dark:bg-[#116E63]/20 border-[#116E63]/40"
-              : "bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600"
-          }`}
+          className={`p-3 mx-3 my-3 border transition-all cursor-pointer rounded-[4px] shrink-0 ${activeTab === "profile"
+            ? "bg-[#116E63]/10 dark:bg-[#116E63]/20 border-[#116E63]/40"
+            : "bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600"
+            }`}
           title="View & Edit Profile"
         >
           <div className="flex items-center gap-3">
@@ -147,16 +146,14 @@ export default function AdminSidebar({
               <button
                 key={item.id}
                 onClick={() => handleItemClick(item.id)}
-                className={`w-[calc(100%-16px)] mx-2 flex items-center gap-3 px-3.5 py-2.5 sm:py-3 text-sm font-semibold transition-colors cursor-pointer rounded-[4px] ${
-                  isActive
-                    ? "bg-[#116E63]/10 dark:bg-[#116E63]/25 text-[#116E63] dark:text-emerald-400 font-bold"
-                    : "text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60"
-                }`}
+                className={`w-[calc(100%-16px)] mx-2 flex items-center gap-3 px-3.5 py-2.5 sm:py-3 text-sm font-semibold transition-colors cursor-pointer rounded-[4px] ${isActive
+                  ? "bg-[#116E63]/10 dark:bg-[#116E63]/25 text-[#116E63] dark:text-emerald-400 font-bold"
+                  : "text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60"
+                  }`}
               >
                 <Icon
-                  className={`w-5 h-5 shrink-0 ${
-                    isActive ? "text-[#116E63] dark:text-emerald-400" : "text-slate-500 dark:text-slate-400"
-                  }`}
+                  className={`w-5 h-5 shrink-0 ${isActive ? "text-[#116E63] dark:text-emerald-400" : "text-slate-500 dark:text-slate-400"
+                    }`}
                 />
                 <span className="truncate">{item.label}</span>
               </button>

@@ -282,7 +282,7 @@ export default function DownlineTable() {
 
                 {/* MEMBER ID WITH QUICK COPY */}
                 <div className="flex items-center justify-center gap-1.5 pt-1">
-                  <span className="font-mono text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1 rounded-[4px]">
+                  <span className="font-mono text-xs font-bold text-slate-700 dark:text-slate-300">
                     Member ID: <strong className="text-slate-950 dark:text-white">{selectedMember.id}</strong>
                   </span>
                   <button

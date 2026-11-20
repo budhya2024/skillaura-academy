@@ -95,7 +95,7 @@ export default function CommissionPlanSection() {
               <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-900 dark:text-emerald-200">
                 Today&apos;s Income
               </span>
-              <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-emerald-300 dark:border-emerald-700 shadow-2xs">
+              <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">
                 +1 Sale
               </span>
             </div>
@@ -116,7 +116,7 @@ export default function CommissionPlanSection() {
               <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-sky-900 dark:text-sky-200">
                 Last 7 Days
               </span>
-              <span className="text-xs font-bold text-sky-800 dark:text-sky-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-sky-300 dark:border-sky-700 shadow-2xs">
+              <span className="text-xs font-bold text-sky-800 dark:text-sky-300">
                 5 Sales
               </span>
             </div>
@@ -137,7 +137,7 @@ export default function CommissionPlanSection() {
               <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-indigo-900 dark:text-indigo-200">
                 Last 30 Days
               </span>
-              <span className="text-xs font-bold text-indigo-800 dark:text-indigo-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-indigo-300 dark:border-indigo-700 shadow-2xs">
+              <span className="text-xs font-bold text-indigo-800 dark:text-indigo-300">
                 24 Sales
               </span>
             </div>
@@ -158,7 +158,7 @@ export default function CommissionPlanSection() {
               <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-900 dark:text-amber-200">
                 Total Earned
               </span>
-              <span className="text-xs font-bold text-amber-900 dark:text-amber-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-amber-300 dark:border-amber-700 shadow-2xs">
+              <span className="text-xs font-bold text-amber-900 dark:text-amber-300">
                 All Time (118 Sales)
               </span>
             </div>
@@ -179,7 +179,7 @@ export default function CommissionPlanSection() {
               <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-900 dark:text-rose-200">
                 Total Withdrawn
               </span>
-              <span className="text-xs font-bold text-rose-800 dark:text-rose-300 bg-white/90 dark:bg-slate-900/90 px-2 py-0.5 rounded-[4px] border border-rose-300 dark:border-rose-700 shadow-2xs">
+              <span className="text-xs font-bold text-rose-800 dark:text-rose-300">
                 Bank Transferred
               </span>
             </div>
@@ -200,7 +200,7 @@ export default function CommissionPlanSection() {
               <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-300">
                 Available Balance
               </span>
-              <span className="text-xs font-bold text-white bg-[#116E63] dark:bg-emerald-600 px-2.5 py-0.5 rounded-[4px] shadow-2xs">
+              <span className="text-xs font-bold text-[#116E63] dark:text-emerald-300">
                 Instant
               </span>
             </div>
@@ -239,7 +239,7 @@ export default function CommissionPlanSection() {
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="text-xs sm:text-sm font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-[4px] border border-slate-200 dark:border-slate-700">
+            <span className="text-xs sm:text-sm font-mono font-bold text-slate-700 dark:text-slate-300">
               Total Sales: <strong className="text-slate-900 dark:text-white">{totalSalesCount} Courses</strong>
             </span>
           </div>
@@ -375,7 +375,7 @@ export default function CommissionPlanSection() {
               Detailed transaction records of all commissions earned from enrolled students
             </p>
           </div>
-          <span className="text-xs font-mono font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-[4px] border border-slate-200 dark:border-slate-700 self-start sm:self-auto">
+          <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 self-start sm:self-auto">
             {MOCK_COMMISSIONS.length} Transactions
           </span>
         </div>
