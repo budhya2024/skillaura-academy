@@ -153,7 +153,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex text-slate-800 font-sans">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 flex text-slate-800 dark:text-slate-100 font-sans transition-colors duration-200">
       {/* ================= SHARED ADMIN SIDEBAR (Desktop Fixed & Mobile Drawer) ================= */}
       <AdminSidebar
         activeTab={activeTab}
@@ -165,39 +165,37 @@ export default function AdminDashboard() {
       {/* ================= MAIN CONTENT WRAPPER ================= */}
       <div className="flex-1 flex flex-col min-w-0 lg:pl-64 min-h-screen">
         {/* Top Header - Fixed / Sticky at top */}
-        <header className="h-14 sm:h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-14 sm:h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs transition-colors duration-200">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="lg:hidden p-2 text-slate-700 hover:bg-slate-100 cursor-pointer shrink-0 rounded-[4px]"
+              className="lg:hidden p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer shrink-0 rounded-[4px]"
               aria-label="Open navigation drawer"
             >
               <Menu className="w-5 h-5" />
             </button>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 truncate">
-                <h1 className="text-sm sm:text-base lg:text-lg font-bold text-slate-900 uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
+                <h1 className="text-sm sm:text-base lg:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
                   {getPageTitle()}
                 </h1>
               </div>
-              <p className="text-xs sm:text-sm text-slate-500 hidden md:block font-medium">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 hidden md:block font-medium">
                 Skill Aura Academy Direct Sales &amp; Active Income Center
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-
-
-            {/* Dark / Light Mode Toggle */}
-            <ThemeToggle className="border border-slate-200" />
+            {/* Dark / Light Mode Toggle (Dashboard Only) */}
+            <ThemeToggle className="border border-slate-200 dark:border-slate-700" />
 
             {/* Notifications */}
             <button
               onClick={() =>
                 alert("Live Alert: ₹3,250 Active Direct Commission credited for Business Mastery sale!")
               }
-              className="p-1.5 sm:p-2 text-slate-600 hover:text-slate-900 border border-slate-200 hover:bg-slate-50 relative cursor-pointer rounded-[4px]"
+              className="p-1.5 sm:p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 relative cursor-pointer rounded-[4px]"
               title="Alerts"
               aria-label="Notifications"
             >
@@ -211,7 +209,7 @@ export default function AdminDashboard() {
               className="flex items-center gap-2 pl-2 sm:pl-3 cursor-pointer hover:opacity-85 transition-opacity"
               title="View Profile"
             >
-              <div className="w-7 h-7 sm:w-8 sm:h-8 relative overflow-hidden rounded-full border border-slate-200 shrink-0 bg-slate-100">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 relative overflow-hidden rounded-full border border-slate-200 dark:border-slate-700 shrink-0 bg-slate-100 dark:bg-slate-800">
                 <Image
                   src="/images/founder.jpeg"
                   alt="Profile"
@@ -221,10 +219,10 @@ export default function AdminDashboard() {
                 />
               </div>
               <div className="hidden md:block text-left text-xs">
-                <span className="font-bold text-slate-900 block leading-tight">
+                <span className="font-bold text-slate-900 dark:text-white block leading-tight">
                   Student Member
                 </span>
-                <span className="text-[10px] font-mono text-slate-500 font-medium">
+                <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-medium">
                   SKA-ROOT88
                 </span>
               </div>
@@ -237,16 +235,16 @@ export default function AdminDashboard() {
           {/* TAB 1: OVERVIEW / DASHBOARD (Streamlined Light Version, Extra Content Hidden) */}
           {activeTab === "overview" && (
             <div className="space-y-4 sm:space-y-5">
-              {/* Executive Welcome Card (Light Version) */}
-              <div className="bg-white border border-slate-200 p-4 sm:p-6 shadow-xs rounded-[4px]">
+              {/* Executive Welcome Card (Light / Dark) */}
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 shadow-xs rounded-[4px] transition-colors duration-200">
                 <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="bg-slate-100 text-slate-700 font-bold text-xs sm:text-sm px-2.5 py-1 uppercase tracking-wider rounded-[4px] border border-slate-200">
+                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs sm:text-sm px-2.5 py-1 uppercase tracking-wider rounded-[4px] border border-slate-200 dark:border-slate-700">
                         Enrolled Student
                       </span>
-                      <span className="text-xs sm:text-sm text-slate-500 font-mono">
-                        ID: <strong className="text-slate-800">SKA-ROOT88</strong>
+                      <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-mono">
+                        ID: <strong className="text-slate-800 dark:text-slate-200">SKA-ROOT88</strong>
                       </span>
                       <span className="text-xs sm:text-sm text-emerald-700 font-semibold flex items-center gap-1">
                         <Activity className="w-4 h-4" /> Active Learner &amp; Affiliate

@@ -24,7 +24,6 @@ import {
 
 import HeaderSearch from "./HeaderSearch";
 import EnrollModal from "./EnrollModal";
-import ThemeToggle from "./ThemeToggle";
 
 export interface NavItem {
   label: string;
@@ -96,6 +95,9 @@ export default function Header() {
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
+    // Ensure public website pages remain strictly in clean light mode
+    document.documentElement.classList.remove("dark");
+
     const handleScroll = () => {
       if (window.scrollY > 40) {
         setIsScrolled(true);
@@ -236,9 +238,6 @@ export default function Header() {
 
           {/* Right Action Icons */}
           <div className="flex items-center gap-2 sm:gap-4">
-            {/* Theme Toggle (Dark / Light) */}
-            <ThemeToggle className="rounded-full" />
-
             {/* Search Icon */}
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
