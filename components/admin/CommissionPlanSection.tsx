@@ -446,7 +446,7 @@ export default function CommissionPlanSection() {
         {/* Tab Content 2: Income Ledger Table */}
         {activeTab === "ledger" && (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs">
+            <table className="w-full text-left border-collapse text-xs min-w-[580px]">
               <thead>
                 <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
                   <th className="py-2.5 px-4">Transaction / Time</th>
@@ -500,7 +500,7 @@ export default function CommissionPlanSection() {
         {/* Tab Content 3: Payout History */}
         {activeTab === "payouts" && (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs">
+            <table className="w-full text-left border-collapse text-xs min-w-[560px]">
               <thead>
                 <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
                   <th className="py-2.5 px-4">Payout ID / Date</th>

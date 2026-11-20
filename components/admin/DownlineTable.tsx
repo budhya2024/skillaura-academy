@@ -96,7 +96,7 @@ export default function DownlineTable() {
 
       {/* Clean Streamlined Table (Extra Info Hidden) */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-xs">
+        <table className="w-full text-left border-collapse text-xs min-w-[500px]">
           <thead>
             <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
               <th className="py-2.5 px-4">Member Name &amp; ID</th>

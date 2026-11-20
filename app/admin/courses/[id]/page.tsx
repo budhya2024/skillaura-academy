@@ -194,20 +194,20 @@ export default function CourseWatchPage({
                 </div>
 
                 {/* Bottom Control Bar */}
-                <div className="absolute bottom-0 inset-x-0 bg-black/90 p-2.5 sm:p-3 flex items-center justify-between text-white text-xs gap-3">
-                  <div className="flex items-center gap-2.5">
-                    <button onClick={() => setIsPlaying(!isPlaying)} className="hover:text-[#FDA31B] cursor-pointer">
-                      {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
+                <div className="absolute bottom-0 inset-x-0 bg-black/90 p-2 sm:p-3 flex items-center justify-between text-white text-xs gap-1.5 sm:gap-3">
+                  <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+                    <button onClick={() => setIsPlaying(!isPlaying)} className="hover:text-[#FDA31B] cursor-pointer p-0.5" aria-label={isPlaying ? "Pause" : "Play"}>
+                      {isPlaying ? <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" /> : <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />}
                     </button>
-                    <button onClick={() => setIsMuted(!isMuted)} className="hover:text-[#FDA31B] cursor-pointer">
-                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    <button onClick={() => setIsMuted(!isMuted)} className="hover:text-[#FDA31B] cursor-pointer p-0.5" aria-label={isMuted ? "Unmute" : "Mute"}>
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                     </button>
-                    <span className="font-mono text-[11px] text-slate-300">
+                    <span className="font-mono text-[10px] sm:text-[11px] text-slate-300">
                       {Math.floor((videoProgress / 100) * 45)}:00 / {currentLesson.duration}
                     </span>
                   </div>
 
-                  <div className="flex-1 max-w-xs mx-2">
+                  <div className="flex-1 min-w-[50px] max-w-xs mx-1 sm:mx-2">
                     <input
                       type="range"
                       min="0"
@@ -218,14 +218,14 @@ export default function CourseWatchPage({
                     />
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                     <button
                       onClick={() => {
                         const speeds = [1, 1.25, 1.5];
                         const next = speeds[(speeds.indexOf(playbackSpeed) + 1) % speeds.length];
                         setPlaybackSpeed(next);
                       }}
-                      className="font-mono text-[11px] px-1.5 py-0.5 bg-white/10 hover:bg-white/20 rounded-[4px] cursor-pointer"
+                      className="font-mono text-[10px] sm:text-[11px] px-1.5 py-0.5 bg-white/10 hover:bg-white/20 rounded-[4px] cursor-pointer"
                     >
                       {playbackSpeed}x
                     </button>
