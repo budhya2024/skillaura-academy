@@ -12,7 +12,6 @@ import {
   Share2,
   Settings,
   LogOut,
-  Bell,
   Search,
   Copy,
   Check,
@@ -40,6 +39,7 @@ import PromoToolsSection from "./PromoToolsSection";
 import MyCoursesSection from "./MyCoursesSection";
 import SettingsSection from "./SettingsSection";
 import AdminSidebar from "./AdminSidebar";
+import NotificationDropdown from "./NotificationDropdown";
 import ThemeToggle from "../shared/ThemeToggle";
 
 export type AdminTab =
@@ -204,18 +204,8 @@ export default function AdminDashboard() {
             {/* Dark / Light Mode Toggle (Dashboard Only) */}
             <ThemeToggle className="border border-slate-200 dark:border-slate-700" />
 
-            {/* Notifications */}
-            <button
-              onClick={() =>
-                alert("Live Alert: ₹3,250 Active Direct Commission credited for Business Mastery sale!")
-              }
-              className="p-1.5 sm:p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 relative cursor-pointer rounded-full"
-              title="Alerts"
-              aria-label="Notifications"
-            >
-              <Bell className="w-4 h-4" />
-              <span className="w-2 h-2 bg-rose-500 absolute top-1 right-1 rounded-full"></span>
-            </button>
+            {/* Notifications Popover with Mark Read / Unread & Delete */}
+            <NotificationDropdown />
 
             {/* Profile Avatar Shortcut */}
             <div
