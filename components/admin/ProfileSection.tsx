@@ -482,14 +482,14 @@ export default function ProfileSection() {
 
               <div className="py-2.5 flex items-center justify-between">
                 <span className="text-slate-500 dark:text-slate-400 font-medium">PAN Verification:</span>
-                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-[4px] border border-emerald-200 dark:border-emerald-800/60 text-xs">
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-xs">
                   {profile.panNumber} (Verified)
                 </span>
               </div>
 
               <div className="py-2.5 flex items-center justify-between">
                 <span className="text-slate-500 dark:text-slate-400 font-medium">Aadhaar Status:</span>
-                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-[4px] border border-emerald-200 dark:border-emerald-800/60 text-xs">
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-xs">
                   {profile.aadhaarNumber} (Verified)
                 </span>
               </div>

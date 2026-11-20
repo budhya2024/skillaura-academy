@@ -102,8 +102,8 @@ export default function SuperAdminPayoutsManager() {
             <span className="text-2xl font-black text-amber-600 font-mono">
               ₹{pendingAmount.toLocaleString()}
             </span>
-            <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-[3px] border border-amber-200">
-              {pendingCount} Requests
+            <span className="text-xs font-bold text-amber-700">
+              ({pendingCount} Requests)
             </span>
           </div>
           <span className="text-[10px] text-slate-400 mt-1 block">Awaiting payment disbursement</span>
@@ -216,7 +216,7 @@ export default function SuperAdminPayoutsManager() {
                   </td>
 
                   <td className="py-2.5 px-3">
-                    <span className="inline-block px-1.5 py-0.2 text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200 uppercase rounded-[3px]">
+                    <span className="inline-block text-[11px] font-bold text-slate-800 uppercase font-mono">
                       {pay.method}
                     </span>
                   </td>
@@ -231,15 +231,15 @@ export default function SuperAdminPayoutsManager() {
 
                   <td className="py-2.5 px-3 text-center">
                     {pay.status === "approved" ? (
-                      <span className="inline-block text-[10px] font-bold uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 border border-emerald-200 rounded-[3px]">
+                      <span className="inline-block text-[11px] font-bold uppercase text-emerald-700">
                         PAID ✓
                       </span>
                     ) : pay.status === "rejected" ? (
-                      <span className="inline-block text-[10px] font-bold uppercase text-rose-800 bg-rose-50 px-2 py-0.5 border border-rose-200 rounded-[3px]">
+                      <span className="inline-block text-[11px] font-bold uppercase text-rose-700">
                         REJECTED
                       </span>
                     ) : (
-                      <span className="inline-block text-[10px] font-bold uppercase text-amber-800 bg-amber-50 px-2 py-0.5 border border-amber-200 rounded-[3px]">
+                      <span className="inline-block text-[11px] font-bold uppercase text-amber-700">
                         PENDING
                       </span>
                     )}

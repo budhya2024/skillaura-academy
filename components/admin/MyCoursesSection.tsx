@@ -148,22 +148,22 @@ export default function MyCoursesSection() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                   <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-black/70 text-white px-2 py-0.5 rounded-[3px] backdrop-blur-xs">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-white drop-shadow-md">
                       {course.category}
                     </span>
                   </div>
 
                   <div className="absolute top-2.5 right-2.5">
                     {course.status === "completed" ? (
-                      <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-600/90 text-white px-2 py-0.5 rounded-[3px] flex items-center gap-1 shadow-xs">
-                        <CheckCircle2 className="w-3 h-3" />
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1 drop-shadow-md">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
                         <span>Completed</span>
                       </span>
                     ) : (
-                      <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-500/90 text-slate-950 px-2 py-0.5 rounded-[3px] flex items-center gap-1 shadow-xs font-mono">
-                        <Clock className="w-3 h-3" />
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1 drop-shadow-md font-mono">
+                        <Clock className="w-3.5 h-3.5" />
                         <span>{progressPercent}% Done</span>
                       </span>
                     )}

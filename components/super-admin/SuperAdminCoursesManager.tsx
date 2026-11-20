@@ -424,7 +424,7 @@ export default function SuperAdminCoursesManager() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-[3px] border border-emerald-200">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">
                       Curriculum Editor
                     </span>
                     <span className="text-xs text-slate-500 font-mono">

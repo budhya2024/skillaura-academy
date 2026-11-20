@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, use } from "react";
+import React, { useState, use, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -17,6 +17,16 @@ import {
   Volume2,
   VolumeX,
   Menu,
+  Maximize2,
+  BookOpen,
+  FileText,
+  LayoutDashboard,
+  GraduationCap,
+  Trophy,
+  Users,
+  Wallet,
+  CreditCard,
+  Sparkles,
 } from "lucide-react";
 import { ENROLLED_COURSES_DATA, EnrolledCourse } from "../../../../lib/coursesData";
 import AdminSidebar from "../../../../components/admin/AdminSidebar";
@@ -28,27 +38,53 @@ export default function CourseWatchPage({
   params: Promise<{ id: string }>;
 }) {
   const unwrappedParams = use(params);
-  const courseId = Number(unwrappedParams.id);
+  const rawId = unwrappedParams?.id;
+  const courseId = Number(rawId);
 
-  const initialCourse =
-    ENROLLED_COURSES_DATA.find((c) => c.id === courseId) || ENROLLED_COURSES_DATA[0];
+  // Safe course matching: by ID or title slug fallback, guaranteed never undefined
+  const initialCourse = useMemo(() => {
+    return (
+      ENROLLED_COURSES_DATA.find((c) => c.id === courseId) ||
+      ENROLLED_COURSES_DATA.find((c) =>
+        c.title.toLowerCase().includes(String(rawId || "").toLowerCase())
+      ) ||
+      ENROLLED_COURSES_DATA[0]
+    );
+  }, [courseId, rawId]);
 
   const [course, setCourse] = useState<EnrolledCourse>(initialCourse);
   const [activeModuleIdx, setActiveModuleIdx] = useState<number>(0);
   const [activeLessonIdx, setActiveLessonIdx] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [videoProgress, setVideoProgress] = useState<number>(25);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
+  const [mobileActiveTab, setMobileActiveTab] = useState<"curriculum" | "summary" | "resources">("curriculum");
   const [expandedModules, setExpandedModules] = useState<{ [key: number]: boolean }>({
     0: true,
     1: true,
     2: true,
   });
 
-  const currentModule = course.modules[activeModuleIdx] || course.modules[0];
-  const currentLesson = currentModule?.lessons[activeLessonIdx] || currentModule?.lessons[0];
+  // Clamp safely to prevent undefined runtime errors
+  const safeModuleIdx = Math.max(0, Math.min(activeModuleIdx, (course.modules?.length || 1) - 1));
+  const currentModule = course.modules?.[safeModuleIdx] || {
+    id: "m-default",
+    title: "Module 1: Course Curriculum",
+    duration: "10 Hours",
+    lessons: [],
+  };
+
+  const safeLessonIdx = Math.max(0, Math.min(activeLessonIdx, (currentModule.lessons?.length || 1) - 1));
+  const currentLesson = currentModule.lessons?.[safeLessonIdx] || {
+    id: "l-default",
+    name: "Course Overview & Orientation",
+    duration: "15 mins",
+    completed: false,
+    description: "Welcome to this practical hands-on masterclass. Follow along with step-by-step videos.",
+    resources: [],
+  };
 
   const toggleModuleAccordion = (idx: number) => {
     setExpandedModules((prev) => ({
@@ -61,7 +97,7 @@ export default function CourseWatchPage({
     setActiveModuleIdx(modIdx);
     setActiveLessonIdx(lessIdx);
     setIsPlaying(true);
-    setVideoProgress(10);
+    setVideoProgress(5);
   };
 
   const toggleLessonCompletion = () => {
@@ -69,9 +105,9 @@ export default function CourseWatchPage({
 
     let delta = 0;
     const updatedModules = course.modules.map((m, mIdx) => {
-      if (mIdx !== activeModuleIdx) return m;
+      if (mIdx !== safeModuleIdx) return m;
       const updatedLessons = m.lessons.map((l, lIdx) => {
-        if (lIdx !== activeLessonIdx) return l;
+        if (lIdx !== safeLessonIdx) return l;
         const newCompleted = !l.completed;
         delta = newCompleted ? 1 : -1;
         return { ...l, completed: newCompleted };
@@ -90,25 +126,27 @@ export default function CourseWatchPage({
   };
 
   const handleNextLesson = () => {
-    if (activeLessonIdx < currentModule.lessons.length - 1) {
-      selectLesson(activeModuleIdx, activeLessonIdx + 1);
-    } else if (activeModuleIdx < course.modules.length - 1) {
-      selectLesson(activeModuleIdx + 1, 0);
-      setExpandedModules((prev) => ({ ...prev, [activeModuleIdx + 1]: true }));
+    if (safeLessonIdx < currentModule.lessons.length - 1) {
+      selectLesson(safeModuleIdx, safeLessonIdx + 1);
+    } else if (safeModuleIdx < course.modules.length - 1) {
+      selectLesson(safeModuleIdx + 1, 0);
+      setExpandedModules((prev) => ({ ...prev, [safeModuleIdx + 1]: true }));
     }
   };
 
   const handlePrevLesson = () => {
-    if (activeLessonIdx > 0) {
-      selectLesson(activeModuleIdx, activeLessonIdx - 1);
-    } else if (activeModuleIdx > 0) {
-      const prevMod = course.modules[activeModuleIdx - 1];
-      selectLesson(activeModuleIdx - 1, prevMod.lessons.length - 1);
-      setExpandedModules((prev) => ({ ...prev, [activeModuleIdx - 1]: true }));
+    if (safeLessonIdx > 0) {
+      selectLesson(safeModuleIdx, safeLessonIdx - 1);
+    } else if (safeModuleIdx > 0) {
+      const prevMod = course.modules[safeModuleIdx - 1];
+      selectLesson(safeModuleIdx - 1, (prevMod?.lessons?.length || 1) - 1);
+      setExpandedModules((prev) => ({ ...prev, [safeModuleIdx - 1]: true }));
     }
   };
 
-  const courseProgress = Math.round((course.completedLessons / course.totalLessons) * 100);
+  const courseProgress = course.totalLessons > 0
+    ? Math.round((course.completedLessons / course.totalLessons) * 100)
+    : 0;
 
   return (
     <div className="flex bg-slate-50 dark:bg-slate-950 min-h-screen text-slate-800 dark:text-slate-100 font-sans">
@@ -124,114 +162,165 @@ export default function CourseWatchPage({
         {/* Top Header - Fixed / Sticky at top */}
         <header className="h-14 sm:h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            {/* Mobile Sidebar Hamburger Toggle */}
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="lg:hidden p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer shrink-0 rounded-[4px]"
+              className="lg:hidden p-1.5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer shrink-0 rounded-[4px]"
               aria-label="Open sidebar drawer"
             >
               <Menu className="w-5 h-5" />
             </button>
-            <div className="flex items-center gap-2 min-w-0">
+
+            {/* Clean Breadcrumb Navigation: No Boxed Badges */}
+            <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
               <Link
                 href="/admin?tab=courses"
-                className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 shrink-0"
+                className="text-slate-600 dark:text-slate-300 hover:text-[#116E63] dark:hover:text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 shrink-0 transition-colors"
               >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">My Courses</span>
+                <ArrowLeft className="w-4 h-4 shrink-0" />
+                <span className="hidden xs:inline">My Courses</span>
               </Link>
-              <span className="text-slate-400 dark:text-slate-600 hidden sm:inline">/</span>
-              <h1 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
+              <span className="text-slate-300 dark:text-slate-700 shrink-0">/</span>
+              <h1 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate max-w-[150px] xs:max-w-[220px] sm:max-w-md">
                 {course.title}
               </h1>
             </div>
           </div>
 
+          {/* Right Controls: Dark Mode Toggle & Progress Counter */}
           <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
-            {/* Dark Mode Toggle */}
             <ThemeToggle className="border border-slate-200 dark:border-slate-700" />
 
-            <span className="text-slate-600 dark:text-slate-400 font-medium hidden sm:inline">
-              Progress: <strong className="text-slate-900 dark:text-white font-mono">{course.completedLessons}/{course.totalLessons}</strong> ({courseProgress}%)
-            </span>
-            <div className="w-20 sm:w-28 h-2 bg-slate-200 dark:bg-slate-800 rounded-[4px] overflow-hidden">
-              <div
-                className="h-full bg-[#116E63] dark:bg-emerald-400 transition-all"
-                style={{ width: `${courseProgress}%` }}
-              ></div>
+            <div className="flex items-center gap-2">
+              <span className="text-slate-600 dark:text-slate-400 font-medium text-[11px] sm:text-xs">
+                <span className="hidden sm:inline">Progress: </span>
+                <strong className="text-slate-900 dark:text-white font-mono">{course.completedLessons}/{course.totalLessons}</strong>
+                <span className="text-slate-500 font-mono hidden xs:inline"> ({courseProgress}%)</span>
+              </span>
+              <div className="w-14 sm:w-24 h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#116E63] dark:bg-emerald-400 transition-all duration-300"
+                  style={{ width: `${courseProgress}%` }}
+                ></div>
+              </div>
             </div>
           </div>
         </header>
 
         {/* Studio Content Area */}
-        <main className="p-3 sm:p-5 lg:p-6 space-y-4 flex-1">
-          {/* 2-Column Clean Workspace: Video & Lesson (Left) + Module Playlist (Right) */}
+        <main className="p-3 sm:p-5 lg:p-6 space-y-4 flex-1 pb-24 lg:pb-8">
+          {/* 2-Column Responsive Workspace: Video & Lesson (Left) + Module Playlist (Right) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
-            {/* Main Video & Lesson Details (8 Cols) */}
+            {/* Main Video & Lesson Details (8 Cols on Desktop) */}
             <div className="lg:col-span-8 space-y-4">
-              {/* Clean Video Player */}
-              <div className="relative aspect-video w-full bg-slate-950 rounded-[4px] overflow-hidden border border-slate-800 shadow-xs select-none">
+              {/* Interactive Video Player */}
+              <div className="relative aspect-video w-full bg-slate-950 rounded-[4px] overflow-hidden border border-slate-800 shadow-sm select-none group">
                 <Image
-                  src={course.image}
+                  src={course.image || "/images/course2.jpg"}
                   alt={currentLesson.name}
                   fill
-                  className={`object-cover transition-opacity duration-300 ${isPlaying ? "opacity-30 blur-[1px]" : "opacity-60"}`}
+                  priority
+                  className={`object-cover transition-all duration-500 ${isPlaying ? "opacity-40" : "opacity-70"}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
 
-                {/* Top Tag */}
-                <div className="absolute top-3 left-3 text-[10px] font-bold text-white bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-[4px] border border-white/20 uppercase tracking-wider">
-                  Module {activeModuleIdx + 1} • Lesson {activeLessonIdx + 1}
+                {/* Top Lesson Indicator: Clean Text Without Heavy Badges */}
+                <div className="absolute top-3 left-3 text-[11px] font-bold text-white drop-shadow-md uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#116E63] animate-pulse"></span>
+                  <span>Module {safeModuleIdx + 1} • Lesson {safeLessonIdx + 1}</span>
                 </div>
 
-                {/* Center Play/Pause Button */}
-                <button
+                {/* Center Play/Pause Overlay - Visible on pause or hover */}
+                <div
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="absolute inset-0 m-auto w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#116E63] hover:bg-[#0c5c53] text-white flex items-center justify-center cursor-pointer shadow-lg transition-transform hover:scale-105 active:scale-95"
-                  aria-label={isPlaying ? "Pause" : "Play"}
+                  className={`absolute inset-0 flex items-center justify-center cursor-pointer transition-opacity duration-300 ${
+                    isPlaying ? "opacity-0 group-hover:opacity-100" : "opacity-100"
+                  }`}
                 >
-                  {isPlaying ? <Pause className="w-6 h-6 fill-white" /> : <Play className="w-6 h-6 fill-white ml-0.5" />}
-                </button>
+                  <button
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#116E63]/90 hover:bg-[#116E63] text-white flex items-center justify-center cursor-pointer shadow-xl transition-transform hover:scale-110 active:scale-95 backdrop-blur-xs"
+                    aria-label={isPlaying ? "Pause" : "Play"}
+                  >
+                    {isPlaying ? (
+                      <Pause className="w-6 h-6 fill-white" />
+                    ) : (
+                      <Play className="w-6 h-6 fill-white ml-1" />
+                    )}
+                  </button>
+                </div>
 
-                {/* Video Title in Video */}
-                <div className="absolute bottom-12 left-4 right-4 text-white text-xs sm:text-sm font-bold truncate drop-shadow-md">
+                {/* Video Title inside Player */}
+                <div className="absolute bottom-11 sm:bottom-12 left-3 right-3 text-white text-xs sm:text-sm font-bold truncate drop-shadow-md">
                   {currentLesson.name}
                 </div>
 
-                {/* Bottom Control Bar */}
-                <div className="absolute bottom-0 inset-x-0 bg-black/90 p-2 sm:p-3 flex items-center justify-between text-white text-xs gap-1.5 sm:gap-3">
-                  <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-                    <button onClick={() => setIsPlaying(!isPlaying)} className="hover:text-[#FDA31B] cursor-pointer p-0.5" aria-label={isPlaying ? "Pause" : "Play"}>
-                      {isPlaying ? <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" /> : <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />}
+                {/* Bottom Video Controls Bar */}
+                <div className="absolute bottom-0 inset-x-0 bg-black/90 backdrop-blur-xs p-2 sm:p-2.5 flex items-center justify-between text-white text-xs gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      onClick={() => setIsPlaying(!isPlaying)}
+                      className="hover:text-[#FDA31B] cursor-pointer p-1 transition-colors"
+                      aria-label={isPlaying ? "Pause" : "Play"}
+                    >
+                      {isPlaying ? (
+                        <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
+                      ) : (
+                        <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
+                      )}
                     </button>
-                    <button onClick={() => setIsMuted(!isMuted)} className="hover:text-[#FDA31B] cursor-pointer p-0.5" aria-label={isMuted ? "Unmute" : "Mute"}>
-                      {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+                    <button
+                      onClick={() => setIsMuted(!isMuted)}
+                      className="hover:text-[#FDA31B] cursor-pointer p-1 transition-colors"
+                      aria-label={isMuted ? "Unmute" : "Mute"}
+                    >
+                      {isMuted ? (
+                        <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      ) : (
+                        <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      )}
                     </button>
                     <span className="font-mono text-[10px] sm:text-[11px] text-slate-300">
                       {Math.floor((videoProgress / 100) * 45)}:00 / {currentLesson.duration}
                     </span>
                   </div>
 
-                  <div className="flex-1 min-w-[50px] max-w-xs mx-1 sm:mx-2">
+                  {/* Scrubber Bar */}
+                  <div className="flex-1 min-w-[50px] mx-1 sm:mx-3">
                     <input
                       type="range"
                       min="0"
                       max="100"
                       value={videoProgress}
                       onChange={(e) => setVideoProgress(Number(e.target.value))}
-                      className="w-full h-1 bg-white/30 rounded-[4px] appearance-none cursor-pointer accent-[#116E63]"
+                      className="w-full h-1 sm:h-1.5 bg-white/30 rounded-full appearance-none cursor-pointer accent-[#116E63]"
                     />
                   </div>
 
+                  {/* Right Video Actions: Speed & Fullscreen */}
                   <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                     <button
                       onClick={() => {
-                        const speeds = [1, 1.25, 1.5];
+                        const speeds = [1, 1.25, 1.5, 2];
                         const next = speeds[(speeds.indexOf(playbackSpeed) + 1) % speeds.length];
                         setPlaybackSpeed(next);
                       }}
-                      className="font-mono text-[10px] sm:text-[11px] px-1.5 py-0.5 bg-white/10 hover:bg-white/20 rounded-[4px] cursor-pointer"
+                      className="font-mono text-[10px] sm:text-[11px] px-1.5 py-0.5 bg-white/10 hover:bg-white/20 rounded-[4px] cursor-pointer text-slate-200"
+                      title="Playback Speed"
                     >
                       {playbackSpeed}x
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (!document.fullscreenElement) {
+                          document.documentElement.requestFullscreen?.();
+                        } else {
+                          document.exitFullscreen?.();
+                        }
+                      }}
+                      className="p-1 hover:text-[#FDA31B] cursor-pointer text-slate-300"
+                      title="Toggle Fullscreen"
+                    >
+                      <Maximize2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
@@ -240,11 +329,11 @@ export default function CourseWatchPage({
               {/* Current Lesson Header & Action Controls */}
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-400">
+                  <div className="min-w-0">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-400 block">
                       {currentModule.title}
                     </span>
-                    <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-0.5 font-[family-name:var(--font-yantramanav)] uppercase">
+                    <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-0.5 font-[family-name:var(--font-yantramanav)] uppercase leading-snug">
                       {currentLesson.name}
                     </h2>
                     <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -258,9 +347,9 @@ export default function CourseWatchPage({
                   {/* Mark as Completed Button */}
                   <button
                     onClick={toggleLessonCompletion}
-                    className={`px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shrink-0 ${
+                    className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shrink-0 ${
                       currentLesson.completed
-                        ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                        ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs"
                         : "bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700"
                     }`}
                   >
@@ -278,12 +367,12 @@ export default function CourseWatchPage({
                   </button>
                 </div>
 
-                {/* Previous / Next Lesson Buttons */}
+                {/* Previous / Next Lesson Navigation Strip */}
                 <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                   <button
                     onClick={handlePrevLesson}
-                    disabled={activeModuleIdx === 0 && activeLessonIdx === 0}
-                    className="px-3 py-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-[4px] text-xs font-bold uppercase tracking-wider flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                    disabled={safeModuleIdx === 0 && safeLessonIdx === 0}
+                    className="px-3 py-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-[4px] text-xs font-bold uppercase tracking-wider flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" /> Previous
                   </button>
@@ -291,152 +380,290 @@ export default function CourseWatchPage({
                   <button
                     onClick={handleNextLesson}
                     disabled={
-                      activeModuleIdx === course.modules.length - 1 &&
-                      activeLessonIdx === currentModule.lessons.length - 1
+                      safeModuleIdx === course.modules.length - 1 &&
+                      safeLessonIdx === currentModule.lessons.length - 1
                     }
-                    className="px-3 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] text-white rounded-[4px] text-xs font-bold uppercase tracking-wider flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                    className="px-3.5 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] text-white rounded-[4px] text-xs font-bold uppercase tracking-wider flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors shadow-xs"
                   >
                     Next Video <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
 
-              {/* Lesson Overview & Resources */}
-              {currentLesson.description && (
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs space-y-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                    Lesson Summary
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    {currentLesson.description}
-                  </p>
+              {/* Mobile Tabs: Curriculum vs Summary vs Resources (< lg) */}
+              <div className="lg:hidden flex border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[4px] overflow-hidden text-xs font-bold uppercase tracking-wider">
+                <button
+                  onClick={() => setMobileActiveTab("curriculum")}
+                  className={`flex-1 py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
+                    mobileActiveTab === "curriculum"
+                      ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-[#116E63]/5"
+                      : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+                >
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Curriculum</span>
+                </button>
+                <button
+                  onClick={() => setMobileActiveTab("summary")}
+                  className={`flex-1 py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
+                    mobileActiveTab === "summary"
+                      ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-[#116E63]/5"
+                      : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Notes</span>
+                </button>
+                <button
+                  onClick={() => setMobileActiveTab("resources")}
+                  className={`flex-1 py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
+                    mobileActiveTab === "resources"
+                      ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-[#116E63]/5"
+                      : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Resources ({currentLesson.resources?.length || 0})</span>
+                </button>
+              </div>
 
-                  {currentLesson.resources && currentLesson.resources.length > 0 && (
-                    <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
-                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                        Lesson Resource Files
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {currentLesson.resources.map((res, rIdx) => (
-                          <button
-                            key={rIdx}
-                            onClick={() => alert(`Downloading: ${res.name}`)}
-                            className="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-[4px] text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1.5 cursor-pointer font-medium"
-                          >
-                            <Download className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
-                            <span>{res.name}</span>
-                            <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">({res.size})</span>
-                          </button>
-                        ))}
-                      </div>
+              {/* Mobile Curriculum View (Rendered when on mobile and tab = curriculum) */}
+              <div className={`lg:hidden space-y-3 ${mobileActiveTab === "curriculum" ? "block" : "hidden"}`}>
+                <CurriculumPlaylist
+                  course={course}
+                  activeModuleIdx={safeModuleIdx}
+                  activeLessonIdx={safeLessonIdx}
+                  expandedModules={expandedModules}
+                  toggleModuleAccordion={toggleModuleAccordion}
+                  selectLesson={selectLesson}
+                />
+              </div>
+
+              {/* Lesson Summary & Overview */}
+              <div className={`space-y-4 ${mobileActiveTab === "summary" || mobileActiveTab === "resources" ? "block" : "hidden lg:block"}`}>
+                {currentLesson.description && (
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs space-y-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
+                      <span>Lesson Key Takeaways &amp; Overview</span>
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {currentLesson.description}
+                    </p>
+                  </div>
+                )}
+
+                {/* Downloadable Resources */}
+                {currentLesson.resources && currentLesson.resources.length > 0 && (
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs space-y-2.5">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                      <Download className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
+                      <span>Lesson Downloadable Worksheets &amp; Templates</span>
+                    </h4>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {currentLesson.resources.map((res, rIdx) => (
+                        <button
+                          key={rIdx}
+                          onClick={() => alert(`Starting download for: ${res.name}`)}
+                          className="px-3 py-2 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-[4px] text-xs text-slate-800 dark:text-slate-200 flex items-center gap-2 cursor-pointer font-medium transition-colors"
+                        >
+                          <Download className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400 shrink-0" />
+                          <span className="font-semibold">{res.name}</span>
+                          <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">({res.size})</span>
+                        </button>
+                      ))}
                     </div>
-                  )}
-                </div>
-              )}
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Module-Wise Curriculum Playlist (4 Cols) */}
-            <div className="lg:col-span-4 space-y-3">
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3.5 rounded-[4px] shadow-xs flex items-center justify-between">
-                <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
-                    Course Modules
-                  </h3>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                    {course.modules.length} Modules • {course.totalLessons} Lessons
-                  </p>
-                </div>
-                <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-[4px] border border-slate-200 dark:border-slate-700">
-                  {course.completedLessons}/{course.totalLessons} Done
-                </span>
-              </div>
-
-              {/* Modules Accordion */}
-              <div className="space-y-2.5">
-                {course.modules.map((module, mIdx) => {
-                  const isExpanded = expandedModules[mIdx] ?? true;
-                  const isCurrentMod = activeModuleIdx === mIdx;
-                  const completedInMod = module.lessons.filter((l) => l.completed).length;
-
-                  return (
-                    <div
-                      key={module.id}
-                      className={`border rounded-[4px] overflow-hidden bg-white dark:bg-slate-900 shadow-2xs ${
-                        isCurrentMod ? "border-[#116E63] dark:border-emerald-500" : "border-slate-200 dark:border-slate-800"
-                      }`}
-                    >
-                      {/* Module Header Button */}
-                      <button
-                        onClick={() => toggleModuleAccordion(mIdx)}
-                        className={`w-full p-3 text-left flex items-center justify-between cursor-pointer transition-colors ${
-                          isCurrentMod ? "bg-teal-50/60 dark:bg-teal-950/40" : "bg-slate-50 dark:bg-slate-800/70 hover:bg-slate-100 dark:hover:bg-slate-800"
-                        }`}
-                      >
-                        <div className="pr-2 space-y-0.5">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-[3px] ${
-                                isCurrentMod ? "bg-[#116E63] text-white" : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
-                              }`}
-                            >
-                              Module {mIdx + 1}
-                            </span>
-                            <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
-                              {completedInMod}/{module.lessons.length}
-                            </span>
-                          </div>
-                          <div className="text-xs font-bold text-slate-900 dark:text-white line-clamp-1">
-                            {module.title.replace(/^Module \d+:\s*/, "")}
-                          </div>
-                        </div>
-
-                        <div className="shrink-0 text-slate-400 dark:text-slate-500">
-                          {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                        </div>
-                      </button>
-
-                      {/* Lessons Under Module */}
-                      {isExpanded && (
-                        <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                          {module.lessons.map((lesson, lIdx) => {
-                            const isCurrent = activeModuleIdx === mIdx && activeLessonIdx === lIdx;
-
-                            return (
-                              <div
-                                key={lesson.id}
-                                onClick={() => selectLesson(mIdx, lIdx)}
-                                className={`p-2.5 sm:p-3 flex items-center justify-between text-xs cursor-pointer transition-colors ${
-                                  isCurrent
-                                    ? "bg-[#116E63]/10 dark:bg-[#116E63]/25 font-bold text-[#116E63] dark:text-emerald-400 border-l-4 border-l-[#116E63] dark:border-l-emerald-400"
-                                    : "hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300"
-                                }`}
-                              >
-                                <div className="flex items-center gap-2 pr-2 truncate">
-                                  {lesson.completed ? (
-                                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                                  ) : isCurrent ? (
-                                    <Play className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400 fill-current shrink-0" />
-                                  ) : (
-                                    <Play className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
-                                  )}
-                                  <span className="truncate">{lesson.name}</span>
-                                </div>
-
-                                <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 shrink-0">
-                                  {lesson.duration}
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+            {/* Desktop Module Playlist (4 Cols on Desktop >= lg) */}
+            <div className="hidden lg:block lg:col-span-4 space-y-3">
+              <CurriculumPlaylist
+                course={course}
+                activeModuleIdx={safeModuleIdx}
+                activeLessonIdx={safeLessonIdx}
+                expandedModules={expandedModules}
+                toggleModuleAccordion={toggleModuleAccordion}
+                selectLesson={selectLesson}
+              />
             </div>
           </div>
         </main>
+
+        {/* 3. Mobile View Bottom Navigation Bar (Sticky Bottom Bar) */}
+        <nav
+          aria-label="Mobile bottom navigation"
+          className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-1 py-1 shadow-lg flex items-center justify-around"
+        >
+          <Link
+            href="/admin?tab=overview"
+            className="flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 transition-colors cursor-pointer rounded-[4px] min-w-0 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+          >
+            <LayoutDashboard className="w-4 h-4 shrink-0" />
+            <span className="text-[10px] font-semibold mt-0.5 truncate">Overview</span>
+          </Link>
+
+          <Link
+            href="/admin?tab=courses"
+            className="flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 transition-colors cursor-pointer rounded-[4px] min-w-0 text-[#116E63] dark:text-emerald-400 font-bold"
+          >
+            <GraduationCap className="w-4 h-4 shrink-0" />
+            <span className="text-[10px] font-semibold mt-0.5 truncate">Courses</span>
+          </Link>
+
+          <Link
+            href="/admin?tab=leaderboard"
+            className="flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 transition-colors cursor-pointer rounded-[4px] min-w-0 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+          >
+            <Trophy className="w-4 h-4 shrink-0" />
+            <span className="text-[10px] font-semibold mt-0.5 truncate">Leaderboard</span>
+          </Link>
+
+          <Link
+            href="/admin?tab=downline"
+            className="flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 transition-colors cursor-pointer rounded-[4px] min-w-0 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+          >
+            <Users className="w-4 h-4 shrink-0" />
+            <span className="text-[10px] font-semibold mt-0.5 truncate">Directs</span>
+          </Link>
+
+          <Link
+            href="/admin?tab=commissions"
+            className="flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 transition-colors cursor-pointer rounded-[4px] min-w-0 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+          >
+            <Wallet className="w-4 h-4 shrink-0" />
+            <span className="text-[10px] font-semibold mt-0.5 truncate">Income</span>
+          </Link>
+
+          <Link
+            href="/admin?tab=commissions"
+            className="flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 transition-colors cursor-pointer rounded-[4px] min-w-0 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+          >
+            <CreditCard className="w-4 h-4 shrink-0" />
+            <span className="text-[10px] font-semibold mt-0.5 truncate">Payment</span>
+          </Link>
+        </nav>
+      </div>
+    </div>
+  );
+}
+
+// Curriculum Playlist Component (Shared cleanly across Mobile & Desktop)
+function CurriculumPlaylist({
+  course,
+  activeModuleIdx,
+  activeLessonIdx,
+  expandedModules,
+  toggleModuleAccordion,
+  selectLesson,
+}: {
+  course: EnrolledCourse;
+  activeModuleIdx: number;
+  activeLessonIdx: number;
+  expandedModules: { [key: number]: boolean };
+  toggleModuleAccordion: (idx: number) => void;
+  selectLesson: (modIdx: number, lessIdx: number) => void;
+}) {
+  return (
+    <div className="space-y-3 font-sans">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3.5 rounded-[4px] shadow-xs flex items-center justify-between">
+        <div>
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white font-[family-name:var(--font-yantramanav)]">
+            Course Curriculum
+          </h3>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+            {course.modules?.length || 0} Modules • {course.totalLessons} Lessons
+          </p>
+        </div>
+        <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
+          {course.completedLessons}/{course.totalLessons} Done
+        </span>
+      </div>
+
+      {/* Modules Accordion List */}
+      <div className="space-y-2">
+        {course.modules?.map((module, mIdx) => {
+          const isExpanded = expandedModules[mIdx] ?? true;
+          const isCurrentMod = activeModuleIdx === mIdx;
+          const completedInMod = module.lessons?.filter((l) => l.completed).length || 0;
+
+          return (
+            <div
+              key={module.id || mIdx}
+              className={`border rounded-[4px] overflow-hidden bg-white dark:bg-slate-900 shadow-2xs transition-colors ${
+                isCurrentMod
+                  ? "border-[#116E63] dark:border-emerald-500"
+                  : "border-slate-200 dark:border-slate-800"
+              }`}
+            >
+              {/* Module Accordion Header */}
+              <button
+                onClick={() => toggleModuleAccordion(mIdx)}
+                className={`w-full p-3 text-left flex items-center justify-between cursor-pointer transition-colors ${
+                  isCurrentMod
+                    ? "bg-teal-50/50 dark:bg-teal-950/30"
+                    : "bg-slate-50 dark:bg-slate-800/70 hover:bg-slate-100 dark:hover:bg-slate-800"
+                }`}
+              >
+                <div className="pr-2 space-y-0.5 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold uppercase text-[#116E63] dark:text-emerald-400">
+                      Module {mIdx + 1}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
+                      ({completedInMod}/{module.lessons?.length || 0})
+                    </span>
+                  </div>
+                  <div className="text-xs font-bold text-slate-900 dark:text-white line-clamp-1">
+                    {module.title.replace(/^Module \d+:\s*/, "")}
+                  </div>
+                </div>
+
+                <div className="shrink-0 text-slate-400 dark:text-slate-500">
+                  {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </div>
+              </button>
+
+              {/* Module Lessons List */}
+              {isExpanded && (
+                <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                  {module.lessons?.map((lesson, lIdx) => {
+                    const isCurrent = activeModuleIdx === mIdx && activeLessonIdx === lIdx;
+
+                    return (
+                      <div
+                        key={lesson.id || lIdx}
+                        onClick={() => selectLesson(mIdx, lIdx)}
+                        className={`p-2.5 sm:p-3 flex items-center justify-between text-xs cursor-pointer transition-colors ${
+                          isCurrent
+                            ? "bg-[#116E63]/10 dark:bg-[#116E63]/25 font-bold text-[#116E63] dark:text-emerald-400 border-l-4 border-l-[#116E63] dark:border-l-emerald-400"
+                            : "hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 pr-2 truncate min-w-0">
+                          {lesson.completed ? (
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                          ) : isCurrent ? (
+                            <Play className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400 fill-current shrink-0" />
+                          ) : (
+                            <Play className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
+                          )}
+                          <span className="truncate">{lesson.name}</span>
+                        </div>
+
+                        <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 shrink-0">
+                          {lesson.duration}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

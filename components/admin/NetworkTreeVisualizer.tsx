@@ -55,17 +55,17 @@ const getRankHeaderColor = (rank: string) => {
 const getRankTag = (rank: string) => {
   switch (rank) {
     case "Crown Ambassador":
-      return "bg-purple-100 text-purple-900 border-purple-300";
+      return "text-purple-700";
     case "Diamond Leader":
-      return "bg-cyan-100 text-cyan-900 border-cyan-300";
+      return "text-cyan-700";
     case "Platinum Partner":
-      return "bg-indigo-100 text-indigo-900 border-indigo-300";
+      return "text-indigo-700";
     case "Gold Associate":
-      return "bg-amber-100 text-amber-900 border-amber-300";
+      return "text-amber-700";
     case "Silver Member":
-      return "bg-slate-100 text-slate-800 border-slate-300";
+      return "text-slate-700";
     default:
-      return "bg-orange-100 text-orange-900 border-orange-300";
+      return "text-orange-700";
   }
 };
 
@@ -105,9 +105,9 @@ const TreeNode: React.FC<TreeNodeProps> = ({
           <div className="flex items-center gap-1.5">
             {node.legPosition !== "root" && (
               <span
-                className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded-[4px] ${node.legPosition === "left"
-                  ? "bg-blue-600 text-white"
-                  : "bg-orange-500 text-white"
+                className={`text-[9px] font-black uppercase ${node.legPosition === "left"
+                  ? "text-blue-600"
+                  : "text-orange-500"
                   }`}
               >
                 {node.legPosition === "left" ? "Branch A" : "Branch B"}
@@ -145,7 +145,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
             </h4>
             <div className="flex items-center gap-1 mt-1">
               <span
-                className={`text-[9px] font-bold px-1.5 py-0.2 border rounded-[4px] ${getRankTag(
+                className={`text-[10px] font-bold ${getRankTag(
                   node.rank
                 )}`}
               >
@@ -476,9 +476,9 @@ export default function NetworkTreeVisualizer() {
             </div>
 
             <span
-              className={`text-[10px] font-bold px-2 py-0.5 uppercase tracking-wider rounded-[4px] ${selectedNode.status === "active"
-                ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
-                : "bg-slate-100 text-slate-600"
+              className={`text-xs font-bold uppercase tracking-wider ${selectedNode.status === "active"
+                ? "text-emerald-700"
+                : "text-slate-600"
                 }`}
             >
               {selectedNode.status}

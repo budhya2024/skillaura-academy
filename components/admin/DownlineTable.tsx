@@ -167,9 +167,9 @@ export default function DownlineTable() {
                   {/* Status */}
                   <td className="py-3 px-3">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 text-xs font-bold uppercase rounded-[4px] ${member.status === "active"
-                        ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60"
-                        : "bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60"
+                      className={`inline-flex items-center text-xs font-bold uppercase ${member.status === "active"
+                        ? "text-emerald-700 dark:text-emerald-400"
+                        : "text-amber-700 dark:text-amber-400"
                         }`}
                     >
                       {member.status}
@@ -312,13 +312,13 @@ export default function DownlineTable() {
                 </span>
               </div>
 
-              {/* Account Status Badge */}
+              {/* Account Status */}
               <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-[4px]">
                 <span className="text-slate-500 dark:text-slate-400 font-medium">Account Status:</span>
                 <span
-                  className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-[4px] ${selectedMember.status === "active"
-                    ? "bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
-                    : "bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800"
+                  className={`text-xs font-bold uppercase ${selectedMember.status === "active"
+                    ? "text-emerald-700 dark:text-emerald-400"
+                    : "text-amber-700 dark:text-amber-400"
                     }`}
                 >
                   {selectedMember.status}
