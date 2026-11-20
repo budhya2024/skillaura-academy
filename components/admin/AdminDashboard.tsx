@@ -40,6 +40,7 @@ import TopEarnersCards from "./TopEarnersCards";
 import ProfileSection from "./ProfileSection";
 import PromoToolsSection from "./PromoToolsSection";
 import MyCoursesSection from "./MyCoursesSection";
+import SettingsSection from "./SettingsSection";
 import AdminSidebar from "./AdminSidebar";
 import ThemeToggle from "../shared/ThemeToggle";
 
@@ -594,68 +595,7 @@ export default function AdminDashboard() {
           {activeTab === "marketing" && <PromoToolsSection />}
 
           {/* TAB 6: STUDENT ACCOUNT SETTINGS */}
-          {activeTab === "settings" && (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-xs max-w-3xl rounded-[4px]">
-              <div className="border-b border-slate-200 dark:border-slate-800 pb-3">
-                <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
-                  Student Account &amp; Notification Preferences
-                </h3>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Manage your personal learning notifications, payout alerts, and security settings
-                </p>
-              </div>
-
-              <div className="space-y-3 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                <div className="flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 gap-3 rounded-[4px]">
-                  <div>
-                    <span className="font-bold text-slate-900 dark:text-white block text-xs uppercase tracking-wider">
-                      Instant WhatsApp Payout Alerts
-                    </span>
-                    <span className="text-slate-500 dark:text-slate-400 font-normal text-[11px]">
-                      Receive automated WhatsApp messages whenever referral income or payouts are credited
-                    </span>
-                  </div>
-                  <input
-                    type="checkbox"
-                    defaultChecked
-                    className="w-4 h-4 accent-[#116E63] shrink-0"
-                  />
-                </div>
-
-                <div className="flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 gap-3 rounded-[4px]">
-                  <div>
-                    <span className="font-bold text-slate-900 dark:text-white block text-xs uppercase tracking-wider">
-                      Course Completion Certificates
-                    </span>
-                    <span className="text-slate-500 dark:text-slate-400 font-normal text-[11px]">
-                      Automatically generate verified skill certificates upon finishing all video lessons
-                    </span>
-                  </div>
-                  <input
-                    type="checkbox"
-                    defaultChecked
-                    className="w-4 h-4 accent-[#116E63] shrink-0"
-                  />
-                </div>
-
-                <div className="flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 gap-3 rounded-[4px]">
-                  <div>
-                    <span className="font-bold text-slate-900 dark:text-white block text-xs uppercase tracking-wider">
-                      Two-Factor Account Security (OTP)
-                    </span>
-                    <span className="text-slate-500 dark:text-slate-400 font-normal text-[11px]">
-                      Secure wallet withdrawals with SMS and WhatsApp OTP verification
-                    </span>
-                  </div>
-                  <input
-                    type="checkbox"
-                    defaultChecked
-                    className="w-4 h-4 accent-[#116E63] shrink-0"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
+          {activeTab === "settings" && <SettingsSection />}
         </main>
       </div>
 
