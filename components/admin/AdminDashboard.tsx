@@ -176,11 +176,11 @@ export default function AdminDashboard() {
             </button>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 truncate">
-                <h1 className="text-sm sm:text-base lg:text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
+                <h1 className="text-xs sm:text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
                   {getPageTitle()}
                 </h1>
               </div>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 hidden md:block font-medium">
+              <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 hidden md:block font-medium">
                 Skill Aura Academy Direct Sales &amp; Active Income Center
               </p>
             </div>
@@ -236,51 +236,51 @@ export default function AdminDashboard() {
           {activeTab === "overview" && (
             <div className="space-y-4 sm:space-y-5">
               {/* Executive Welcome Card (Light / Dark) */}
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 shadow-xs rounded-[4px] transition-colors duration-200">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs rounded-[4px] transition-colors duration-200">
                 <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs sm:text-sm px-2.5 py-1 uppercase tracking-wider rounded-[4px] border border-slate-200 dark:border-slate-700">
+                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-[10px] px-2 py-0.5 uppercase tracking-wider rounded-[4px] border border-slate-200 dark:border-slate-700">
                         Enrolled Student
                       </span>
-                      <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-mono">
+                      <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
                         ID: <strong className="text-slate-800 dark:text-slate-200">SKA-ROOT88</strong>
                       </span>
-                      <span className="text-xs sm:text-sm text-emerald-700 font-semibold flex items-center gap-1">
-                        <Activity className="w-4 h-4" /> Active Learner &amp; Affiliate
+                      <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1">
+                        <Activity className="w-3.5 h-3.5" /> Active Learner &amp; Affiliate
                       </span>
                     </div>
-                    <h2 className="text-lg sm:text-2xl font-bold text-slate-900 uppercase tracking-wide font-[family-name:var(--font-yantramanav)]">
+                    <h2 className="text-base sm:text-xl font-bold text-slate-900 uppercase tracking-wide font-[family-name:var(--font-yantramanav)]">
                       Welcome back, Student
                     </h2>
-                    <p className="text-xs sm:text-sm text-slate-500 max-w-xl leading-relaxed">
+                    <p className="text-xs text-slate-500 max-w-xl">
                       Access your enrolled course lessons, personal referral income, and wallet earnings.
                     </p>
                   </div>
 
                   {/* Referral Link Quick Box */}
-                  <div className="w-full lg:w-auto lg:min-w-[360px] space-y-2 bg-slate-50 dark:bg-slate-800/60 p-3.5 border border-slate-200 dark:border-slate-700 rounded-[4px]">
-                    <div className="flex items-center justify-between text-xs sm:text-sm">
-                      <span className="font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  <div className="w-full lg:w-auto lg:min-w-[340px] space-y-1.5 bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200 dark:border-slate-700 rounded-[4px]">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-bold text-slate-700 dark:text-slate-300 text-[11px] uppercase tracking-wider">
                         Your Direct Referral Link
                       </span>
-                      <span className="text-xs sm:text-sm font-bold text-[#116E63] dark:text-emerald-400 uppercase">
+                      <span className="text-[10px] font-bold text-[#116E63] dark:text-emerald-400 uppercase">
                         65% Commission
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-1.5 rounded-[4px]">
+                    <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-1 rounded-[4px]">
                       <input
                         type="text"
                         readOnly
                         value={referralUrl}
-                        className="bg-transparent text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-mono flex-1 min-w-0 outline-none px-2 truncate py-1"
+                        className="bg-transparent text-xs text-slate-700 dark:text-slate-200 font-mono flex-1 min-w-0 outline-none px-2 truncate"
                       />
                       <button
                         onClick={handleCopyLink}
-                        className="bg-[#116E63] hover:bg-[#0c5c53] text-white font-bold text-xs sm:text-sm px-3.5 py-1.5 shrink-0 flex items-center justify-center gap-1.5 transition-colors cursor-pointer uppercase rounded-[4px]"
+                        className="bg-[#116E63] hover:bg-[#0c5c53] text-white font-bold text-xs px-3 py-1.5 shrink-0 flex items-center justify-center gap-1.5 transition-colors cursor-pointer uppercase rounded-[4px]"
                       >
-                        {copiedLink ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                        {copiedLink ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{copiedLink ? "Copied" : "Copy"}</span>
                       </button>
                     </div>
@@ -290,70 +290,70 @@ export default function AdminDashboard() {
 
               {/* Top 4 KPI Cards: Light & Dark Mode */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs rounded-[4px]">
-                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1.5">
-                    <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs rounded-[4px]">
+                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Active Income
                     </span>
-                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold text-xs sm:text-sm bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 border border-emerald-200 dark:border-emerald-800/60 uppercase rounded-[4px]">
+                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold text-[10px] bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.2 border border-emerald-200 dark:border-emerald-800/60 uppercase rounded-[4px]">
                       100% Active
                     </span>
                   </div>
-                  <div className="text-xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono">
+                  <div className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
                     ₹3,48,500
                   </div>
-                  <div className="mt-1.5 text-xs sm:text-sm text-emerald-700 dark:text-emerald-400 font-medium flex items-center gap-1 truncate">
-                    <TrendingUp className="w-4 h-4 shrink-0" /> Direct sales revenue
+                  <div className="mt-1 text-[10px] sm:text-[11px] text-emerald-700 dark:text-emerald-400 font-medium flex items-center gap-1 truncate">
+                    <TrendingUp className="w-3.5 h-3.5 shrink-0" /> Direct sales revenue
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs rounded-[4px]">
-                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1.5">
-                    <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs rounded-[4px]">
+                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Direct Students
                     </span>
-                    <span className="text-teal-700 dark:text-teal-400 font-semibold text-xs sm:text-sm bg-teal-50 dark:bg-teal-950/60 px-2 py-0.5 border border-teal-200 dark:border-teal-800/60 uppercase rounded-[4px]">
+                    <span className="text-teal-700 dark:text-teal-400 font-semibold text-[10px] bg-teal-50 dark:bg-teal-950/60 px-1.5 py-0.2 border border-teal-200 dark:border-teal-800/60 uppercase rounded-[4px]">
                       Personal
                     </span>
                   </div>
-                  <div className="text-xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono">
+                  <div className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
                     28 Directs
                   </div>
-                  <div className="mt-1.5 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium truncate">
+                  <div className="mt-1 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate">
                     Total: <strong className="text-slate-800 dark:text-slate-200">118 Sold</strong>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs rounded-[4px]">
-                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1.5">
-                    <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs rounded-[4px]">
+                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Active Tier
                     </span>
-                    <span className="text-amber-700 dark:text-amber-400 font-semibold text-xs sm:text-sm bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 border border-amber-200 dark:border-amber-800/60 uppercase rounded-[4px]">
+                    <span className="text-amber-700 dark:text-amber-400 font-semibold text-[10px] bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.2 border border-amber-200 dark:border-amber-800/60 uppercase rounded-[4px]">
                       Tier 3
                     </span>
                   </div>
-                  <div className="text-xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono">
+                  <div className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
                     65% Direct
                   </div>
-                  <div className="mt-1.5 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium truncate">
+                  <div className="mt-1 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate">
                     Unlocks 70% at 30 sales
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs rounded-[4px]">
-                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1.5">
-                    <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs rounded-[4px]">
+                  <div className="flex items-center justify-between gap-1 flex-wrap mb-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Wallet Balance
                     </span>
-                    <span className="text-blue-700 dark:text-blue-400 font-semibold text-xs sm:text-sm bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 border border-blue-200 dark:border-blue-800/60 uppercase rounded-[4px]">
+                    <span className="text-blue-700 dark:text-blue-400 font-semibold text-[10px] bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.2 border border-blue-200 dark:border-blue-800/60 uppercase rounded-[4px]">
                       Instant
                     </span>
                   </div>
-                  <div className="text-xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono">
+                  <div className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white font-mono">
                     ₹48,650
                   </div>
-                  <div className="mt-1.5 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium truncate">
+                  <div className="mt-1 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate">
                     Settled: ₹2,99,850
                   </div>
                 </div>
