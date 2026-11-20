@@ -86,9 +86,7 @@ export default function SuperAdminSidebar({
               <span className="font-bold text-slate-900 dark:text-white tracking-wider text-sm block font-[family-name:var(--font-yantramanav)] uppercase">
                 Skill Aura
               </span>
-              <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase">
-                Super Admin
-              </span>
+
             </div>
             <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono tracking-tight block -mt-1 font-semibold">
               Platform Master Console
@@ -116,19 +114,17 @@ export default function SuperAdminSidebar({
             <button
               key={item.id}
               onClick={() => handleTabClick(item.id)}
-              className={`w-[calc(100%-16px)] mx-2 flex items-center justify-between px-3.5 py-2.5 sm:py-3 text-sm font-semibold transition-colors cursor-pointer rounded-[4px] ${
-                isActive
-                  ? "bg-[#116E63]/10 dark:bg-[#116E63]/25 text-[#116E63] dark:text-emerald-400 font-bold"
-                  : "text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60"
-              }`}
+              className={`w-[calc(100%-16px)] mx-2 flex items-center justify-between px-3.5 py-2.5 sm:py-3 text-sm font-semibold transition-colors cursor-pointer rounded-[4px] ${isActive
+                ? "bg-[#116E63]/10 dark:bg-[#116E63]/25 text-[#116E63] dark:text-emerald-400 font-bold"
+                : "text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60"
+                }`}
             >
               <div className="flex items-center gap-3 min-w-0">
                 <Icon
-                  className={`w-5 h-5 shrink-0 ${
-                    isActive
-                      ? "text-[#116E63] dark:text-emerald-400"
-                      : "text-slate-500 dark:text-slate-400"
-                  }`}
+                  className={`w-5 h-5 shrink-0 ${isActive
+                    ? "text-[#116E63] dark:text-emerald-400"
+                    : "text-slate-500 dark:text-slate-400"
+                    }`}
                 />
                 <span className="truncate">{item.label}</span>
               </div>
