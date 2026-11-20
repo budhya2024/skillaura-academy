@@ -381,62 +381,7 @@ export default function PromoToolsSection() {
         </div>
       </div>
 
-      {/* ================= 3. ACTIVE MILESTONE CASH BONUSES ================= */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
-        {/* Milestone 1 */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 shadow-xs rounded-[4px] space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Milestone 1 (10 Sales)
-            </span>
-            <span className="text-[9px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.2 border border-emerald-200 dark:border-emerald-800/60 uppercase rounded-[4px]">
-              Achieved
-            </span>
-          </div>
-          <div className="text-xl font-black text-slate-900 dark:text-white font-mono">
-            +₹5,000 Cash
-          </div>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            One-time direct active performance cash bonus credited to your wallet.
-          </p>
-        </div>
 
-        {/* Milestone 2 */}
-        <div className="bg-white dark:bg-slate-900 border-2 border-[#116E63] dark:border-emerald-500 p-4 shadow-xs rounded-[4px] space-y-2 relative bg-gradient-to-b from-teal-50/20 to-white dark:from-teal-950/20 dark:to-slate-900">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-400">
-              Milestone 2 (25 Sales)
-            </span>
-            <span className="text-[9px] font-bold text-teal-800 dark:text-teal-300 bg-teal-100 dark:bg-teal-950/80 px-1.5 py-0.2 rounded-[4px] uppercase">
-              18 / 25 Done
-            </span>
-          </div>
-          <div className="text-xl font-black text-[#116E63] dark:text-emerald-400 font-mono">
-            +₹15,000 Cash
-          </div>
-          <p className="text-[11px] text-slate-600 dark:text-slate-300">
-            Just <strong>7 direct personal sales</strong> away from unlocking ₹15,000 cash bonus!
-          </p>
-        </div>
-
-        {/* Milestone 3 */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 shadow-xs rounded-[4px] space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Milestone 3 (50 Sales)
-            </span>
-            <span className="text-[9px] font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.2 rounded-[4px] uppercase">
-              Upcoming
-            </span>
-          </div>
-          <div className="text-xl font-black text-slate-900 dark:text-white font-mono">
-            +₹35,000 Cash
-          </div>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Executive direct sales performer bonus credited directly upon 50 personal enrollments.
-          </p>
-        </div>
-      </div>
     </div>
   );
 }
