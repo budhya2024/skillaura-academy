@@ -30,7 +30,7 @@ interface SuperAdminSidebarProps {
 export const SUPER_ADMIN_NAV_ITEMS = [
   {
     id: "overview" as SuperAdminTab,
-    label: "Executive Overview",
+    label: "Dashboard",
     icon: LayoutDashboard,
   },
   {

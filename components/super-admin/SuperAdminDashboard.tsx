@@ -62,8 +62,9 @@ export default function SuperAdminDashboard() {
         return "Website Announcements & CMS";
       case "profile":
         return "Admin Profile & Security Settings";
+      case "overview":
       default:
-        return "Super Admin Command Center";
+        return "Dashboard";
     }
   };
 
@@ -160,6 +161,7 @@ export default function SuperAdminDashboard() {
             <SuperAdminOverview
               onNavigate={setActiveTab}
               pendingPayoutCount={pendingPayoutCount}
+              pendingKycCount={pendingKycCount}
               totalStudents={totalStudents}
               totalCourses={totalCourses}
             />
