@@ -130,7 +130,7 @@ export default function AdminDashboard() {
     },
     {
       id: "commissions",
-      label: "Active Income & Payouts",
+      label: "Income & Payouts",
       icon: Wallet,
     },
     {
