@@ -86,10 +86,10 @@ export default function CommissionPlanSection() {
       prev.map((item) =>
         item.id === id
           ? {
-              ...item,
-              status: "approved",
-              payoutRef: `UTR${Math.floor(1000000000 + Math.random() * 9000000000)}`,
-            }
+            ...item,
+            status: "approved",
+            payoutRef: `UTR${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+          }
           : item
       )
     );
@@ -362,21 +362,19 @@ export default function CommissionPlanSection() {
         <div className="flex items-center border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 overflow-x-auto">
           <button
             onClick={() => setActiveTab("ledger")}
-            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
-              activeTab === "ledger"
-                ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 dark:border-emerald-500 bg-white dark:bg-slate-900"
-                : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            }`}
+            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${activeTab === "ledger"
+              ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 dark:border-emerald-500 bg-white dark:bg-slate-900"
+              : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              }`}
           >
             Income Ledger ({MOCK_COMMISSIONS.length})
           </button>
           <button
             onClick={() => setActiveTab("payouts")}
-            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${
-              activeTab === "payouts"
-                ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 dark:border-emerald-500 bg-white dark:bg-slate-900"
-                : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            }`}
+            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors cursor-pointer shrink-0 ${activeTab === "payouts"
+              ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 dark:border-emerald-500 bg-white dark:bg-slate-900"
+              : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              }`}
           >
             Payout History ({payouts.length})
           </button>
