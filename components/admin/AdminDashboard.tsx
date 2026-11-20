@@ -161,9 +161,9 @@ export default function AdminDashboard() {
       />
 
       {/* ================= MAIN CONTENT WRAPPER ================= */}
-      <div className="flex-1 flex flex-col min-w-0 lg:pl-64 overflow-y-auto min-h-screen">
-        {/* Top Header */}
-        <header className="h-14 sm:h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-20 shadow-xs">
+      <div className="flex-1 flex flex-col min-w-0 lg:pl-64 min-h-screen">
+        {/* Top Header - Fixed / Sticky at top */}
+        <header className="h-14 sm:h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}

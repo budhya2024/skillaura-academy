@@ -108,10 +108,16 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="w-full font-sans border-b border-slate-100 relative z-[60]">
+    <header className="sticky top-0 z-[60] w-full font-sans bg-white shadow-xs border-b border-slate-100">
       {/* ================= TOP BAR (Desktop Only) ================= */}
-      <div className="hidden md:block w-full bg-[#116E63] text-white text-xs sm:text-sm border-b border-white/10">
-        <div className="container flex items-center justify-between py-2">
+      <div
+        className={`hidden md:block w-full bg-[#116E63] text-white text-xs sm:text-sm transition-all duration-300 overflow-hidden ${
+          isScrolled
+            ? "max-h-0 opacity-0 py-0 border-none"
+            : "max-h-12 opacity-100 py-2 border-b border-white/10"
+        }`}
+      >
+        <div className="container flex items-center justify-between">
           {/* Left Section: Social Media Follow */}
           <div className="flex items-center gap-3 shrink-0">
             <span className="font-extrabold text-white tracking-wider text-xs uppercase font-[family-name:var(--font-yantramanav)]">
@@ -174,13 +180,8 @@ export default function Header() {
       </div>
 
       {/* ================= MAIN NAVBAR ================= */}
-      <div
-        className={`w-full bg-white transition-all duration-300 ${isScrolled
-          ? "fixed top-0 left-0 right-0 shadow-lg z-[60] animate-in slide-in-from-top-4"
-          : "relative shadow-sm"
-          }`}
-      >
-        <div className="container h-20 flex items-center justify-between">
+      <div className="w-full bg-white">
+        <div className="container h-16 sm:h-20 flex items-center justify-between">
           {/* Logo Section */}
           <Link href="/" className="flex items-center group py-1">
             <Image
