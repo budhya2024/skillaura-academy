@@ -63,7 +63,7 @@ export const NAV_ITEMS = [
   },
   {
     id: "settings",
-    label: "Active Plan Rules",
+    label: "Account Settings",
     icon: Settings,
   },
 ];
@@ -97,7 +97,7 @@ export default function AdminSidebar({
                 Skill Aura
               </span>
               <span className="text-[10px] text-slate-500 font-mono tracking-tight block -mt-1 font-semibold">
-                Direct Partner Hub
+                Student &amp; Affiliate Hub
               </span>
             </div>
           </Link>
@@ -125,10 +125,10 @@ export default function AdminSidebar({
             </div>
             <div className="min-w-0 flex-1">
               <h4 className="font-bold text-sm text-slate-900 truncate uppercase tracking-wider">
-                SkillAura Master
+                SkillAura Student
               </h4>
               <div className="text-xs font-mono text-slate-500 font-medium truncate mt-0.5">
-                SKA-ROOT88
+                SKA-ROOT88 &bull; Student
               </div>
             </div>
           </div>

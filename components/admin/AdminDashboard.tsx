@@ -124,7 +124,7 @@ export default function AdminDashboard() {
     },
     {
       id: "settings",
-      label: "Active Plan Rules",
+      label: "Account Settings",
       icon: Settings,
     },
   ];
@@ -132,21 +132,21 @@ export default function AdminDashboard() {
   const getPageTitle = () => {
     switch (activeTab) {
       case "courses":
-        return "My Enrolled Courses & Learning Hub";
+        return "My Learning Courses";
       case "profile":
-        return "Member Profile & Account Identification";
+        return "Student Profile";
       case "leaderboard":
-        return "Network Leaderboard & Top Earners";
+        return "Top Earners Leaderboard";
       case "downline":
-        return "Direct Team Members & Active Sales Roster";
+        return "Direct Team Members";
       case "commissions":
-        return "Active Direct Income & Settlement Queue";
+        return "Income & Payouts";
       case "marketing":
-        return "Referral Links & Promotional Kit";
+        return "Referral Links & Promo Tools";
       case "settings":
-        return "Active Commission Rules & Direct Payout Terms";
+        return "Account Settings & Preferences";
       default:
-        return "Active Income Command Station";
+        return "Student Dashboard";
     }
   };
 
@@ -218,7 +218,7 @@ export default function AdminDashboard() {
               </div>
               <div className="hidden md:block text-left text-xs">
                 <span className="font-bold text-slate-900 block leading-tight">
-                  Super Admin
+                  Student Member
                 </span>
                 <span className="text-[10px] font-mono text-slate-500 font-medium">
                   SKA-ROOT88
@@ -239,20 +239,20 @@ export default function AdminDashboard() {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="bg-slate-100 text-slate-700 font-bold text-[10px] px-2 py-0.5 uppercase tracking-wider rounded-[4px] border border-slate-200">
-                        Direct Partner
+                        Enrolled Student
                       </span>
                       <span className="text-xs text-slate-500 font-mono">
                         ID: <strong className="text-slate-800">SKA-ROOT88</strong>
                       </span>
                       <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1">
-                        <Activity className="w-3.5 h-3.5" /> 100% Active Direct Income
+                        <Activity className="w-3.5 h-3.5" /> Active Learner &amp; Affiliate
                       </span>
                     </div>
                     <h2 className="text-base sm:text-xl font-bold text-slate-900 uppercase tracking-wide font-[family-name:var(--font-yantramanav)]">
-                      Welcome back, SkillAura Master
+                      Welcome back, Student
                     </h2>
                     <p className="text-xs text-slate-500 max-w-xl">
-                      Monitor your personal direct course sales, milestone progress, and available wallet balance.
+                      Access your enrolled course lessons, personal referral income, and wallet earnings.
                     </p>
                   </div>
 
@@ -542,15 +542,15 @@ export default function AdminDashboard() {
           {/* TAB 5: MARKETING & PROMO TOOLS (With Commission Chart Underneath) */}
           {activeTab === "marketing" && <PromoToolsSection />}
 
-          {/* TAB 6: PLAN SETTINGS */}
+          {/* TAB 6: STUDENT ACCOUNT SETTINGS */}
           {activeTab === "settings" && (
             <div className="bg-white border border-slate-200 p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-xs max-w-3xl rounded-[4px]">
               <div className="border-b border-slate-200 pb-3">
                 <h3 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
-                  Active Direct Selling Plan Configuration
+                  Student Account &amp; Notification Preferences
                 </h3>
                 <p className="text-[11px] text-slate-500">
-                  Configure direct active payout rules, statutory tax withholdings, and instant settlement limits
+                  Manage your personal learning notifications, payout alerts, and security settings
                 </p>
               </div>
 
@@ -558,10 +558,10 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between p-3.5 border border-slate-200 bg-slate-50 gap-3 rounded-[4px]">
                   <div>
                     <span className="font-bold text-slate-900 block text-xs uppercase tracking-wider">
-                      Instant Direct Commission Credit
+                      Instant WhatsApp Payout Alerts
                     </span>
                     <span className="text-slate-500 font-normal text-[11px]">
-                      Automatically credit 50% - 70% active earnings into partner wallet immediately upon checkout
+                      Receive automated WhatsApp messages whenever referral income or payouts are credited
                     </span>
                   </div>
                   <input
@@ -574,10 +574,10 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between p-3.5 border border-slate-200 bg-slate-50 gap-3 rounded-[4px]">
                   <div>
                     <span className="font-bold text-slate-900 block text-xs uppercase tracking-wider">
-                      Statutory TDS Deduction (5%)
+                      Course Completion Certificates
                     </span>
                     <span className="text-slate-500 font-normal text-[11px]">
-                      Deduct standard 5% TDS with quarterly Form 16A generation for active earnings
+                      Automatically generate verified skill certificates upon finishing all video lessons
                     </span>
                   </div>
                   <input
@@ -590,10 +590,10 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between p-3.5 border border-slate-200 bg-slate-50 gap-3 rounded-[4px]">
                   <div>
                     <span className="font-bold text-slate-900 block text-xs uppercase tracking-wider">
-                      Auto UPI Withdrawal Settlement
+                      Two-Factor Account Security (OTP)
                     </span>
                     <span className="text-slate-500 font-normal text-[11px]">
-                      Disburse withdrawal requests up to ₹10,000 instantly to verified UPI VPA
+                      Secure wallet withdrawals with SMS and WhatsApp OTP verification
                     </span>
                   </div>
                   <input

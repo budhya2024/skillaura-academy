@@ -587,12 +587,9 @@ export default function CommissionPlanSection() {
                           PAID
                         </span>
                       ) : (
-                        <button
-                          onClick={() => handleApprovePayout(pay.id)}
-                          className="bg-[#116E63] hover:bg-[#0c5048] text-white font-bold px-3 py-1 text-xs transition-colors cursor-pointer uppercase tracking-wider rounded-[4px]"
-                        >
-                          Approve &amp; Pay
-                        </button>
+                        <span className="inline-block text-[10px] font-bold uppercase text-amber-800 bg-amber-50 px-2 py-0.5 border border-amber-200 rounded-[3px]">
+                          PROCESSING
+                        </span>
                       )}
                     </td>
                   </tr>
