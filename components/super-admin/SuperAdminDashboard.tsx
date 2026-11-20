@@ -82,8 +82,8 @@ export default function SuperAdminDashboard() {
 
       {/* 2. Main Workspace (Offset for Left Sidebar with lg:pl-64) */}
       <div className="flex-1 flex flex-col min-w-0 lg:pl-64 min-h-screen">
-        {/* Top Header - Fixed & Sticky */}
-        <header className="h-14 sm:h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        {/* Top Header - Not Fixed / Static Flow */}
+        <header className="h-14 sm:h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-6 flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
@@ -98,9 +98,6 @@ export default function SuperAdminDashboard() {
                 <h1 className="text-xs sm:text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
                   {getTabTitle()}
                 </h1>
-                <span className="text-xs text-amber-700 dark:text-amber-400 font-bold uppercase tracking-wider hidden sm:inline">
-                  • Super Admin
-                </span>
               </div>
               <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 hidden md:block font-medium">
                 Skill Aura Academy Master Control &amp; Central Operations Hub
@@ -124,7 +121,7 @@ export default function SuperAdminDashboard() {
               )}
             </button>
 
-            {/* Super Admin User Profile Tag - Click to Open Profile, Password & Dark Mode Settings */}
+            {/* Admin Profile Avatar Shortcut (Clean, Super Admin text hidden) */}
             <button
               onClick={() => setActiveTab("profile")}
               className={`flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800 cursor-pointer hover:opacity-85 transition-all text-left rounded-[4px] p-1 ${
@@ -132,23 +129,23 @@ export default function SuperAdminDashboard() {
                   ? "bg-[#116E63]/10 dark:bg-[#116E63]/25 ring-1 ring-[#116E63]/40"
                   : ""
               }`}
-              title="Click to manage profile, change password & toggle dark mode"
+              title="Manage profile, password & security settings"
             >
               <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-amber-500 shrink-0 bg-slate-100 dark:bg-slate-800 relative">
                 <Image
                   src="/images/founder.jpeg"
-                  alt="Super Admin"
+                  alt="Admin"
                   width={32}
                   height={32}
                   className="w-full h-full object-cover object-top"
                 />
               </div>
               <div className="hidden md:block text-left text-xs">
-                <span className="font-bold text-slate-900 dark:text-white block leading-tight">
-                  Super Admin
+                <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 block leading-tight">
+                  Settings
                 </span>
-                <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-medium">
-                  Settings &bull; Root
+                <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 font-medium">
+                  Root
                 </span>
               </div>
             </button>
