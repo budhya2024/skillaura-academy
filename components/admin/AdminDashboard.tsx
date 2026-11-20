@@ -36,7 +36,6 @@ import {
 import DownlineTable from "./DownlineTable";
 import CommissionPlanSection from "./CommissionPlanSection";
 import LeaderboardSection from "./LeaderboardSection";
-import TopEarnersCards from "./TopEarnersCards";
 import ProfileSection from "./ProfileSection";
 import PromoToolsSection from "./PromoToolsSection";
 import MyCoursesSection from "./MyCoursesSection";
@@ -211,7 +210,7 @@ export default function AdminDashboard() {
               onClick={() =>
                 alert("Live Alert: ₹3,250 Active Direct Commission credited for Business Mastery sale!")
               }
-              className="p-1.5 sm:p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 relative cursor-pointer rounded-[4px]"
+              className="p-1.5 sm:p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 relative cursor-pointer rounded-full"
               title="Alerts"
               aria-label="Notifications"
             >
@@ -443,39 +442,6 @@ export default function AdminDashboard() {
                     <span>25 Sales Goal</span>
                   </div>
                 </div>
-              </div>
-
-              {/* 3-Box Top Earners Section (Today's, Last 7 Days, Last 30 Days) */}
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[4px] p-4 sm:p-5 shadow-xs space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-[4px] bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-                      <Trophy className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
-                          Top Earners &bull; Leaderboard Showcase
-                        </h3>
-                        <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 px-2 py-0.2 rounded-[3px] hidden sm:inline-block">
-                          Live Verified
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                        Official network rankings updated across Today, Last 7 Days, and Last 30 Days
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setActiveTab("leaderboard")}
-                    className="text-xs font-bold text-[#116E63] dark:text-emerald-400 hover:text-[#0c5c53] uppercase tracking-wider cursor-pointer flex items-center gap-1 self-start sm:self-auto"
-                  >
-                    <span>View All Rankings</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
-                <TopEarnersCards />
               </div>
 
               {/* Quick Navigation Cards */}
