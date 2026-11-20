@@ -57,14 +57,14 @@ export default function DownlineTable() {
   };
 
   return (
-    <div className="bg-white border border-slate-200 shadow-xs overflow-hidden flex flex-col rounded-[4px] font-sans">
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden flex flex-col rounded-[4px] font-sans transition-colors">
       {/* Top Header & Search Controls */}
-      <div className="p-4 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div>
-          <h3 className="text-sm sm:text-base font-bold text-slate-900 uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
+          <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
             Direct Team Members ({filteredMembers.length})
           </h3>
-          <p className="text-xs sm:text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             Active directly enrolled students and direct partners.
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function DownlineTable() {
                 setSearch(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 focus:outline-none focus:border-[#116E63] rounded-[4px] text-slate-800"
+              className="w-full pl-8 pr-3 py-1.5 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#116E63] rounded-[4px] text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
             />
           </div>
 
@@ -91,7 +91,7 @@ export default function DownlineTable() {
               setStatusFilter(e.target.value);
               setCurrentPage(1);
             }}
-            className="px-2.5 py-1.5 text-xs bg-white border border-slate-200 focus:outline-none focus:border-[#116E63] text-slate-700 font-semibold rounded-[4px] cursor-pointer"
+            className="px-2.5 py-1.5 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#116E63] text-slate-700 dark:text-slate-200 font-semibold rounded-[4px] cursor-pointer"
           >
             <option value="all">All Status</option>
             <option value="active">Active</option>
@@ -104,7 +104,7 @@ export default function DownlineTable() {
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[580px]">
           <thead>
-            <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-xs tracking-wider">
+            <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 uppercase font-bold text-xs tracking-wider">
               <th className="py-3 px-4">Member Name &amp; ID</th>
               <th className="py-3 px-3">Enrolled Course</th>
               <th className="py-3 px-3">My Earning</th>
@@ -112,17 +112,17 @@ export default function DownlineTable() {
               <th className="py-3 px-4 text-right">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
             {paginatedMembers.length > 0 ? (
               paginatedMembers.map((member) => (
                 <tr
                   key={member.id}
-                  className="hover:bg-slate-50 transition-colors"
+                  className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
                 >
                   {/* Member Name & ID */}
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full overflow-hidden border border-slate-200 bg-slate-100 shrink-0 relative shadow-2xs">
+                      <div className="w-9 h-9 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 shrink-0 relative shadow-2xs">
                         <Image
                           src="/images/founder.jpeg"
                           alt={member.name}
@@ -131,10 +131,10 @@ export default function DownlineTable() {
                         />
                       </div>
                       <div>
-                        <div className="font-bold text-slate-900 leading-tight text-xs sm:text-sm">
+                        <div className="font-bold text-slate-900 dark:text-white leading-tight text-xs sm:text-sm">
                           {member.name}
                         </div>
-                        <div className="text-xs font-mono text-slate-500 font-semibold">
+                        <div className="text-xs font-mono text-slate-500 dark:text-slate-400 font-semibold">
                           ID: {member.id}
                         </div>
                       </div>
@@ -143,17 +143,17 @@ export default function DownlineTable() {
 
                   {/* Course Package */}
                   <td className="py-3 px-3">
-                    <span className="text-slate-800 font-medium line-clamp-1 text-xs sm:text-sm">
+                    <span className="text-slate-800 dark:text-slate-300 font-medium line-clamp-1 text-xs sm:text-sm">
                       {member.package}
                     </span>
                   </td>
 
                   {/* My Earning */}
                   <td className="py-3 px-3 font-mono">
-                    <span className="font-bold text-emerald-700 text-sm sm:text-base block">
+                    <span className="font-bold text-emerald-700 dark:text-emerald-400 text-sm sm:text-base block">
                       +₹{member.totalCommission.toLocaleString()}
                     </span>
-                    <span className="text-xs text-slate-500 font-sans uppercase font-semibold">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-sans uppercase font-semibold">
                       My Commission
                     </span>
                   </td>
@@ -163,8 +163,8 @@ export default function DownlineTable() {
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 text-xs font-bold uppercase rounded-[4px] ${
                         member.status === "active"
-                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                          : "bg-amber-50 text-amber-700 border border-amber-200"
+                          ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60"
+                          : "bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60"
                       }`}
                     >
                       {member.status}
@@ -175,7 +175,7 @@ export default function DownlineTable() {
                   <td className="py-3 px-4 text-right">
                     <button
                       onClick={() => setSelectedMember(member)}
-                      className="px-3 py-1.5 text-xs font-bold text-[#116E63] bg-[#116E63]/10 hover:bg-[#116E63] hover:text-white border border-[#116E63]/30 rounded-[4px] inline-flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                      className="px-3 py-1.5 text-xs font-bold text-[#116E63] dark:text-emerald-400 bg-[#116E63]/10 dark:bg-[#116E63]/25 hover:bg-[#116E63] hover:text-white border border-[#116E63]/30 rounded-[4px] inline-flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
                       title="View Member Details on Right Side"
                     >
                       <Eye className="w-3.5 h-3.5" />
@@ -186,7 +186,7 @@ export default function DownlineTable() {
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="py-8 text-center text-slate-500 text-xs">
+                <td colSpan={5} className="py-8 text-center text-slate-500 dark:text-slate-400 text-xs">
                   No members found matching your search.
                 </td>
               </tr>
@@ -196,17 +196,17 @@ export default function DownlineTable() {
       </div>
 
       {/* Pagination Footer */}
-      <div className="p-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-600">
+      <div className="p-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
         <div>
-          Showing <strong className="text-slate-900">{paginatedMembers.length}</strong> of{" "}
-          <strong className="text-slate-900">{filteredMembers.length}</strong> members
+          Showing <strong className="text-slate-900 dark:text-white">{paginatedMembers.length}</strong> of{" "}
+          <strong className="text-slate-900 dark:text-white">{filteredMembers.length}</strong> members
         </div>
 
         <div className="flex items-center gap-1">
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="p-1.5 border border-slate-200 bg-white text-slate-700 disabled:opacity-40 hover:bg-slate-100 cursor-pointer rounded-[4px]"
+            className="p-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer rounded-[4px]"
             aria-label="Previous Page"
           >
             <ChevronLeft className="w-3.5 h-3.5" />
@@ -217,7 +217,7 @@ export default function DownlineTable() {
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="p-1.5 border border-slate-200 bg-white text-slate-700 disabled:opacity-40 hover:bg-slate-100 cursor-pointer rounded-[4px]"
+            className="p-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer rounded-[4px]"
             aria-label="Next Page"
           >
             <ChevronRight className="w-3.5 h-3.5" />
@@ -232,14 +232,14 @@ export default function DownlineTable() {
         <div className="fixed inset-0 z-50 flex justify-end animate-in fade-in duration-200">
           {/* Backdrop Blur Overlay */}
           <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
             onClick={() => setSelectedMember(null)}
           />
 
           {/* Right-Side Drawer Panel */}
-          <div className="relative w-full max-w-md sm:max-w-md bg-white text-slate-800 flex flex-col h-full z-50 shadow-2xl border-l border-slate-200 overflow-y-auto animate-in slide-in-from-right duration-300">
+          <div className="relative w-full max-w-md sm:max-w-md bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 flex flex-col h-full z-50 shadow-2xl border-l border-slate-200 dark:border-slate-800 overflow-y-auto animate-in slide-in-from-right duration-300">
             {/* Drawer Header */}
-            <div className="bg-slate-900 text-white p-4 flex items-center justify-between shrink-0 border-b border-slate-800">
+            <div className="bg-slate-900 dark:bg-slate-950 text-white p-4 flex items-center justify-between shrink-0 border-b border-slate-800">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-300 font-[family-name:var(--font-yantramanav)]">
                 Member Profile Details
               </span>
@@ -255,9 +255,9 @@ export default function DownlineTable() {
             {/* Drawer Content */}
             <div className="p-5 space-y-5 flex-1 overflow-y-auto text-xs">
               {/* Circle Profile Image & Member ID Highlight */}
-              <div className="text-center space-y-2.5 pb-4 border-b border-slate-100">
+              <div className="text-center space-y-2.5 pb-4 border-b border-slate-100 dark:border-slate-800">
                 {/* CIRCLE PROFILE IMAGE */}
-                <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#116E63]/30 bg-slate-100 shadow-md relative mx-auto ring-4 ring-slate-50">
+                <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#116E63]/30 bg-slate-100 dark:bg-slate-800 shadow-md relative mx-auto ring-4 ring-slate-50 dark:ring-slate-800">
                   <Image
                     src="/images/founder.jpeg"
                     alt={selectedMember.name}
@@ -267,26 +267,26 @@ export default function DownlineTable() {
                 </div>
 
                 <div>
-                  <h4 className="text-base sm:text-lg font-bold text-slate-900 uppercase font-[family-name:var(--font-yantramanav)]">
+                  <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white uppercase font-[family-name:var(--font-yantramanav)]">
                     {selectedMember.name}
                   </h4>
-                  <div className="text-xs text-slate-500 font-medium">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                     {selectedMember.rank}
                   </div>
                 </div>
 
                 {/* MEMBER ID WITH QUICK COPY */}
                 <div className="flex items-center justify-center gap-1.5 pt-1">
-                  <span className="font-mono text-xs font-bold text-slate-700 bg-slate-100 border border-slate-200 px-3 py-1 rounded-[4px]">
-                    Member ID: <strong className="text-slate-950">{selectedMember.id}</strong>
+                  <span className="font-mono text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1 rounded-[4px]">
+                    Member ID: <strong className="text-slate-950 dark:text-white">{selectedMember.id}</strong>
                   </span>
                   <button
                     onClick={() => handleCopyId(selectedMember.id)}
-                    className="p-1 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-[4px] text-slate-600 hover:text-[#116E63] cursor-pointer"
+                    className="p-1 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-[4px] text-slate-600 dark:text-slate-300 hover:text-[#116E63] cursor-pointer"
                     title="Copy Member ID"
                   >
                     {copiedId ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     ) : (
                       <Copy className="w-3.5 h-3.5" />
                     )}
@@ -295,26 +295,26 @@ export default function DownlineTable() {
               </div>
 
               {/* MY EARNING DISPLAY CARD (Prominently Highlighted) */}
-              <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-[4px] text-center space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 block">
+              <div className="p-3.5 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 rounded-[4px] text-center space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 block">
                   My Earning From This Student
                 </span>
-                <span className="text-2xl font-black text-emerald-700 font-mono block">
+                <span className="text-2xl font-black text-emerald-700 dark:text-emerald-400 font-mono block">
                   +₹{selectedMember.totalCommission.toLocaleString()}
                 </span>
-                <span className="text-[10px] text-emerald-600 font-medium block">
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400/80 font-medium block">
                   Direct Referral Commission Credited &bull; KYC Verified
                 </span>
               </div>
 
               {/* Account Status Badge */}
-              <div className="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-[4px]">
-                <span className="text-slate-500 font-medium">Account Status:</span>
+              <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-[4px]">
+                <span className="text-slate-500 dark:text-slate-400 font-medium">Account Status:</span>
                 <span
                   className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-[4px] ${
                     selectedMember.status === "active"
-                      ? "bg-emerald-100 text-emerald-800"
-                      : "bg-amber-100 text-amber-800"
+                      ? "bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
+                      : "bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800"
                   }`}
                 >
                   {selectedMember.status}
@@ -322,48 +322,48 @@ export default function DownlineTable() {
               </div>
 
               {/* Enrolled Course & Direct Team Details */}
-              <div className="space-y-2 border border-slate-200 rounded-[4px] p-3.5 bg-white">
-                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                  <span className="text-slate-500 font-medium">Enrolled Course:</span>
-                  <span className="font-bold text-slate-900 text-right max-w-[200px] truncate">
+              <div className="space-y-2 border border-slate-200 dark:border-slate-800 rounded-[4px] p-3.5 bg-white dark:bg-slate-900">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">Enrolled Course:</span>
+                  <span className="font-bold text-slate-900 dark:text-white text-right max-w-[200px] truncate">
                     {selectedMember.package}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                  <span className="text-slate-500 font-medium">Direct Sponsor:</span>
-                  <span className="font-semibold text-slate-800">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">Direct Sponsor:</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">
                     {selectedMember.sponsorName}{" "}
-                    <span className="font-mono text-slate-500 text-[11px]">
+                    <span className="font-mono text-slate-500 dark:text-slate-400 text-[11px]">
                       ({selectedMember.sponsorId})
                     </span>
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                  <span className="text-slate-500 font-medium">Joining Date:</span>
-                  <span className="font-mono text-slate-700">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">Joining Date:</span>
+                  <span className="font-mono text-slate-700 dark:text-slate-300">
                     {selectedMember.joinDate}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                  <span className="text-slate-500 font-medium">Direct Referrals:</span>
-                  <span className="font-mono font-bold text-slate-900">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">Direct Referrals:</span>
+                  <span className="font-mono font-bold text-slate-900 dark:text-white">
                     {selectedMember.directs} Students
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                  <span className="text-slate-500 font-medium">Official Email:</span>
-                  <span className="font-mono text-slate-800">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">Official Email:</span>
+                  <span className="font-mono text-slate-800 dark:text-slate-200">
                     {selectedMember.email}
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-500 font-medium">Phone / WhatsApp:</span>
-                  <span className="font-mono text-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">Phone / WhatsApp:</span>
+                  <span className="font-mono text-slate-800 dark:text-slate-200">
                     {selectedMember.phone}
                   </span>
                 </div>
@@ -371,7 +371,7 @@ export default function DownlineTable() {
             </div>
 
             {/* Drawer Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/60 border-t border-slate-200 dark:border-slate-800 flex justify-end shrink-0">
               <button
                 onClick={() => setSelectedMember(null)}
                 className="w-full py-2 bg-[#116E63] hover:bg-[#0c5c53] text-white font-bold text-xs uppercase tracking-wider rounded-[4px] transition-colors cursor-pointer text-center"

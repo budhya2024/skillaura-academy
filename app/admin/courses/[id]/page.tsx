@@ -111,7 +111,7 @@ export default function CourseWatchPage({
   const courseProgress = Math.round((course.completedLessons / course.totalLessons) * 100);
 
   return (
-    <div className="flex bg-slate-50 min-h-screen text-slate-800 font-sans">
+    <div className="flex bg-slate-50 dark:bg-slate-950 min-h-screen text-slate-800 dark:text-slate-100 font-sans">
       {/* 1. Admin Left Sidebar - ALWAYS PRESENT & VISIBLE */}
       <AdminSidebar
         activeTab="courses"
@@ -122,11 +122,11 @@ export default function CourseWatchPage({
       {/* 2. Main Workspace (Offset for Left Sidebar with lg:pl-64) */}
       <div className="flex-1 flex flex-col min-w-0 lg:pl-64 min-h-screen">
         {/* Top Header - Fixed / Sticky at top */}
-        <header className="h-14 sm:h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-14 sm:h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="lg:hidden p-2 text-slate-700 hover:bg-slate-100 cursor-pointer shrink-0 rounded-[4px]"
+              className="lg:hidden p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer shrink-0 rounded-[4px]"
               aria-label="Open sidebar drawer"
             >
               <Menu className="w-5 h-5" />
@@ -134,13 +134,13 @@ export default function CourseWatchPage({
             <div className="flex items-center gap-2 min-w-0">
               <Link
                 href="/admin?tab=courses"
-                className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 shrink-0"
+                className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 shrink-0"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">My Courses</span>
               </Link>
-              <span className="text-slate-400 hidden sm:inline">/</span>
-              <h1 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
+              <span className="text-slate-400 dark:text-slate-600 hidden sm:inline">/</span>
+              <h1 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
                 {course.title}
               </h1>
             </div>
@@ -148,14 +148,14 @@ export default function CourseWatchPage({
 
           <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
             {/* Dark Mode Toggle */}
-            <ThemeToggle className="border border-slate-200" />
+            <ThemeToggle className="border border-slate-200 dark:border-slate-700" />
 
-            <span className="text-slate-600 font-medium hidden sm:inline">
-              Progress: <strong className="text-slate-900 font-mono">{course.completedLessons}/{course.totalLessons}</strong> ({courseProgress}%)
+            <span className="text-slate-600 dark:text-slate-400 font-medium hidden sm:inline">
+              Progress: <strong className="text-slate-900 dark:text-white font-mono">{course.completedLessons}/{course.totalLessons}</strong> ({courseProgress}%)
             </span>
-            <div className="w-20 sm:w-28 h-2 bg-slate-200 rounded-[4px] overflow-hidden">
+            <div className="w-20 sm:w-28 h-2 bg-slate-200 dark:bg-slate-800 rounded-[4px] overflow-hidden">
               <div
-                className="h-full bg-[#116E63] transition-all"
+                className="h-full bg-[#116E63] dark:bg-emerald-400 transition-all"
                 style={{ width: `${courseProgress}%` }}
               ></div>
             </div>
@@ -238,16 +238,16 @@ export default function CourseWatchPage({
               </div>
 
               {/* Current Lesson Header & Action Controls */}
-              <div className="bg-white border border-slate-200 p-4 rounded-[4px] shadow-xs space-y-3">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#116E63]">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-400">
                       {currentModule.title}
                     </span>
-                    <h2 className="text-base sm:text-lg font-bold text-slate-900 mt-0.5 font-[family-name:var(--font-yantramanav)] uppercase">
+                    <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-0.5 font-[family-name:var(--font-yantramanav)] uppercase">
                       {currentLesson.name}
                     </h2>
-                    <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
+                    <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
                       <span className="flex items-center gap-1 font-mono">
                         <Clock className="w-3.5 h-3.5" /> {currentLesson.duration}
                       </span>
@@ -261,7 +261,7 @@ export default function CourseWatchPage({
                     className={`px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shrink-0 ${
                       currentLesson.completed
                         ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                        : "bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300"
+                        : "bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700"
                     }`}
                   >
                     {currentLesson.completed ? (
@@ -271,7 +271,7 @@ export default function CourseWatchPage({
                       </>
                     ) : (
                       <>
-                        <CheckCircle2 className="w-4 h-4 text-slate-500" />
+                        <CheckCircle2 className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                         <span>Mark as Complete</span>
                       </>
                     )}
@@ -279,11 +279,11 @@ export default function CourseWatchPage({
                 </div>
 
                 {/* Previous / Next Lesson Buttons */}
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                   <button
                     onClick={handlePrevLesson}
                     disabled={activeModuleIdx === 0 && activeLessonIdx === 0}
-                    className="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-[4px] text-xs font-bold uppercase tracking-wider flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                    className="px-3 py-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-[4px] text-xs font-bold uppercase tracking-wider flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" /> Previous
                   </button>
@@ -303,17 +303,17 @@ export default function CourseWatchPage({
 
               {/* Lesson Overview & Resources */}
               {currentLesson.description && (
-                <div className="bg-white border border-slate-200 p-4 rounded-[4px] shadow-xs space-y-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs space-y-2">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                     Lesson Summary
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     {currentLesson.description}
                   </p>
 
                   {currentLesson.resources && currentLesson.resources.length > 0 && (
-                    <div className="pt-3 border-t border-slate-100 space-y-2">
-                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                    <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                         Lesson Resource Files
                       </h4>
                       <div className="flex flex-wrap gap-2">
@@ -321,11 +321,11 @@ export default function CourseWatchPage({
                           <button
                             key={rIdx}
                             onClick={() => alert(`Downloading: ${res.name}`)}
-                            className="px-2.5 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-[4px] text-xs text-slate-700 flex items-center gap-1.5 cursor-pointer font-medium"
+                            className="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-[4px] text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1.5 cursor-pointer font-medium"
                           >
-                            <Download className="w-3.5 h-3.5 text-[#116E63]" />
+                            <Download className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
                             <span>{res.name}</span>
-                            <span className="text-[10px] text-slate-400 font-mono">({res.size})</span>
+                            <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">({res.size})</span>
                           </button>
                         ))}
                       </div>
@@ -337,16 +337,16 @@ export default function CourseWatchPage({
 
             {/* Module-Wise Curriculum Playlist (4 Cols) */}
             <div className="lg:col-span-4 space-y-3">
-              <div className="bg-white border border-slate-200 p-3.5 rounded-[4px] shadow-xs flex items-center justify-between">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3.5 rounded-[4px] shadow-xs flex items-center justify-between">
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
                     Course Modules
                   </h3>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
                     {course.modules.length} Modules • {course.totalLessons} Lessons
                   </p>
                 </div>
-                <span className="text-xs font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-[4px]">
+                <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-[4px] border border-slate-200 dark:border-slate-700">
                   {course.completedLessons}/{course.totalLessons} Done
                 </span>
               </div>
@@ -361,43 +361,43 @@ export default function CourseWatchPage({
                   return (
                     <div
                       key={module.id}
-                      className={`border rounded-[4px] overflow-hidden bg-white shadow-2xs ${
-                        isCurrentMod ? "border-[#116E63]" : "border-slate-200"
+                      className={`border rounded-[4px] overflow-hidden bg-white dark:bg-slate-900 shadow-2xs ${
+                        isCurrentMod ? "border-[#116E63] dark:border-emerald-500" : "border-slate-200 dark:border-slate-800"
                       }`}
                     >
                       {/* Module Header Button */}
                       <button
                         onClick={() => toggleModuleAccordion(mIdx)}
                         className={`w-full p-3 text-left flex items-center justify-between cursor-pointer transition-colors ${
-                          isCurrentMod ? "bg-teal-50/60" : "bg-slate-50 hover:bg-slate-100"
+                          isCurrentMod ? "bg-teal-50/60 dark:bg-teal-950/40" : "bg-slate-50 dark:bg-slate-800/70 hover:bg-slate-100 dark:hover:bg-slate-800"
                         }`}
                       >
                         <div className="pr-2 space-y-0.5">
                           <div className="flex items-center gap-2">
                             <span
                               className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-[3px] ${
-                                isCurrentMod ? "bg-[#116E63] text-white" : "bg-slate-200 text-slate-700"
+                                isCurrentMod ? "bg-[#116E63] text-white" : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
                               }`}
                             >
                               Module {mIdx + 1}
                             </span>
-                            <span className="text-[10px] font-mono text-slate-500">
+                            <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
                               {completedInMod}/{module.lessons.length}
                             </span>
                           </div>
-                          <div className="text-xs font-bold text-slate-900 line-clamp-1">
+                          <div className="text-xs font-bold text-slate-900 dark:text-white line-clamp-1">
                             {module.title.replace(/^Module \d+:\s*/, "")}
                           </div>
                         </div>
 
-                        <div className="shrink-0 text-slate-400">
+                        <div className="shrink-0 text-slate-400 dark:text-slate-500">
                           {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                         </div>
                       </button>
 
                       {/* Lessons Under Module */}
                       {isExpanded && (
-                        <div className="divide-y divide-slate-100">
+                        <div className="divide-y divide-slate-100 dark:divide-slate-800">
                           {module.lessons.map((lesson, lIdx) => {
                             const isCurrent = activeModuleIdx === mIdx && activeLessonIdx === lIdx;
 
@@ -407,22 +407,22 @@ export default function CourseWatchPage({
                                 onClick={() => selectLesson(mIdx, lIdx)}
                                 className={`p-2.5 sm:p-3 flex items-center justify-between text-xs cursor-pointer transition-colors ${
                                   isCurrent
-                                    ? "bg-[#116E63]/10 font-bold text-[#116E63] border-l-4 border-l-[#116E63]"
-                                    : "hover:bg-slate-50 text-slate-700"
+                                    ? "bg-[#116E63]/10 dark:bg-[#116E63]/25 font-bold text-[#116E63] dark:text-emerald-400 border-l-4 border-l-[#116E63] dark:border-l-emerald-400"
+                                    : "hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300"
                                 }`}
                               >
                                 <div className="flex items-center gap-2 pr-2 truncate">
                                   {lesson.completed ? (
                                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                                   ) : isCurrent ? (
-                                    <Play className="w-3.5 h-3.5 text-[#116E63] fill-current shrink-0" />
+                                    <Play className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400 fill-current shrink-0" />
                                   ) : (
-                                    <Play className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                    <Play className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
                                   )}
                                   <span className="truncate">{lesson.name}</span>
                                 </div>
 
-                                <span className="text-[11px] font-mono text-slate-400 shrink-0">
+                                <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 shrink-0">
                                   {lesson.duration}
                                 </span>
                               </div>

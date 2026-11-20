@@ -34,7 +34,7 @@ export default function MyCoursesSection() {
           return (
             <div
               key={course.id}
-              className="bg-white border border-slate-200 rounded-[4px] overflow-hidden shadow-xs flex flex-col hover:border-[#116E63]/40 transition-colors"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[4px] overflow-hidden shadow-xs flex flex-col hover:border-[#116E63]/40 dark:hover:border-[#116E63]/60 transition-colors"
             >
               {/* Thumbnail */}
               <div className="relative h-40 w-full bg-slate-900 overflow-hidden">
@@ -58,25 +58,25 @@ export default function MyCoursesSection() {
               {/* Body */}
               <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-bold text-sm sm:text-base text-slate-900 font-[family-name:var(--font-yantramanav)] uppercase leading-snug">
+                  <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white font-[family-name:var(--font-yantramanav)] uppercase leading-snug">
                     {course.title}
                   </h3>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Mentor: <strong className="text-slate-700">{course.instructor}</strong>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    Mentor: <strong className="text-slate-700 dark:text-slate-300">{course.instructor}</strong>
                   </p>
                 </div>
 
                 {/* Simple Progress Bar */}
                 <div className="space-y-1">
-                  <div className="flex items-center justify-between text-xs text-slate-600 font-medium">
+                  <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 font-medium">
                     <span>Progress:</span>
-                    <span className="font-mono text-slate-900 font-bold">
+                    <span className="font-mono text-slate-900 dark:text-white font-bold">
                       {course.completedLessons}/{course.totalLessons} ({progressPercent}%)
                     </span>
                   </div>
-                  <div className="w-full h-1.5 bg-slate-100 rounded-[4px] overflow-hidden">
+                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-[4px] overflow-hidden">
                     <div
-                      className={`h-full ${course.status === "completed" ? "bg-emerald-600" : "bg-[#116E63]"}`}
+                      className={`h-full ${course.status === "completed" ? "bg-emerald-600 dark:bg-emerald-500" : "bg-[#116E63] dark:bg-emerald-400"}`}
                       style={{ width: `${progressPercent}%` }}
                     ></div>
                   </div>
@@ -99,7 +99,7 @@ export default function MyCoursesSection() {
       </div>
 
       {filteredCourses.length === 0 && (
-        <div className="bg-white border border-slate-200 p-8 text-center rounded-[4px] text-slate-500 text-xs">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 text-center rounded-[4px] text-slate-500 dark:text-slate-400 text-xs">
           No courses found matching your filter.
         </div>
       )}

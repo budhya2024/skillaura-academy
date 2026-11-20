@@ -48,7 +48,7 @@ export default function SuperAdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex text-slate-800 font-sans">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 flex text-slate-800 dark:text-slate-100 font-sans">
       {/* 1. Super Admin Sidebar */}
       <SuperAdminSidebar
         activeTab={activeTab}
@@ -61,21 +61,21 @@ export default function SuperAdminDashboard() {
       {/* 2. Main Workspace (Offset for Left Sidebar with lg:pl-64) */}
       <div className="flex-1 flex flex-col min-w-0 lg:pl-64 min-h-screen">
         {/* Top Header - Fixed & Sticky */}
-        <header className="h-14 sm:h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-14 sm:h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="lg:hidden p-2 text-slate-700 hover:bg-slate-100 cursor-pointer shrink-0 rounded-[4px]"
+              className="lg:hidden p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer shrink-0 rounded-[4px]"
               aria-label="Open sidebar"
             >
               <Menu className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-2 min-w-0">
-              <span className="text-[10px] font-bold bg-amber-500/20 text-amber-800 border border-amber-500/40 px-1.5 py-0.5 rounded-[3px] uppercase shrink-0 hidden sm:inline">
+              <span className="text-[10px] font-bold bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/40 px-1.5 py-0.5 rounded-[3px] uppercase shrink-0 hidden sm:inline">
                 Master Admin
               </span>
-              <h1 className="text-xs sm:text-base font-bold text-slate-900 uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
+              <h1 className="text-xs sm:text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
                 {getTabTitle()}
               </h1>
             </div>
@@ -86,31 +86,31 @@ export default function SuperAdminDashboard() {
             <Link
               href="/admin"
               target="_blank"
-              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold text-[#116E63] bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-[4px] transition-colors"
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold text-[#116E63] dark:text-emerald-400 bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 dark:hover:bg-teal-900/60 border border-teal-200 dark:border-teal-800 rounded-[4px] transition-colors"
             >
               <Users className="w-3.5 h-3.5" />
               <span>Student Panel</span>
-              <ExternalLink className="w-3 h-3 text-slate-400" />
+              <ExternalLink className="w-3 h-3 text-slate-400 dark:text-slate-500" />
             </Link>
 
             {/* Quick Link to Website */}
             <Link
               href="/"
               target="_blank"
-              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-[4px] transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-[4px] transition-colors"
             >
-              <BookOpen className="w-3.5 h-3.5 text-slate-500" />
+              <BookOpen className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               <span>Website</span>
-              <ExternalLink className="w-3 h-3 text-slate-400" />
+              <ExternalLink className="w-3 h-3 text-slate-400 dark:text-slate-500" />
             </Link>
 
             {/* Theme Toggle (Dark / Light) */}
-            <ThemeToggle className="border border-slate-200" />
+            <ThemeToggle className="border border-slate-200 dark:border-slate-700" />
 
             {/* Notifications */}
             <button
               onClick={() => setActiveTab("payouts")}
-              className="relative p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-[4px] cursor-pointer"
+              className="relative p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-[4px] cursor-pointer"
               title="Payouts Awaiting Approval"
             >
               <Bell className="w-4 h-4" />
@@ -120,8 +120,8 @@ export default function SuperAdminDashboard() {
             </button>
 
             {/* Super Admin User Profile Tag */}
-            <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
-              <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-amber-500 shrink-0 bg-slate-100 relative">
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800">
+              <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-amber-500 shrink-0 bg-slate-100 dark:bg-slate-800 relative">
                 <Image
                   src="/images/founder.jpeg"
                   alt="Super Admin"
@@ -131,10 +131,10 @@ export default function SuperAdminDashboard() {
                 />
               </div>
               <div className="hidden md:block text-left text-xs">
-                <span className="font-bold text-slate-900 block leading-tight">
+                <span className="font-bold text-slate-900 dark:text-white block leading-tight">
                   Super Admin
                 </span>
-                <span className="text-[10px] font-mono text-slate-500 font-medium">
+                <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-medium">
                   Root Authority
                 </span>
               </div>
