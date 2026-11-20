@@ -170,7 +170,9 @@ export default function NotificationDropdown() {
       >
         <Bell className="w-4 h-4" />
         {unreadCount > 0 && (
-          <span className="w-2.5 h-2.5 bg-rose-500 ring-2 ring-white dark:ring-slate-900 absolute top-0.5 right-0.5 rounded-full animate-pulse" />
+          <span className="absolute -top-1 -right-1 bg-rose-500 text-white font-mono font-bold text-[10px] min-w-4 h-4 px-1 rounded-full flex items-center justify-center ring-2 ring-white dark:ring-slate-900 shadow-xs animate-pulse">
+            {unreadCount}
+          </span>
         )}
       </button>
 
@@ -316,15 +318,51 @@ export default function NotificationDropdown() {
                         />
                       )}
                     </div>
-                    <p className="text-[11px] text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
                       {notif.message}
                     </p>
+
+                    {/* Direct Link (No Approve/Disapprove) */}
+                    <div className="pt-1 flex items-center justify-between">
+                      <a
+                        href={
+                          notif.type === "commission"
+                            ? "/admin?tab=earnings"
+                            : notif.type === "student"
+                            ? "/admin?tab=referrals"
+                            : notif.type === "milestone"
+                            ? "/admin?tab=leaderboard"
+                            : notif.type === "payout"
+                            ? "/admin?tab=payouts"
+                            : "/admin?tab=courses"
+                        }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleRead(notif.id);
+                          setIsOpen(false);
+                        }}
+                        className="inline-flex items-center gap-1 text-xs font-bold text-[#116E63] dark:text-emerald-400 hover:underline cursor-pointer"
+                      >
+                        <span>
+                          {notif.type === "commission"
+                            ? "View Commission →"
+                            : notif.type === "student"
+                            ? "View Referral Team →"
+                            : notif.type === "milestone"
+                            ? "View Milestones →"
+                            : notif.type === "payout"
+                            ? "View Payout History →"
+                            : "View Course →"}
+                        </span>
+                      </a>
+                    </div>
+
                     <div className="flex items-center justify-between pt-1">
                       <span className="text-[10px] text-slate-400 font-mono">
                         {notif.time}
                       </span>
 
-                      {/* Item Actions (Read/Unread Toggle & Delete) */}
+                      {/* Item Actions (Read/Unread Toggle & Delete particular notification) */}
                       <div className="flex items-center gap-1.5 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                         <button
                           onClick={(e) => toggleRead(notif.id, e)}
@@ -340,7 +378,8 @@ export default function NotificationDropdown() {
                         <button
                           onClick={(e) => deleteNotification(notif.id, e)}
                           className="p-1 text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-[3px] transition-colors cursor-pointer"
-                          title="Delete notification"
+                          title="Delete this notification"
+                          aria-label="Delete notification"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>

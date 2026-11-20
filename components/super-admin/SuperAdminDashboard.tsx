@@ -11,6 +11,7 @@ import SuperAdminPayoutsManager from "./SuperAdminPayoutsManager";
 import SuperAdminCMS from "./SuperAdminCMS";
 import SuperAdminKYCManager from "./SuperAdminKYCManager";
 import SuperAdminProfileSettings from "./SuperAdminProfileSettings";
+import SuperAdminNotificationDropdown from "./SuperAdminNotificationDropdown";
 import { ENROLLED_COURSES_DATA } from "../../lib/coursesData";
 import { MOCK_DOWNLINE_LIST, MOCK_PAYOUTS } from "../../lib/networkData";
 import { getKycRecords } from "../../lib/kycData";
@@ -109,17 +110,8 @@ export default function SuperAdminDashboard() {
             {/* Theme Toggle (Dark / Light) */}
             <ThemeToggle className="border border-slate-200 dark:border-slate-700" />
 
-            {/* Notifications */}
-            <button
-              onClick={() => setActiveTab("payouts")}
-              className="relative p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-[4px] cursor-pointer"
-              title="Payouts Awaiting Approval"
-            >
-              <Bell className="w-4 h-4" />
-              {pendingPayoutCount > 0 && (
-                <span className="w-2 h-2 bg-amber-500 absolute top-1 right-1 rounded-full animate-ping"></span>
-              )}
-            </button>
+            {/* Notifications Dropdown (Shows quantity, direct links, no approve/disapprove, supports deleting individual notifications) */}
+            <SuperAdminNotificationDropdown onNavigate={(tab) => setActiveTab(tab)} />
 
             {/* Admin Profile Avatar Shortcut (Clean, Super Admin text hidden) */}
             <button
