@@ -234,11 +234,10 @@ export default function SuperAdminCMS() {
       <div className="flex items-center gap-1 overflow-x-auto border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-2 pt-2 rounded-[4px] shadow-2xs scrollbar-none">
         <button
           onClick={() => setActiveTab("announcement")}
-          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${
-            activeTab === "announcement"
-              ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
-              : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-          }`}
+          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${activeTab === "announcement"
+            ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
+            : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
         >
           <Megaphone className="w-3.5 h-3.5" />
           <span>Announcement &amp; Promo</span>
@@ -246,11 +245,10 @@ export default function SuperAdminCMS() {
 
         <button
           onClick={() => setActiveTab("hero")}
-          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${
-            activeTab === "hero"
-              ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
-              : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-          }`}
+          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${activeTab === "hero"
+            ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
+            : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
         >
           <Layers className="w-3.5 h-3.5" />
           <span>Hero Sliders ({cms.heroSlides.length})</span>
@@ -258,11 +256,10 @@ export default function SuperAdminCMS() {
 
         <button
           onClick={() => setActiveTab("stats")}
-          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${
-            activeTab === "stats"
-              ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
-              : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-          }`}
+          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${activeTab === "stats"
+            ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
+            : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
         >
           <BarChart3 className="w-3.5 h-3.5" />
           <span>Key Metrics &amp; Stats</span>
@@ -270,11 +267,10 @@ export default function SuperAdminCMS() {
 
         <button
           onClick={() => setActiveTab("about")}
-          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${
-            activeTab === "about"
-              ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
-              : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-          }`}
+          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${activeTab === "about"
+            ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
+            : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
         >
           <BookOpen className="w-3.5 h-3.5" />
           <span>About Us Section</span>
@@ -282,11 +278,10 @@ export default function SuperAdminCMS() {
 
         <button
           onClick={() => setActiveTab("testimonials")}
-          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${
-            activeTab === "testimonials"
-              ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
-              : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-          }`}
+          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${activeTab === "testimonials"
+            ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
+            : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
         >
           <MessageSquare className="w-3.5 h-3.5" />
           <span>Testimonials ({cms.testimonials.length})</span>
@@ -294,11 +289,10 @@ export default function SuperAdminCMS() {
 
         <button
           onClick={() => setActiveTab("faqs")}
-          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${
-            activeTab === "faqs"
-              ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
-              : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-          }`}
+          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${activeTab === "faqs"
+            ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
+            : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
         >
           <HelpCircle className="w-3.5 h-3.5" />
           <span>FAQs ({cms.faqs.length})</span>
@@ -306,11 +300,10 @@ export default function SuperAdminCMS() {
 
         <button
           onClick={() => setActiveTab("contact")}
-          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${
-            activeTab === "contact"
-              ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
-              : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-          }`}
+          className={`px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-colors border-b-2 flex items-center gap-1.5 ${activeTab === "contact"
+            ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-teal-50/50 dark:bg-teal-950/40"
+            : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
         >
           <Globe className="w-3.5 h-3.5" />
           <span>Contact &amp; Social Channels</span>
@@ -519,11 +512,10 @@ export default function SuperAdminCMS() {
               <button
                 key={slide.id}
                 onClick={() => setSelectedSlideId(slide.id)}
-                className={`px-3.5 py-2 text-xs font-bold uppercase rounded-[4px] border cursor-pointer transition-colors flex items-center gap-1.5 ${
-                  selectedSlideId === slide.id
-                    ? "bg-[#116E63] text-white border-[#116E63]"
-                    : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
-                }`}
+                className={`px-3.5 py-2 text-xs font-bold uppercase rounded-[4px] border cursor-pointer transition-colors flex items-center gap-1.5 ${selectedSlideId === slide.id
+                  ? "bg-[#116E63] text-white border-[#116E63]"
+                  : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                  }`}
               >
                 <span>Slide #{idx + 1}</span>
                 <span className="text-[10px] opacity-80 truncate max-w-[120px]">
