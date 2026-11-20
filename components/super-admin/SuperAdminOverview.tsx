@@ -252,38 +252,6 @@ export default function SuperAdminOverview({
               Platform analytics, student referral income generation, course curriculum studio, and company profit tracking.
             </p>
           </div>
-
-          {/* Quick Action Navigation Pills */}
-          <div className="flex items-center gap-2 flex-wrap shrink-0">
-            <button
-              onClick={() => onNavigate("courses")}
-              className="bg-[#116E63] hover:bg-[#0c5c53] text-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span>Add Course</span>
-            </button>
-            <button
-              onClick={() => onNavigate("students")}
-              className="bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <Users className="w-3.5 h-3.5" />
-              <span>Students</span>
-            </button>
-            <button
-              onClick={() => onNavigate("kyc")}
-              className="bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
-              <span>KYC ({pendingKycCount})</span>
-            </button>
-            <button
-              onClick={() => onNavigate("payouts")}
-              className="bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <Wallet className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-              <span>Payouts ({pendingPayoutCount})</span>
-            </button>
-          </div>
         </div>
       </div>
 
