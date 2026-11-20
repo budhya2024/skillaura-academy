@@ -518,13 +518,13 @@ export default function SuperAdminCoursesManager() {
               />
             </div>
 
-            <div className="flex items-center gap-1 overflow-x-auto pb-1 text-xs scrollbar-none">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs scrollbar-none">
               <button
                 onClick={() => setFilterCategory("all")}
-                className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-[3px] border cursor-pointer shrink-0 ${
+                className={`px-2.5 py-1 text-xs font-bold uppercase rounded-[3px] border cursor-pointer shrink-0 transition-colors ${
                   filterCategory === "all"
                     ? "bg-[#116E63] text-white border-[#116E63]"
-                    : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700"
+                    : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300"
                 }`}
               >
                 All ({courses.length})
@@ -533,10 +533,10 @@ export default function SuperAdminCoursesManager() {
                 <button
                   key={cat}
                   onClick={() => setFilterCategory(cat)}
-                  className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-[3px] border cursor-pointer shrink-0 ${
+                  className={`px-2.5 py-1 text-xs font-bold uppercase rounded-[3px] border cursor-pointer shrink-0 transition-colors ${
                     filterCategory === cat
                       ? "bg-[#116E63] text-white border-[#116E63]"
-                      : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700"
+                      : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300"
                   }`}
                 >
                   {cat}
@@ -572,8 +572,8 @@ export default function SuperAdminCoursesManager() {
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-1 mb-0.5">
-                        <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-400">
                           {course.category}
                         </span>
                         <div className="flex items-center gap-1">
@@ -585,16 +585,16 @@ export default function SuperAdminCoursesManager() {
                             className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 rounded-[2px]"
                             title="Edit Course & Change Thumbnail"
                           >
-                            <Edit2 className="w-3 h-3" />
+                            <Edit2 className="w-3.5 h-3.5" />
                           </button>
                         </div>
                       </div>
 
-                      <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-tight truncate">
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white leading-snug">
                         {course.title}
                       </h4>
 
-                      <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium mt-1 flex-wrap">
+                      <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 font-medium mt-1.5 flex-wrap">
                         <span className="font-semibold text-[#116E63] dark:text-emerald-400">
                           {course.modules.length} Sessions
                         </span>
@@ -636,19 +636,19 @@ export default function SuperAdminCoursesManager() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-400">
                         {selectedCourse.category}
                       </span>
                       <span className="text-slate-300 dark:text-slate-700">&bull;</span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                      <span className="text-xs text-slate-500 dark:text-slate-400 font-mono font-semibold">
                         Course ID: #{selectedCourse.id}
                       </span>
                     </div>
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white uppercase font-[family-name:var(--font-yantramanav)] mt-0.5 leading-snug">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white uppercase font-[family-name:var(--font-yantramanav)] mt-0.5 leading-snug">
                       {selectedCourse.title}
                     </h3>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                      Instructor: <strong className="text-slate-700 dark:text-slate-300">{selectedCourse.instructor}</strong> &bull; Total: <strong className="text-slate-700 dark:text-slate-300 font-mono">{selectedCourse.duration}</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
+                      Instructor: <strong className="text-slate-800 dark:text-slate-200">{selectedCourse.instructor}</strong> &bull; Total: <strong className="text-slate-800 dark:text-slate-200 font-mono">{selectedCourse.duration}</strong>
                     </p>
                   </div>
                 </div>
@@ -656,7 +656,7 @@ export default function SuperAdminCoursesManager() {
                 <div className="flex items-center gap-2 shrink-0">
                   <button
                     onClick={() => handleOpenEditCourse(selectedCourse)}
-                    className="px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 cursor-pointer"
                     title="Change Thumbnail & Metadata"
                   >
                     <ImageIcon className="w-3.5 h-3.5" />
@@ -664,7 +664,7 @@ export default function SuperAdminCoursesManager() {
                   </button>
                   <button
                     onClick={handleOpenAddSession}
-                    className="px-3 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 cursor-pointer transition-colors shadow-xs"
+                    className="px-3 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 cursor-pointer transition-colors shadow-xs"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Add Session</span>
@@ -674,11 +674,11 @@ export default function SuperAdminCoursesManager() {
 
               {/* Sessions List */}
               <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider text-[11px]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+                  <span className="font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider text-xs sm:text-sm">
                     Curriculum Sessions ({selectedCourse.modules.length} Sessions &bull; {selectedCourse.totalLessons} Lessons)
                   </span>
-                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                  <span className="text-xs text-slate-500 dark:text-slate-400">
                     Click &ldquo;+ Upload Video&rdquo; to add video lessons to any session
                   </span>
                 </div>
@@ -690,16 +690,16 @@ export default function SuperAdminCoursesManager() {
                   >
                     {/* Session Header Strip */}
                     <div className="p-3 bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-[3px] bg-[#116E63] text-white flex items-center justify-center font-bold text-xs">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-[3px] bg-[#116E63] text-white flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">
                           {sIdx + 1}
                         </div>
                         <div>
-                          <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">
+                          <div className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">
                             {session.title}
                           </div>
-                          <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
-                            {session.lessons.length} Video Lessons &bull; {session.duration}
+                          <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-0.5">
+                            {session.lessons.length} Video Lessons &bull; <span className="font-mono">{session.duration}</span>
                           </div>
                         </div>
                       </div>
@@ -707,10 +707,10 @@ export default function SuperAdminCoursesManager() {
                       <div className="flex items-center gap-1.5 self-end sm:self-auto">
                         <button
                           onClick={() => handleOpenAddLesson(session.id)}
-                          className="px-2.5 py-1 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-[11px] font-bold uppercase rounded-[3px] flex items-center gap-1 cursor-pointer transition-colors shadow-xs"
+                          className="px-3 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase rounded-[3px] flex items-center gap-1.5 cursor-pointer transition-colors shadow-xs"
                           title="Upload video lesson to this session"
                         >
-                          <Upload className="w-3 h-3" />
+                          <Upload className="w-3.5 h-3.5" />
                           <span>Upload Video</span>
                         </button>
                         <button
@@ -752,32 +752,32 @@ export default function SuperAdminCoursesManager() {
                             key={lesson.id}
                             className="py-2.5 flex items-center justify-between gap-3 hover:bg-white dark:hover:bg-slate-800/50 px-2 rounded-[3px] transition-colors"
                           >
-                            <div className="flex items-center gap-2.5 min-w-0">
-                              <span className="font-mono font-bold text-slate-400 text-xs w-5 text-right shrink-0">
+                            <div className="flex items-center gap-3 min-w-0">
+                              <span className="font-mono font-bold text-slate-500 dark:text-slate-400 text-xs sm:text-sm w-6 text-right shrink-0">
                                 {sIdx + 1}.{lIdx + 1}
                               </span>
 
                               <div className="min-w-0">
-                                <div className="font-semibold text-slate-900 dark:text-white text-xs truncate">
+                                <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm leading-snug">
                                   {lesson.name}
                                 </div>
-                                <div className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-2 mt-0.5 font-mono">
+                                <div className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-2.5 mt-1 font-mono flex-wrap">
                                   <span className="flex items-center gap-1">
-                                    <Clock className="w-3 h-3" /> {lesson.duration}
+                                    <Clock className="w-3.5 h-3.5" /> {lesson.duration}
                                   </span>
                                   {(lesson as any).videoUrl && (
                                     <>
                                       <span>&bull;</span>
-                                      <span className="text-emerald-700 dark:text-emerald-400 font-sans font-semibold flex items-center gap-0.5">
-                                        <Check className="w-3 h-3" /> Video Attached
+                                      <span className="text-emerald-700 dark:text-emerald-400 font-sans font-semibold flex items-center gap-1">
+                                        <Check className="w-3.5 h-3.5" /> Video Attached
                                       </span>
                                     </>
                                   )}
                                   {lesson.resources?.[0]?.name && (
                                     <>
                                       <span>&bull;</span>
-                                      <span className="text-slate-600 dark:text-slate-400 flex items-center gap-0.5">
-                                        <FileText className="w-3 h-3" /> {lesson.resources[0].name}
+                                      <span className="text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                                        <FileText className="w-3.5 h-3.5" /> {lesson.resources[0].name}
                                       </span>
                                     </>
                                   )}
@@ -785,11 +785,11 @@ export default function SuperAdminCoursesManager() {
                               </div>
                             </div>
 
-                            <div className="flex items-center gap-1 shrink-0">
+                            <div className="flex items-center gap-1.5 shrink-0">
                               {(lesson as any).videoUrl && (
                                 <button
                                   onClick={() => setPreviewVideoUrl((lesson as any).videoUrl)}
-                                  className="px-2 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[3px] flex items-center gap-1 cursor-pointer transition-colors"
+                                  className="px-2.5 py-1 text-xs font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[3px] flex items-center gap-1.5 cursor-pointer transition-colors"
                                   title="Test & Preview Video Playback"
                                 >
                                   <Play className="w-3 h-3 fill-current" />

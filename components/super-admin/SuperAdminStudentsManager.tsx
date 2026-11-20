@@ -846,7 +846,7 @@ export default function SuperAdminStudentsManager() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs min-w-[960px]">
             <thead>
-              <tr className="bg-slate-100/80 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] tracking-wider">
+              <tr className="bg-slate-100/80 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-xs tracking-wider">
                 <th className="py-3 px-3 w-12 text-center">SL No.</th>
                 <th className="py-3 px-3">Student</th>
                 <th className="py-3 px-3">Course Purchased</th>
@@ -899,7 +899,7 @@ export default function SuperAdminStudentsManager() {
                             <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm truncate leading-tight">
                               {student.name}
                             </div>
-                            <span className="font-mono text-[10px] text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5">
+                            <span className="font-mono text-xs text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5">
                               {student.id}
                             </span>
                           </div>
@@ -919,7 +919,7 @@ export default function SuperAdminStudentsManager() {
                             ₹{student.purchasedCourse.courseFee.toLocaleString()}
                           </span>
                           <span className="text-slate-300 dark:text-slate-600">&bull;</span>
-                          <span className="text-slate-500 dark:text-slate-400 text-[11px] font-mono">
+                          <span className="text-slate-500 dark:text-slate-400 text-xs font-mono">
                             {student.purchasedCourse.purchaseDate}
                           </span>
                         </div>
@@ -933,7 +933,7 @@ export default function SuperAdminStudentsManager() {
                         >
                           {student.sponsor.sponsorName.split(" (")[0]}
                         </div>
-                        <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 block mt-0.5">
+                        <span className="font-mono text-xs text-slate-500 dark:text-slate-400 block mt-0.5">
                           {student.sponsor.sponsorId}
                         </span>
                       </td>
