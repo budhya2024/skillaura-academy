@@ -30,6 +30,7 @@ import {
   Activity,
   ArrowDownRight,
   MoreHorizontal,
+  GraduationCap,
 } from "lucide-react";
 
 import DownlineTable from "./DownlineTable";
@@ -37,9 +38,11 @@ import CommissionPlanSection from "./CommissionPlanSection";
 import LeaderboardSection from "./LeaderboardSection";
 import ProfileSection from "./ProfileSection";
 import PromoToolsSection from "./PromoToolsSection";
+import MyCoursesSection from "./MyCoursesSection";
 
 export type AdminTab =
   | "overview"
+  | "courses"
   | "profile"
   | "leaderboard"
   | "downline"
@@ -62,14 +65,19 @@ export default function AdminDashboard() {
 
   const navItems = [
     {
-      id: "profile",
-      label: "Profile",
-      icon: User,
-    },
-    {
       id: "overview",
       label: "Dashboard",
       icon: LayoutDashboard,
+    },
+    {
+      id: "courses",
+      label: "My Courses",
+      icon: GraduationCap,
+    },
+    {
+      id: "profile",
+      label: "Profile",
+      icon: User,
     },
     {
       id: "leaderboard",
@@ -100,6 +108,8 @@ export default function AdminDashboard() {
 
   const getPageTitle = () => {
     switch (activeTab) {
+      case "courses":
+        return "My Enrolled Courses & Learning Hub";
       case "profile":
         return "Member Profile & Account Identification";
       case "leaderboard":
@@ -145,29 +155,29 @@ export default function AdminDashboard() {
             title="View & Edit Profile"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 relative overflow-hidden rounded-full border border-slate-200 shrink-0 bg-slate-100 shadow-xs">
+              <div className="w-11 h-11 relative overflow-hidden rounded-full border border-slate-200 shrink-0 bg-slate-100 shadow-xs">
                 <Image
                   src="/images/founder.jpeg"
                   alt="SkillAura Master"
-                  width={40}
-                  height={40}
+                  width={44}
+                  height={44}
                   className="w-full h-full object-cover object-top"
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <h4 className="font-bold text-xs text-slate-900 truncate uppercase tracking-wider">
+                <h4 className="font-bold text-sm text-slate-900 truncate uppercase tracking-wider">
                   SkillAura Master
                 </h4>
-                <div className="text-[11px] font-mono text-slate-500 font-medium truncate">
+                <div className="text-xs font-mono text-slate-500 font-medium truncate mt-0.5">
                   SKA-ROOT88
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Navigation Links (Pure Text Only, Light Version, Scrollable on Overflow) */}
-          <nav className="flex-1 py-1 space-y-0.5 overflow-y-auto">
-            <div className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+          {/* Navigation Links (Pure Text Only, Light Version, Increased Font Size) */}
+          <nav className="flex-1 py-1 space-y-1 overflow-y-auto">
+            <div className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-500">
               Main Menu
             </div>
 
@@ -178,13 +188,13 @@ export default function AdminDashboard() {
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id as AdminTab)}
-                  className={`w-[calc(100%-16px)] mx-2 flex items-center gap-3 px-3.5 py-2.5 text-xs font-bold transition-colors cursor-pointer rounded-[4px] ${isActive
-                    ? "bg-[#116E63]/10 text-[#116E63]"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
+                  className={`w-[calc(100%-16px)] mx-2 flex items-center gap-3 px-3.5 py-2.5 sm:py-3 text-sm font-semibold transition-colors cursor-pointer rounded-[4px] ${isActive
+                    ? "bg-[#116E63]/10 text-[#116E63] font-bold"
+                    : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
                     }`}
                 >
                   <Icon
-                    className={`w-4 h-4 shrink-0 ${isActive ? "text-[#116E63]" : "text-slate-400"
+                    className={`w-5 h-5 shrink-0 ${isActive ? "text-[#116E63]" : "text-slate-500"
                       }`}
                   />
                   <span className="truncate">{item.label}</span>
@@ -198,9 +208,9 @@ export default function AdminDashboard() {
         <div className="p-3 border-t border-slate-100 space-y-2 bg-slate-50/50 shrink-0">
           <Link
             href="/"
-            className="flex items-center gap-2 px-3 py-1.5 text-xs md:text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors rounded-[4px]"
+            className="flex items-center gap-2.5 px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-slate-900 transition-colors rounded-[4px]"
           >
-            <BookOpen className="w-4 h-4 text-slate-400" />
+            <BookOpen className="w-4.5 h-4.5 text-slate-500" />
             <span>Academy Main Site</span>
           </Link>
           <button
@@ -209,9 +219,9 @@ export default function AdminDashboard() {
                 window.location.href = "/login";
               }
             }}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer rounded-[4px]"
+            className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer rounded-[4px]"
           >
-            <LogOut className="w-4 h-4 text-rose-600" />
+            <LogOut className="w-4.5 h-4.5 text-rose-600" />
             <span>Logout</span>
           </button>
         </div>
@@ -255,28 +265,28 @@ export default function AdminDashboard() {
                 className="p-3 mx-3 my-3 bg-slate-50 border border-slate-200 cursor-pointer rounded-[4px] shrink-0"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 relative overflow-hidden rounded-full border border-slate-200 shrink-0 bg-slate-100 shadow-xs">
+                  <div className="w-11 h-11 relative overflow-hidden rounded-full border border-slate-200 shrink-0 bg-slate-100 shadow-xs">
                     <Image
                       src="/images/founder.jpeg"
                       alt="SkillAura Master"
-                      width={40}
-                      height={40}
+                      width={44}
+                      height={44}
                       className="w-full h-full object-cover object-top"
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="font-bold text-xs text-slate-900 truncate uppercase">
+                    <h4 className="font-bold text-sm text-slate-900 truncate uppercase">
                       SkillAura Master
                     </h4>
-                    <div className="text-[11px] font-mono text-slate-500 font-medium truncate">
+                    <div className="text-xs font-mono text-slate-500 font-medium truncate mt-0.5">
                       SKA-ROOT88
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Mobile Nav Links (Pure Text Only, Light Version) */}
-              <div className="py-1 space-y-0.5 flex-1 overflow-y-auto">
+              {/* Mobile Nav Links (Pure Text Only, Light Version, Increased Font Size) */}
+              <div className="py-1 space-y-1 flex-1 overflow-y-auto">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
@@ -287,12 +297,12 @@ export default function AdminDashboard() {
                         setActiveTab(item.id as AdminTab);
                         setIsMobileSidebarOpen(false);
                       }}
-                      className={`w-[calc(100%-16px)] mx-2 flex items-center gap-3 px-3.5 py-2.5 text-xs font-bold transition-colors rounded-[4px] ${isActive
-                        ? "bg-[#116E63]/10 text-[#116E63]"
-                        : "text-slate-600 hover:bg-slate-100"
+                      className={`w-[calc(100%-16px)] mx-2 flex items-center gap-3 px-3.5 py-2.5 sm:py-3 text-sm font-semibold transition-colors rounded-[4px] ${isActive
+                        ? "bg-[#116E63]/10 text-[#116E63] font-bold"
+                        : "text-slate-700 hover:bg-slate-100"
                         }`}
                     >
-                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-[#116E63]" : "text-slate-400"}`} />
+                      <Icon className={`w-5 h-5 shrink-0 ${isActive ? "text-[#116E63]" : "text-slate-500"}`} />
                       <span className="truncate">{item.label}</span>
                     </button>
                   );
@@ -304,7 +314,7 @@ export default function AdminDashboard() {
             <div className="p-3 border-t border-slate-100 space-y-2 bg-slate-50/50 shrink-0">
               <Link
                 href="/"
-                className="block text-center text-xs font-bold py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors uppercase tracking-wider rounded-[4px]"
+                className="block text-center text-sm font-bold py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors uppercase tracking-wider rounded-[4px]"
               >
                 Academy Main Site
               </Link>
@@ -314,9 +324,9 @@ export default function AdminDashboard() {
                     window.location.href = "/login";
                   }
                 }}
-                className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer rounded-[4px]"
+                className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer rounded-[4px]"
               >
-                <LogOut className="w-4 h-4 text-rose-600" />
+                <LogOut className="w-4.5 h-4.5 text-rose-600" />
                 <span>Logout</span>
               </button>
             </div>
@@ -338,7 +348,7 @@ export default function AdminDashboard() {
             </button>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 truncate">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+
                 <h1 className="text-xs sm:text-base font-bold text-slate-900 uppercase tracking-wider font-[family-name:var(--font-yantramanav)] truncate">
                   {getPageTitle()}
                 </h1>
@@ -607,7 +617,28 @@ export default function AdminDashboard() {
               </div>
 
               {/* Quick Navigation Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                <div
+                  onClick={() => setActiveTab("courses")}
+                  className="bg-white border border-slate-200 hover:border-[#116E63] p-4 rounded-[4px] shadow-xs cursor-pointer transition-colors group flex flex-col justify-between space-y-3"
+                >
+                  <div className="space-y-1">
+                    <div className="w-8 h-8 rounded-[4px] bg-slate-100 group-hover:bg-[#116E63]/10 text-slate-700 group-hover:text-[#116E63] flex items-center justify-center transition-colors">
+                      <GraduationCap className="w-4 h-4" />
+                    </div>
+                    <h4 className="font-bold text-xs uppercase tracking-wider text-slate-900 group-hover:text-[#116E63] transition-colors">
+                      My Enrolled Courses
+                    </h4>
+                    <p className="text-[11px] text-slate-500">
+                      Access training modules, video lessons, and certification.
+                    </p>
+                  </div>
+                  <span className="text-xs font-bold text-[#116E63] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    <span>Go to Courses</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+
                 <div
                   onClick={() => setActiveTab("leaderboard")}
                   className="bg-white border border-slate-200 hover:border-[#116E63] p-4 rounded-[4px] shadow-xs cursor-pointer transition-colors group flex flex-col justify-between space-y-3"
@@ -673,6 +704,10 @@ export default function AdminDashboard() {
               </div>
             </div>
           )}
+
+          {/* TAB 1: OVERVIEW */}
+          {/* TAB: MY COURSES */}
+          {activeTab === "courses" && <MyCoursesSection />}
 
           {/* TAB 2: PROFILE */}
           {activeTab === "profile" && <ProfileSection />}
@@ -766,14 +801,14 @@ export default function AdminDashboard() {
       {/* ================= STICKY MOBILE BOTTOM NAVIGATION BAR (Light Version) ================= */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 flex items-center justify-around py-1.5 px-1 sm:px-2 text-slate-700 shadow-md">
         <button
-          onClick={() => setActiveTab("profile")}
-          className={`flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 transition-colors cursor-pointer rounded-[4px] min-w-0 ${activeTab === "profile"
+          onClick={() => setActiveTab("courses")}
+          className={`flex flex-col items-center justify-center py-1 px-1.5 sm:px-2.5 transition-colors cursor-pointer rounded-[4px] min-w-0 ${activeTab === "courses"
             ? "text-[#116E63] font-bold"
             : "text-slate-500 hover:text-slate-900"
             }`}
         >
-          <User className="w-4 h-4 mb-0.5 shrink-0" />
-          <span className="text-[10px] uppercase font-bold tracking-wider truncate">Profile</span>
+          <GraduationCap className="w-4 h-4 mb-0.5 shrink-0" />
+          <span className="text-[10px] uppercase font-bold tracking-wider truncate">Courses</span>
         </button>
 
         <button
