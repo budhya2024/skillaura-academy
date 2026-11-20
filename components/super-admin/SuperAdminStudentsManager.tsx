@@ -234,6 +234,7 @@ export default function SuperAdminStudentsManager() {
           <table className="w-full text-left border-collapse text-xs min-w-[700px]">
             <thead>
               <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
+                <th className="py-2.5 px-3 w-12 sm:w-14 text-center">SL No.</th>
                 <th className="py-2.5 px-3 sm:px-4">Student</th>
                 <th className="py-2.5 px-3">Contact</th>
                 <th className="py-2.5 px-3">Enrolled Course</th>
@@ -244,11 +245,14 @@ export default function SuperAdminStudentsManager() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
-              {filteredStudents.map((student) => (
+              {filteredStudents.map((student, idx) => (
                 <tr
                   key={student.id}
                   className="hover:bg-slate-50/80 transition-colors"
                 >
+                  <td className="py-2.5 px-3 text-center font-mono font-bold text-slate-500 text-xs">
+                    {idx + 1}
+                  </td>
                   <td className="py-2.5 px-3 sm:px-4">
                     <div className="flex items-center gap-2.5">
                       <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 relative shrink-0 bg-slate-100 shadow-2xs">

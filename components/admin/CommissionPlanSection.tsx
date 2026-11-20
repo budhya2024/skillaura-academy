@@ -422,7 +422,7 @@ export default function CommissionPlanSection() {
               <table className="w-full text-left border-collapse text-xs sm:text-sm">
                 <thead>
                   <tr className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-xs tracking-wider">
-                    <th className="py-2.5 sm:py-3 px-3 sm:px-4 w-16">Rank</th>
+                    <th className="py-2.5 sm:py-3 px-3 sm:px-4 w-16 text-center">SL / Rank</th>
                     <th className="py-2.5 sm:py-3 px-3 sm:px-4">Member</th>
                     <th className="py-2.5 sm:py-3 px-3 sm:px-4 text-right">Direct Referrals</th>
                     <th className="py-2.5 sm:py-3 px-4 sm:px-5 text-right">Earn Money</th>
@@ -436,7 +436,7 @@ export default function CommissionPlanSection() {
                         user.rankPosition === 1 ? "bg-amber-50/20 dark:bg-amber-950/20" : ""
                       }`}
                     >
-                      <td className="py-2.5 sm:py-3 px-3 sm:px-4">
+                      <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-center">
                         <span
                           className={`font-black font-mono text-xs sm:text-sm px-2 py-0.5 border rounded-[3px] inline-block ${
                             user.rankPosition === 1
@@ -496,9 +496,10 @@ export default function CommissionPlanSection() {
         {/* Tab Content 2: Income Ledger Table */}
         {activeTab === "ledger" && (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[580px]">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[620px]">
               <thead>
                 <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-xs tracking-wider">
+                  <th className="py-2.5 sm:py-3 px-3 sm:px-4 w-12 sm:w-14 text-center">SL No.</th>
                   <th className="py-2.5 sm:py-3 px-4">Transaction / Time</th>
                   <th className="py-2.5 sm:py-3 px-3">Student Name</th>
                   <th className="py-2.5 sm:py-3 px-3">Course Package</th>
@@ -508,8 +509,11 @@ export default function CommissionPlanSection() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
-                {MOCK_COMMISSIONS.map((rec) => (
+                {MOCK_COMMISSIONS.map((rec, idx) => (
                   <tr key={rec.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                      {idx + 1}
+                    </td>
                     <td className="py-2.5 sm:py-3 px-4">
                       <div className="font-bold text-slate-900 dark:text-white font-mono text-xs sm:text-sm">
                         {rec.id}
@@ -550,9 +554,10 @@ export default function CommissionPlanSection() {
         {/* Tab Content 3: Payout History */}
         {activeTab === "payouts" && (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[560px]">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[600px]">
               <thead>
                 <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-xs tracking-wider">
+                  <th className="py-2.5 sm:py-3 px-3 sm:px-4 w-12 sm:w-14 text-center">SL No.</th>
                   <th className="py-2.5 sm:py-3 px-4">Payout ID / Date</th>
                   <th className="py-2.5 sm:py-3 px-3">Amount</th>
                   <th className="py-2.5 sm:py-3 px-3">Mode</th>
@@ -562,8 +567,11 @@ export default function CommissionPlanSection() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
-                {payouts.map((pay) => (
+                {payouts.map((pay, idx) => (
                   <tr key={pay.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                      {idx + 1}
+                    </td>
                     <td className="py-2.5 sm:py-3 px-4">
                       <div className="font-bold text-slate-900 dark:text-white font-mono text-xs sm:text-sm">
                         {pay.id}

@@ -105,6 +105,7 @@ export default function DownlineTable() {
         <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[580px]">
           <thead>
             <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 uppercase font-bold text-xs tracking-wider">
+              <th className="py-3 px-3 sm:px-4 w-12 sm:w-14 text-center">SL No.</th>
               <th className="py-3 px-4">Member Name &amp; ID</th>
               <th className="py-3 px-3">Enrolled Course</th>
               <th className="py-3 px-3">My Earning</th>
@@ -114,11 +115,16 @@ export default function DownlineTable() {
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
             {paginatedMembers.length > 0 ? (
-              paginatedMembers.map((member) => (
+              paginatedMembers.map((member, idx) => (
                 <tr
                   key={member.id}
                   className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
                 >
+                  {/* Serial Number */}
+                  <td className="py-3 px-3 sm:px-4 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                    {(currentPage - 1) * itemsPerPage + idx + 1}
+                  </td>
+
                   {/* Member Name & ID */}
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-3">
@@ -186,7 +192,7 @@ export default function DownlineTable() {
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="py-8 text-center text-slate-500 dark:text-slate-400 text-xs">
+                <td colSpan={6} className="py-8 text-center text-slate-500 dark:text-slate-400 text-xs">
                   No members found matching your search.
                 </td>
               </tr>

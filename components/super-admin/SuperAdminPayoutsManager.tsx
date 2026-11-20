@@ -183,9 +183,10 @@ export default function SuperAdminPayoutsManager() {
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs min-w-[700px]">
+          <table className="w-full text-left border-collapse text-xs min-w-[720px]">
             <thead>
               <tr className="bg-slate-100/70 border-b border-slate-200 text-slate-600 uppercase font-bold text-[10px] tracking-wider">
+                <th className="py-2.5 px-3 w-12 sm:w-14 text-center">SL No.</th>
                 <th className="py-2.5 px-4">Payout ID / Date</th>
                 <th className="py-2.5 px-3">Requested Amount</th>
                 <th className="py-2.5 px-3">Transfer Mode</th>
@@ -196,8 +197,11 @@ export default function SuperAdminPayoutsManager() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
-              {filteredPayouts.map((pay) => (
+              {filteredPayouts.map((pay, idx) => (
                 <tr key={pay.id} className="hover:bg-slate-50 transition-colors">
+                  <td className="py-2.5 px-3 text-center font-mono font-bold text-slate-500 text-xs">
+                    {idx + 1}
+                  </td>
                   <td className="py-2.5 px-4">
                     <span className="font-bold text-slate-900 font-mono block">
                       {pay.id}

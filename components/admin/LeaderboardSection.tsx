@@ -104,7 +104,7 @@ export default function LeaderboardSection() {
           <table className="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
               <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] sm:text-xs tracking-wider">
-                <th className="py-2.5 px-3 sm:px-4 w-16">Rank</th>
+                <th className="py-2.5 px-3 sm:px-4 w-16 text-center">SL / Rank</th>
                 <th className="py-2.5 px-3">Member</th>
                 <th className="py-2.5 px-3 text-right">Referrals</th>
                 <th className="py-2.5 px-3 sm:px-4 text-right">Earn Money</th>

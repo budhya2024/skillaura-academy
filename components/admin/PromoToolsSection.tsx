@@ -294,6 +294,7 @@ export default function PromoToolsSection() {
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] tracking-wider">
+                <th className="py-3 px-3 w-12 sm:w-14 text-center">SL No.</th>
                 <th className="py-3 px-4">Masterclass Course</th>
                 <th className="py-3 px-3">Price (INR)</th>
                 <th className="py-3 px-3">
@@ -318,11 +319,16 @@ export default function PromoToolsSection() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
-              {PROMO_COURSE_COMMISSIONS.map((item) => (
+              {PROMO_COURSE_COMMISSIONS.map((item, idx) => (
                 <tr
                   key={item.id}
                   className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors"
                 >
+                  {/* Serial Number */}
+                  <td className="py-3 px-3 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                    {idx + 1}
+                  </td>
+
                   {/* Course Title & Category */}
                   <td className="py-3 px-4">
                     <div className="font-bold text-slate-900 dark:text-white text-xs">
