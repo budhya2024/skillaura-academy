@@ -48,35 +48,24 @@ export default function LeaderboardSection() {
                 <span className="text-xs font-bold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 px-2.5 py-0.5 rounded-[4px]">
                   Rank #1 Overall
                 </span>
-                <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-mono font-bold">
-                  SKA-ROOT88
-                </span>
               </div>
               <h2 className="text-base sm:text-xl font-bold font-[family-name:var(--font-yantramanav)] uppercase text-slate-900 dark:text-white leading-tight">
                 SkillAura Master
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                Top Earn Money &amp; Direct Referral Performer
+                Top Earn Money Performer
               </p>
             </div>
           </div>
 
-          {/* Quick Metrics: Earn Money & Referrals */}
-          <div className="w-full md:w-auto grid grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 rounded-[4px]">
+          {/* Quick Metrics: Earn Money */}
+          <div className="w-full md:w-auto bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 rounded-[4px]">
             <div>
               <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
-                Earn Money
+                Total Earned
               </span>
               <span className="text-xl sm:text-2xl font-black text-emerald-700 dark:text-emerald-400 font-mono block mt-0.5">
                 ₹3,48,500
-              </span>
-            </div>
-            <div className="border-l border-slate-200 dark:border-slate-700 pl-3.5">
-              <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
-                Direct Referrals
-              </span>
-              <span className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white font-mono block mt-0.5">
-                28 Referrals
               </span>
             </div>
           </div>
@@ -92,7 +81,7 @@ export default function LeaderboardSection() {
           <div className="flex items-center gap-2">
             <Trophy className="w-4 h-4 text-amber-500" />
             <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
-              Top Earners &amp; Referrals Leaderboard
+              Top Earners Leaderboard
             </h3>
           </div>
           <span className="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 px-2.5 py-0.5 border border-slate-200 dark:border-slate-700 rounded-[3px]">
@@ -101,13 +90,12 @@ export default function LeaderboardSection() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[640px]">
+          <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[500px]">
             <thead>
               <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] sm:text-xs tracking-wider">
                 <th className="py-2.5 sm:py-3 px-3 sm:px-4 w-12 sm:w-14 text-center">SL No.</th>
                 <th className="py-2.5 sm:py-3 px-3 w-24 text-center">Rank</th>
                 <th className="py-2.5 sm:py-3 px-3">Student / Member</th>
-                <th className="py-2.5 sm:py-3 px-3 text-right">Direct Referrals</th>
                 <th className="py-2.5 sm:py-3 px-3 sm:px-4 text-right">Earn Amount</th>
                 <th className="py-2.5 sm:py-3 px-3 text-right hidden sm:table-cell">Growth</th>
               </tr>
@@ -142,7 +130,7 @@ export default function LeaderboardSection() {
                     </span>
                   </td>
 
-                  {/* Member Column */}
+                  {/* Member Column - ID Removed */}
                   <td className="py-2.5 sm:py-3 px-3">
                     <div className="flex items-center gap-2.5 sm:gap-3">
                       <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 relative shrink-0 bg-slate-100 dark:bg-slate-800 shadow-2xs">
@@ -158,24 +146,13 @@ export default function LeaderboardSection() {
                         <div className="font-bold text-slate-900 dark:text-white leading-tight text-xs sm:text-sm truncate">
                           {user.name}
                         </div>
-                        <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mt-0.5">
-                          <span>{user.id}</span>
-                          {user.state && (
-                            <>
-                              <span>&bull;</span>
-                              <span className="font-sans text-[10px] text-slate-400">{user.state}</span>
-                            </>
-                          )}
-                        </div>
+                        {user.state && (
+                          <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                            {user.state}
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </td>
-
-                  {/* Direct Referrals Column */}
-                  <td className="py-2.5 sm:py-3 px-3 text-right">
-                    <span className="font-bold font-mono text-slate-900 dark:text-slate-200 text-xs sm:text-sm bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-[3px] border border-slate-200 dark:border-slate-700">
-                      {user.directs} <span className="text-[10px] text-slate-500 dark:text-slate-400 font-sans hidden sm:inline">Referrals</span>
-                    </span>
                   </td>
 
                   {/* Earn Amount Column */}
