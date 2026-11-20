@@ -138,7 +138,7 @@ export default function ContactFormSection() {
                     <CheckCircle2 className="w-7 h-7 stroke-[2.5]" />
                   </div>
                   <div className="space-y-1">
-                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-extrabold uppercase tracking-wide">
+                    <span className="text-emerald-700 text-xs font-extrabold uppercase tracking-wide">
                       ✓ Message Sent Successfully (SMS Receipt)
                     </span>
                     <h3 className="text-lg font-bold text-slate-900 font-[family-name:var(--font-yantramanav)]">

@@ -302,12 +302,12 @@ export default function PromoToolsSection() {
                   Tier 2 (60%)
                   <span className="block text-[9px] font-normal text-slate-400 dark:text-slate-500">6 - 15 Sales</span>
                 </th>
-                <th className="py-3 px-3 bg-emerald-50/70 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 border-x border-emerald-200 dark:border-emerald-800/60">
+                <th className="py-3 px-3 text-[#116E63] dark:text-emerald-400">
                   <div className="flex items-center gap-1">
                     <span>Tier 3 (65%)</span>
-                    <span className="text-[8px] bg-emerald-600 text-white px-1 py-0.2 rounded font-black">YOU</span>
+                    <span className="text-[9px] font-bold text-[#116E63] dark:text-emerald-400">(You)</span>
                   </div>
-                  <span className="block text-[9px] font-normal text-emerald-700 dark:text-emerald-400">16 - 25 Sales</span>
+                  <span className="block text-[9px] font-normal text-slate-400 dark:text-slate-500">16 - 25 Sales</span>
                 </th>
                 <th className="py-3 px-4 text-right">
                   Tier 4 (70%)
@@ -352,7 +352,7 @@ export default function PromoToolsSection() {
                   </td>
 
                   {/* Tier 3 (65% - Current User Tier) */}
-                  <td className="py-3 px-3 font-mono font-black text-emerald-700 dark:text-emerald-400 bg-emerald-50/40 dark:bg-emerald-950/20 border-x border-emerald-100 dark:border-emerald-900/50 text-sm">
+                  <td className="py-3 px-3 font-mono font-black text-[#116E63] dark:text-emerald-400 text-sm">
                     ₹{item.tier3_65.toLocaleString()}
                   </td>
 

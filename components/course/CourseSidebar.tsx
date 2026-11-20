@@ -200,7 +200,7 @@ export default function CourseSidebar({
             <span className="text-lg font-bold text-slate-400 line-through">
               {originalPriceInr}
             </span>
-            <span className="bg-emerald-100 text-emerald-800 font-extrabold text-xs px-2.5 py-1 rounded-full">
+            <span className="text-emerald-700 dark:text-emerald-400 font-extrabold text-xs">
               {discountPercentage}
             </span>
           </div>
@@ -355,7 +355,7 @@ export default function CourseSidebar({
                     <CheckCircle2 className="w-8 h-8 stroke-[2.5]" />
                   </div>
                   <div className="space-y-1">
-                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-extrabold uppercase tracking-wide">
+                    <span className="text-emerald-700 dark:text-emerald-400 text-xs font-extrabold uppercase tracking-wide">
                       ✓ Enrollment Confirmation SMS / Receipt
                     </span>
                     <h4 className="text-xl font-extrabold text-[#19232B] font-[family-name:var(--font-yantramanav)]">

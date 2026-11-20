@@ -93,20 +93,21 @@ export default function SuperAdminOverview({
 }: SuperAdminOverviewProps) {
   return (
     <div className="space-y-4 font-sans text-slate-800 dark:text-slate-100">
-      {/* 1. Welcome Banner */}
-      <div className="bg-slate-900 dark:bg-slate-900 text-white p-4 sm:p-5 rounded-[4px] shadow-sm border border-slate-800 relative overflow-hidden">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* 1. Welcome Banner - Styled identical to Student Admin Welcome Card */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs rounded-[4px] transition-colors">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" /> Super Admin Platform Console
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5" /> Super Admin Platform Console
               </span>
-              <span className="text-xs text-slate-400 font-mono">v2.4 Production</span>
+              <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">v2.4 Production</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold uppercase font-[family-name:var(--font-yantramanav)] text-white tracking-wide">
+            <h2 className="text-base sm:text-2xl font-bold uppercase font-[family-name:var(--font-yantramanav)] text-slate-900 dark:text-white tracking-wide">
               SkillAura Master Administration
-            </h1>
-            <p className="text-xs text-slate-300 max-w-2xl">
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-2xl">
               Centralized command center for managing enrolled students, purchased course tracking, student referral genealogy, and instant banking payout approvals.
             </p>
           </div>
@@ -114,16 +115,16 @@ export default function SuperAdminOverview({
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => onNavigate("students")}
-              className="bg-[#116E63] hover:bg-[#0c5950] text-white px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+              className="bg-[#116E63] hover:bg-[#0c5c53] text-white px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
             >
               <Users className="w-4 h-4" />
               <span>Student Directory</span>
             </button>
             <button
               onClick={() => onNavigate("payouts")}
-              className="bg-amber-500 hover:bg-amber-600 text-slate-950 px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+              className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <Wallet className="w-4 h-4" />
+              <Wallet className="w-4 h-4 text-[#FDA31B]" />
               <span>Approve Payouts ({pendingPayoutCount})</span>
             </button>
           </div>

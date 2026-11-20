@@ -150,7 +150,7 @@ export default function SettingsSection() {
                   Light Mode
                 </span>
                 {theme === "light" && (
-                  <span className="text-[10px] font-bold uppercase bg-[#116E63] text-white px-2 py-0.2 rounded-[3px]">
+                  <span className="text-xs font-bold uppercase text-[#116E63] dark:text-emerald-400">
                     Active
                   </span>
                 )}
@@ -186,7 +186,7 @@ export default function SettingsSection() {
                   Dark Mode
                 </span>
                 {theme === "dark" && (
-                  <span className="text-[10px] font-bold uppercase bg-emerald-600 text-white px-2 py-0.2 rounded-[3px]">
+                  <span className="text-xs font-bold uppercase text-[#116E63] dark:text-emerald-400">
                     Active
                   </span>
                 )}

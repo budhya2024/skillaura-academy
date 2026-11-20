@@ -186,7 +186,7 @@ export default function CourseOverview({
                         </div>
                         <div className="flex items-center gap-3">
                           {lesson.preview && (
-                            <span className="bg-[#116E63]/10 text-[#116E63] font-bold text-[10px] uppercase px-2 py-0.5 rounded-full">
+                            <span className="text-[#116E63] font-bold text-xs uppercase tracking-wider">
                               Free Preview
                             </span>
                           )}

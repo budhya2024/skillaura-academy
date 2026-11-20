@@ -140,7 +140,7 @@ export default function HeaderSearch({ isOpen, onClose }: HeaderSearchProps) {
                         {course.title}
                       </h4>
                       <div className="flex items-center gap-2">
-                        <span className="text-[11px] font-semibold text-[#116E63] bg-[#116E63]/10 px-2 py-0.5 rounded-md">
+                        <span className="text-[11px] font-semibold text-[#116E63]">
                           {course.category}
                         </span>
                         <span className="text-xs text-slate-400">

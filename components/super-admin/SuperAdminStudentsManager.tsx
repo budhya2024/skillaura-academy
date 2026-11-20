@@ -1022,10 +1022,10 @@ export default function SuperAdminStudentsManager() {
                   <div className="pt-1 flex items-center justify-center gap-2">
                     <button
                       onClick={() => handleToggleKyc(selectedStudent.id)}
-                      className={`text-xs font-bold px-3 py-1 rounded-[4px] border cursor-pointer ${
+                      className={`text-xs font-bold uppercase tracking-wider cursor-pointer hover:underline inline-flex items-center gap-1 ${
                         selectedStudent.kycVerified
-                          ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800"
-                          : "bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800"
+                          ? "text-emerald-700 dark:text-emerald-400"
+                          : "text-amber-700 dark:text-amber-400"
                       }`}
                     >
                       {selectedStudent.kycVerified
