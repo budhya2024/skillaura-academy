@@ -813,31 +813,28 @@ export default function SuperAdminStudentsManager() {
             <div className="flex items-center gap-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-[4px] p-0.5 self-start sm:self-auto">
               <button
                 onClick={() => setKycFilter("all")}
-                className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-[3px] transition-colors cursor-pointer ${
-                  kycFilter === "all"
-                    ? "bg-[#116E63] dark:bg-emerald-600 text-white"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                }`}
+                className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-[3px] transition-colors cursor-pointer ${kycFilter === "all"
+                  ? "bg-[#116E63] dark:bg-emerald-600 text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
               >
                 All ({students.length})
               </button>
               <button
                 onClick={() => setKycFilter("verified")}
-                className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-[3px] transition-colors cursor-pointer ${
-                  kycFilter === "verified"
-                    ? "bg-[#116E63] dark:bg-emerald-600 text-white"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                }`}
+                className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-[3px] transition-colors cursor-pointer ${kycFilter === "verified"
+                  ? "bg-[#116E63] dark:bg-emerald-600 text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
               >
                 Verified ({totalVerifiedCount})
               </button>
               <button
                 onClick={() => setKycFilter("pending")}
-                className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-[3px] transition-colors cursor-pointer ${
-                  kycFilter === "pending"
-                    ? "bg-[#116E63] dark:bg-emerald-600 text-white"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                }`}
+                className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-[3px] transition-colors cursor-pointer ${kycFilter === "pending"
+                  ? "bg-[#116E63] dark:bg-emerald-600 text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
               >
                 Pending ({students.length - totalVerifiedCount})
               </button>
@@ -847,18 +844,18 @@ export default function SuperAdminStudentsManager() {
 
         {/* Master Student Roster Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs min-w-[1040px]">
+          <table className="w-full text-left border-collapse text-xs min-w-[960px]">
             <thead>
               <tr className="bg-slate-100/80 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] tracking-wider">
                 <th className="py-3 px-3 w-12 text-center">SL No.</th>
-                <th className="py-3 px-3">Student &amp; Contact</th>
+                <th className="py-3 px-3">Student</th>
                 <th className="py-3 px-3">Course Purchased</th>
-                <th className="py-3 px-3">Referred By (Sponsor)</th>
+                <th className="py-3 px-3">Sponsor</th>
                 <th className="py-3 px-3 text-center">Students Added</th>
                 <th className="py-3 px-3 text-center">Income Generated</th>
                 <th className="py-3 px-3 text-center">Company Profit</th>
                 <th className="py-3 px-3 text-center">KYC Status</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th className="py-3 px-4 text-center">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80 font-medium text-slate-800 dark:text-slate-200">
@@ -882,19 +879,19 @@ export default function SuperAdminStudentsManager() {
                       className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
                     >
                       {/* 1. SL No. */}
-                      <td className="py-3 px-3 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                      <td className="py-3 px-3 text-center font-mono font-semibold text-slate-500 dark:text-slate-400 text-xs">
                         {idx + 1}
                       </td>
 
-                      {/* 2. Student Identity & Contact */}
+                      {/* 2. Student (Minimized: Clean Avatar, Name & ID only) */}
                       <td className="py-3 px-3">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-9 h-9 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 relative shrink-0 bg-slate-100 dark:bg-slate-800 shadow-2xs">
+                          <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 relative shrink-0 bg-slate-100 dark:bg-slate-800 shadow-2xs">
                             <Image
                               src={student.avatarImage || "/images/founder.jpeg"}
                               alt={student.name}
                               fill
-                              sizes="36px"
+                              sizes="32px"
                               className="object-cover object-top"
                             />
                           </div>
@@ -902,92 +899,61 @@ export default function SuperAdminStudentsManager() {
                             <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm truncate leading-tight">
                               {student.name}
                             </div>
-                            <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
-                              <span className="font-bold text-[#116E63] dark:text-emerald-400">
-                                {student.id}
-                              </span>
-                              <span>&bull;</span>
-                              <span>{student.phone}</span>
-                            </div>
-                            <div className="text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[170px]">
-                              {student.email}
-                            </div>
+                            <span className="font-mono text-[10px] text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5">
+                              {student.id}
+                            </span>
                           </div>
                         </div>
                       </td>
 
-                      {/* 3. Course Purchased & Price (Clickable to Inspect Course Purchase & Amount) */}
-                      <td
-                        className="py-3 px-3 cursor-pointer group"
-                        onClick={() => {
-                          setSelectedStudent(student);
-                          setDrawerTab("purchase");
-                        }}
-                        title="Click to inspect course purchase invoice & amount details"
-                      >
-                        <div className="font-bold text-slate-900 dark:text-white truncate max-w-[210px] group-hover:text-[#116E63] dark:group-hover:text-emerald-400 transition-colors">
+                      {/* 3. Course Purchased & Fee (Minimized: Title & Amount only) */}
+                      <td className="py-3 px-3">
+                        <div
+                          className="font-semibold text-slate-900 dark:text-white text-xs truncate max-w-[200px]"
+                          title={student.purchasedCourse.courseName}
+                        >
                           {student.purchasedCourse.courseName}
                         </div>
-                        <div className="flex items-center gap-2 mt-0.5 text-[11px]">
-                          <span className="font-mono font-black text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm">
-                            ₹{student.purchasedCourse.courseFee.toLocaleString()}
-                          </span>
-                          <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
-                            <CheckCircle2 className="w-3 h-3" /> Paid
-                          </span>
-                          <span className="text-[10px] text-slate-400 font-mono">
-                            {student.purchasedCourse.purchaseDate}
-                          </span>
+                        <div className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-xs mt-0.5">
+                          ₹{student.purchasedCourse.courseFee.toLocaleString()}
                         </div>
                       </td>
 
-                      {/* 4. Referred By (Sponsor Info) */}
+                      {/* 4. Sponsor (Minimized: Name & ID only) */}
                       <td className="py-3 px-3">
-                        <div className="flex items-start gap-1.5">
-                          <Share2 className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400 shrink-0 mt-0.5" />
-                          <div className="min-w-0">
-                            <div className="font-bold text-slate-900 dark:text-white text-xs truncate max-w-[170px]">
-                              {student.sponsor.sponsorName}
-                            </div>
-                            <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
-                              Sponsor: <strong className="text-slate-700 dark:text-slate-300">{student.sponsor.sponsorId}</strong>
-                            </div>
-                          </div>
+                        <div
+                          className="font-semibold text-slate-900 dark:text-white text-xs truncate max-w-[170px]"
+                          title={student.sponsor.sponsorName}
+                        >
+                          {student.sponsor.sponsorName.split(" (")[0]}
                         </div>
+                        <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 block mt-0.5">
+                          {student.sponsor.sponsorId}
+                        </span>
                       </td>
 
-                      {/* 5. Students Added */}
+                      {/* 5. Students Added (Minimized: Clean count) */}
                       <td className="py-3 px-3 text-center">
-                        <div className="font-mono font-bold text-slate-900 dark:text-white text-xs">
-                          {student.referrals.totalDirects} Directs
-                        </div>
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                          Active Learners
-                        </div>
+                        <span className="font-mono font-bold text-slate-900 dark:text-white text-xs">
+                          {student.referrals.totalDirects}
+                        </span>
                       </td>
 
-                      {/* 6. Income Generated for Student */}
+                      {/* 6. Income Generated (Minimized: Clean amount) */}
                       <td className="py-3 px-3 text-center">
-                        <div className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm">
+                        <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm">
                           ₹{student.referrals.totalCommissionEarned.toLocaleString()}
-                        </div>
-                        <span className="text-[10px] text-emerald-600 dark:text-emerald-400/80 font-semibold">
-                          65% Commission
                         </span>
                       </td>
 
-                      {/* 7. Platform Company Profit Generated */}
+                      {/* 7. Company Profit (Minimized: Clean profit) */}
                       <td className="py-3 px-3 text-center">
-                        <div className="font-mono font-bold text-[#116E63] dark:text-teal-300 text-xs sm:text-sm flex items-center justify-center gap-0.5">
-                          <TrendingUp className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                          <span>+₹{companyProfitGenerated.toLocaleString()}</span>
-                        </div>
-                        <span className="text-[10px] text-slate-500 dark:text-slate-400">
-                          35% Net Margin
+                        <span className="font-mono font-bold text-[#116E63] dark:text-teal-300 text-xs sm:text-sm">
+                          +₹{companyProfitGenerated.toLocaleString()}
                         </span>
                       </td>
 
-                      {/* 8. KYC Status (Toggle) */}
+                      {/* 8. KYC Status */}
                       <td className="py-3 px-3 text-center">
                         <button
                           onClick={() => handleToggleKyc(student.id)}
@@ -1012,8 +978,8 @@ export default function SuperAdminStudentsManager() {
                         </button>
                       </td>
 
-                      {/* 9. Action: Inspect */}
-                      <td className="py-3 px-4 text-right">
+                      {/* 9. Action: Inspect (Opens Full Details & Purchase Ledger) */}
+                      <td className="py-3 px-4 text-center">
                         <button
                           onClick={() => {
                             setSelectedStudent(student);
@@ -1098,16 +1064,37 @@ export default function SuperAdminStudentsManager() {
                   <div className="pt-1 flex items-center justify-center gap-2">
                     <button
                       onClick={() => handleToggleKyc(selectedStudent.id)}
-                      className={`text-xs font-bold uppercase tracking-wider cursor-pointer hover:underline inline-flex items-center gap-1 ${
-                        selectedStudent.kycVerified
-                          ? "text-emerald-700 dark:text-emerald-400"
-                          : "text-amber-700 dark:text-amber-400"
-                      }`}
+                      className={`text-xs font-bold uppercase tracking-wider cursor-pointer hover:underline inline-flex items-center gap-1 ${selectedStudent.kycVerified
+                        ? "text-emerald-700 dark:text-emerald-400"
+                        : "text-amber-700 dark:text-amber-400"
+                        }`}
                     >
                       {selectedStudent.kycVerified
                         ? "KYC Verified ✓"
                         : "KYC Pending (Click to Verify)"}
                     </button>
+                  </div>
+
+                  {/* Student Full Contact Strip (Moved to Inspect for Clean Table) */}
+                  <div className="pt-2 border-t border-slate-200 dark:border-slate-700/80 flex items-center justify-around text-xs">
+                    <a
+                      href={`https://wa.me/${selectedStudent.phone.replace(/[^0-9]/g, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-700 dark:text-emerald-400 hover:underline font-mono font-bold flex items-center gap-1"
+                      title="Chat on WhatsApp"
+                    >
+                      <Phone className="w-3 h-3" />
+                      <span>{selectedStudent.phone}</span>
+                    </a>
+                    <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+                    <a
+                      href={`mailto:${selectedStudent.email}`}
+                      className="text-slate-600 dark:text-slate-300 hover:underline font-mono truncate max-w-[170px]"
+                      title="Send Email"
+                    >
+                      {selectedStudent.email}
+                    </a>
                   </div>
                 </div>
 
@@ -1136,31 +1123,28 @@ export default function SuperAdminStudentsManager() {
                 <div className="flex border-b border-slate-200 dark:border-slate-800">
                   <button
                     onClick={() => setDrawerTab("purchase")}
-                    className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-colors ${
-                      drawerTab === "purchase"
-                        ? "border-[#116E63] text-[#116E63] dark:border-emerald-400 dark:text-emerald-400 font-extrabold"
-                        : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white"
-                    }`}
+                    className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-colors ${drawerTab === "purchase"
+                      ? "border-[#116E63] text-[#116E63] dark:border-emerald-400 dark:text-emerald-400 font-extrabold"
+                      : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white"
+                      }`}
                   >
                     Course &amp; Purchase
                   </button>
                   <button
                     onClick={() => setDrawerTab("details")}
-                    className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-colors ${
-                      drawerTab === "details"
-                        ? "border-[#116E63] text-[#116E63] dark:border-emerald-400 dark:text-emerald-400 font-extrabold"
-                        : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white"
-                    }`}
+                    className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-colors ${drawerTab === "details"
+                      ? "border-[#116E63] text-[#116E63] dark:border-emerald-400 dark:text-emerald-400 font-extrabold"
+                      : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white"
+                      }`}
                   >
                     Profile &amp; Sponsor
                   </button>
                   <button
                     onClick={() => setDrawerTab("referrals")}
-                    className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-colors ${
-                      drawerTab === "referrals"
-                        ? "border-[#116E63] text-[#116E63] dark:border-emerald-400 dark:text-emerald-400 font-extrabold"
-                        : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white"
-                    }`}
+                    className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider border-b-2 cursor-pointer transition-colors ${drawerTab === "referrals"
+                      ? "border-[#116E63] text-[#116E63] dark:border-emerald-400 dark:text-emerald-400 font-extrabold"
+                      : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white"
+                      }`}
                   >
                     Referrals ({selectedStudent.referrals.totalDirects})
                   </button>
