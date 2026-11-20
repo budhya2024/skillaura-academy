@@ -164,13 +164,7 @@ export default function AdminSidebar({
 
       {/* Footer Actions with Bottom Logout Button */}
       <div className="p-3 border-t border-slate-100 dark:border-slate-800 space-y-2 bg-slate-50/50 dark:bg-slate-800/30 shrink-0">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 px-3.5 py-2 text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors rounded-[4px]"
-        >
-          <BookOpen className="w-4.5 h-4.5 text-slate-500 dark:text-slate-400" />
-          <span>Academy Main Site</span>
-        </Link>
+
         <button
           onClick={() => {
             if (confirm("Are you sure you want to log out?")) {

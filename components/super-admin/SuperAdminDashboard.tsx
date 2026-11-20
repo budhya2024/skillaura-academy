@@ -10,6 +10,7 @@ import SuperAdminStudentsManager from "./SuperAdminStudentsManager";
 import SuperAdminPayoutsManager from "./SuperAdminPayoutsManager";
 import SuperAdminCMS from "./SuperAdminCMS";
 import SuperAdminKYCManager from "./SuperAdminKYCManager";
+import SuperAdminProfileSettings from "./SuperAdminProfileSettings";
 import { ENROLLED_COURSES_DATA } from "../../lib/coursesData";
 import { MOCK_DOWNLINE_LIST, MOCK_PAYOUTS } from "../../lib/networkData";
 import ThemeToggle from "../shared/ThemeToggle";
@@ -42,6 +43,8 @@ export default function SuperAdminDashboard() {
         return "Payout Approvals & Banking Disbursements";
       case "cms":
         return "Website Announcements & CMS";
+      case "profile":
+        return "Admin Profile & Security Settings";
       default:
         return "Super Admin Command Center";
     }
@@ -103,8 +106,16 @@ export default function SuperAdminDashboard() {
               )}
             </button>
 
-            {/* Super Admin User Profile Tag */}
-            <div className="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800">
+            {/* Super Admin User Profile Tag - Click to Open Profile, Password & Dark Mode Settings */}
+            <button
+              onClick={() => setActiveTab("profile")}
+              className={`flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800 cursor-pointer hover:opacity-85 transition-all text-left rounded-[4px] p-1 ${
+                activeTab === "profile"
+                  ? "bg-[#116E63]/10 dark:bg-[#116E63]/25 ring-1 ring-[#116E63]/40"
+                  : ""
+              }`}
+              title="Click to manage profile, change password & toggle dark mode"
+            >
               <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-amber-500 shrink-0 bg-slate-100 dark:bg-slate-800 relative">
                 <Image
                   src="/images/founder.jpeg"
@@ -119,10 +130,10 @@ export default function SuperAdminDashboard() {
                   Super Admin
                 </span>
                 <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 font-medium">
-                  Root Authority
+                  Settings &bull; Root
                 </span>
               </div>
-            </div>
+            </button>
           </div>
         </header>
 
@@ -146,6 +157,8 @@ export default function SuperAdminDashboard() {
           {activeTab === "payouts" && <SuperAdminPayoutsManager />}
 
           {activeTab === "cms" && <SuperAdminCMS />}
+
+          {activeTab === "profile" && <SuperAdminProfileSettings />}
         </main>
       </div>
     </div>

@@ -16,7 +16,7 @@ import {
   X,
 } from "lucide-react";
 
-export type SuperAdminTab = "overview" | "courses" | "students" | "kyc" | "payouts" | "cms";
+export type SuperAdminTab = "overview" | "courses" | "students" | "kyc" | "payouts" | "cms" | "profile";
 
 interface SuperAdminSidebarProps {
   activeTab: SuperAdminTab;
@@ -146,6 +146,20 @@ export default function SuperAdminSidebar({
           );
         })}
       </nav>
+
+      {/* Bottom Logout Action */}
+      <div className="p-3 border-t border-slate-200 dark:border-slate-800">
+        <Link
+          href="/login"
+          className="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 hover:text-white hover:bg-rose-600 dark:hover:bg-rose-600 border border-rose-200 dark:border-rose-900/60 rounded-[4px] transition-colors cursor-pointer shadow-xs"
+        >
+          <div className="flex items-center gap-2.5">
+            <LogOut className="w-4 h-4" />
+            <span>Sign Out Admin</span>
+          </div>
+          <span className="text-[10px] opacity-75 font-mono">Exit</span>
+        </Link>
+      </div>
 
       {/* Footer System Status */}
       <div className="p-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/60">
