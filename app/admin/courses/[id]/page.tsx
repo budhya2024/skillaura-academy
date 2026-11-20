@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, use, useMemo } from "react";
+import React, { useState, useEffect, use, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -53,6 +53,29 @@ export default function CourseWatchPage({
   }, [courseId, rawId]);
 
   const [course, setCourse] = useState<EnrolledCourse>(initialCourse);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const raw = localStorage.getItem("skillAuraCoursesRegistry");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            const found =
+              parsed.find((c: EnrolledCourse) => c.id === courseId) ||
+              parsed.find((c: EnrolledCourse) =>
+                c.title.toLowerCase().includes(String(rawId || "").toLowerCase())
+              );
+            if (found) {
+              setCourse(found);
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Failed to load course from registry", e);
+      }
+    }
+  }, [courseId, rawId]);
   const [activeModuleIdx, setActiveModuleIdx] = useState<number>(0);
   const [activeLessonIdx, setActiveLessonIdx] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);

@@ -4,6 +4,7 @@ export interface Lesson {
   duration: string;
   completed: boolean;
   description?: string;
+  videoUrl?: string;
   resources?: { name: string; size: string }[];
 }
 
@@ -23,6 +24,7 @@ export interface EnrolledCourse {
   totalLessons: number;
   completedLessons: number;
   duration: string;
+  price?: number;
   status: "in-progress" | "completed";
   modules: CourseModule[];
 }

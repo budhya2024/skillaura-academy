@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   ENROLLED_COURSES_DATA,
@@ -26,25 +26,54 @@ import {
   Sparkles,
   Eye,
   Save,
+  Upload,
+  Image as ImageIcon,
+  Film,
+  Link as LinkIcon,
+  Check,
+  FolderPlus,
+  HelpCircle,
+  AlertCircle,
 } from "lucide-react";
+
+const PRESET_THUMBNAILS = [
+  { name: "Business Mastery", url: "/images/course1.jpg" },
+  { name: "High-Ticket Sales", url: "/images/course2.jpg" },
+  { name: "Graphic & Brand Design", url: "/images/course3.jpg" },
+  { name: "Video Editing Reels", url: "/images/course4.jpg" },
+  { name: "Digital Growth Ads", url: "/images/course5.jpg" },
+];
+
+const STORAGE_KEY = "skillAuraCoursesRegistry";
 
 export default function SuperAdminCoursesManager() {
   const [courses, setCourses] = useState<EnrolledCourse[]>(ENROLLED_COURSES_DATA);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
 
-  // Selection for Module/Lesson view
-  const [selectedCourse, setSelectedCourse] = useState<EnrolledCourse | null>(courses[0]);
+  // Selection for Session/Lesson view
+  const [selectedCourse, setSelectedCourse] = useState<EnrolledCourse | null>(null);
 
   // Modal states
   const [isCourseModalOpen, setIsCourseModalOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<EnrolledCourse | null>(null);
 
+  // Session (Module) Modal
+  const [isSessionModalOpen, setIsSessionModalOpen] = useState(false);
+  const [editingSession, setEditingSession] = useState<CourseModule | null>(null);
+  const [sessionForm, setSessionForm] = useState({
+    title: "",
+    duration: "10 Hours",
+  });
+
+  // Video Lesson Modal
   const [isLessonModalOpen, setIsLessonModalOpen] = useState(false);
-  const [targetModuleId, setTargetModuleId] = useState<string | null>(null);
+  const [targetSessionId, setTargetSessionId] = useState<string | null>(null);
   const [editingLesson, setEditingLesson] = useState<Lesson | null>(null);
 
+  // Live video preview
   const [previewVideoUrl, setPreviewVideoUrl] = useState<string | null>(null);
+  const [notification, setNotification] = useState<string | null>(null);
 
   // Form states for Course
   const [courseForm, setCourseForm] = useState({
@@ -52,17 +81,59 @@ export default function SuperAdminCoursesManager() {
     category: "Business & Sales",
     instructor: "SkillAura Master Team",
     duration: "60 Hours",
+    price: 4999,
     image: "/images/course2.jpg",
   });
 
   // Form states for Lesson
+  const [videoSourceType, setVideoSourceType] = useState<"upload" | "url">("upload");
+  const [uploadedVideoFileName, setUploadedVideoFileName] = useState<string | null>(null);
+  const [uploadedVideoFileSize, setUploadedVideoFileSize] = useState<string | null>(null);
+
   const [lessonForm, setLessonForm] = useState({
     name: "",
-    duration: "45 mins",
+    duration: "35 mins",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     description: "",
     resourceName: "",
   });
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setCourses(parsed);
+            setSelectedCourse(parsed[0]);
+            return;
+          }
+        }
+      } catch (e) {
+        console.error("Failed to load courses from localStorage", e);
+      }
+      setSelectedCourse(ENROLLED_COURSES_DATA[0]);
+    }
+  }, []);
+
+  const saveAndSyncCourses = (newCourses: EnrolledCourse[]) => {
+    setCourses(newCourses);
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newCourses));
+        window.dispatchEvent(new Event("skillaura_courses_updated"));
+      } catch (e) {
+        console.error("Failed to save courses to localStorage", e);
+      }
+    }
+  };
+
+  const showNotification = (msg: string) => {
+    setNotification(msg);
+    setTimeout(() => setNotification(null), 3500);
+  };
 
   // Filtered courses
   const filteredCourses = courses.filter((c) => {
@@ -71,7 +142,6 @@ export default function SuperAdminCoursesManager() {
     return matchesSearch && matchesCat;
   });
 
-  // Categories list
   const categories = Array.from(new Set(courses.map((c) => c.category)));
 
   // Handlers for Course
@@ -82,6 +152,7 @@ export default function SuperAdminCoursesManager() {
       category: "Business & Sales",
       instructor: "SkillAura Master Team",
       duration: "40 Hours",
+      price: 4999,
       image: "/images/course1.jpg",
     });
     setIsCourseModalOpen(true);
@@ -94,42 +165,44 @@ export default function SuperAdminCoursesManager() {
       category: course.category,
       instructor: course.instructor,
       duration: course.duration,
+      price: course.price || 4999,
       image: course.image,
     });
     setIsCourseModalOpen(true);
   };
 
+  const handleThumbnailUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setCourseForm((prev) => ({ ...prev, image: url }));
+      showNotification(`Main course thumbnail loaded: ${file.name}`);
+    }
+  };
+
   const handleSaveCourse = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!courseForm.title.trim()) return;
+
     if (editingCourse) {
-      setCourses((prev) =>
-        prev.map((c) =>
-          c.id === editingCourse.id
-            ? {
-                ...c,
-                title: courseForm.title,
-                category: courseForm.category,
-                instructor: courseForm.instructor,
-                duration: courseForm.duration,
-                image: courseForm.image,
-              }
-            : c
-        )
+      const updated = courses.map((c) =>
+        c.id === editingCourse.id
+          ? {
+              ...c,
+              title: courseForm.title,
+              category: courseForm.category,
+              instructor: courseForm.instructor,
+              duration: courseForm.duration,
+              price: courseForm.price,
+              image: courseForm.image,
+            }
+          : c
       );
+      saveAndSyncCourses(updated);
       if (selectedCourse?.id === editingCourse.id) {
-        setSelectedCourse((prev) =>
-          prev
-            ? {
-                ...prev,
-                title: courseForm.title,
-                category: courseForm.category,
-                instructor: courseForm.instructor,
-                duration: courseForm.duration,
-                image: courseForm.image,
-              }
-            : null
-        );
+        setSelectedCourse(updated.find((c) => c.id === editingCourse.id) || null);
       }
+      showNotification("Course details and thumbnail updated successfully!");
     } else {
       const newCourse: EnrolledCourse = {
         id: Date.now(),
@@ -137,60 +210,129 @@ export default function SuperAdminCoursesManager() {
         category: courseForm.category,
         instructor: courseForm.instructor,
         duration: courseForm.duration,
+        price: courseForm.price,
         image: courseForm.image,
         totalLessons: 0,
         completedLessons: 0,
         status: "in-progress",
         modules: [
           {
-            id: `m-${Date.now()}`,
-            title: "Module 1: Introduction & Fundamentals",
-            duration: "10 Hours",
+            id: `session-1`,
+            title: "Session 1: Foundations & Orientation",
+            duration: "8 Hours",
             lessons: [],
           },
         ],
       };
-      setCourses((prev) => [newCourse, ...prev]);
+      const updated = [newCourse, ...courses];
+      saveAndSyncCourses(updated);
       setSelectedCourse(newCourse);
+      showNotification("New course created with Session 1 workspace ready!");
     }
     setIsCourseModalOpen(false);
   };
 
-  // Handlers for Module
-  const handleAddModule = () => {
+  // Handlers for Sessions (Modules)
+  const handleOpenAddSession = () => {
     if (!selectedCourse) return;
-    const newModuleNumber = selectedCourse.modules.length + 1;
-    const newModule: CourseModule = {
-      id: `mod-${Date.now()}`,
-      title: `Module ${newModuleNumber}: Advanced Strategies & Deep Dive`,
-      duration: "12 Hours",
-      lessons: [],
-    };
-    const updated = {
-      ...selectedCourse,
-      modules: [...selectedCourse.modules, newModule],
-    };
-    setSelectedCourse(updated);
-    setCourses((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
+    const nextSessionNum = selectedCourse.modules.length + 1;
+    setEditingSession(null);
+    setSessionForm({
+      title: `Session ${nextSessionNum}: Advanced Strategies & Tactical Blueprint`,
+      duration: "10 Hours",
+    });
+    setIsSessionModalOpen(true);
   };
 
-  // Handlers for Lesson
-  const handleOpenAddLesson = (moduleId: string) => {
-    setTargetModuleId(moduleId);
+  const handleOpenEditSession = (session: CourseModule) => {
+    setEditingSession(session);
+    setSessionForm({
+      title: session.title,
+      duration: session.duration,
+    });
+    setIsSessionModalOpen(true);
+  };
+
+  const handleSaveSession = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedCourse) return;
+
+    let updatedModules: CourseModule[];
+    if (editingSession) {
+      updatedModules = selectedCourse.modules.map((m) =>
+        m.id === editingSession.id
+          ? {
+              ...m,
+              title: sessionForm.title,
+              duration: sessionForm.duration,
+            }
+          : m
+      );
+      showNotification("Session title and duration updated!");
+    } else {
+      const newSession: CourseModule = {
+        id: `session-${Date.now()}`,
+        title: sessionForm.title,
+        duration: sessionForm.duration,
+        lessons: [],
+      };
+      updatedModules = [...selectedCourse.modules, newSession];
+      showNotification("New session added to course curriculum!");
+    }
+
+    const updatedCourse: EnrolledCourse = {
+      ...selectedCourse,
+      modules: updatedModules,
+    };
+    setSelectedCourse(updatedCourse);
+    saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
+    setIsSessionModalOpen(false);
+  };
+
+  const handleDeleteSession = (sessionId: string) => {
+    if (!selectedCourse) return;
+    if (selectedCourse.modules.length <= 1) {
+      alert("A course must have at least one session.");
+      return;
+    }
+    if (!confirm("Are you sure you want to delete this session and all its video lessons?")) return;
+
+    const updatedModules = selectedCourse.modules.filter((m) => m.id !== sessionId);
+    const totalLes = updatedModules.reduce((acc, m) => acc + m.lessons.length, 0);
+
+    const updatedCourse: EnrolledCourse = {
+      ...selectedCourse,
+      modules: updatedModules,
+      totalLessons: totalLes,
+    };
+    setSelectedCourse(updatedCourse);
+    saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
+    showNotification("Session deleted.");
+  };
+
+  // Handlers for Video Lessons
+  const handleOpenAddLesson = (sessionId: string) => {
+    setTargetSessionId(sessionId);
     setEditingLesson(null);
+    setVideoSourceType("upload");
+    setUploadedVideoFileName(null);
+    setUploadedVideoFileSize(null);
     setLessonForm({
       name: "",
-      duration: "45 mins",
+      duration: "35 mins",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
       description: "",
-      resourceName: "Handout-CheatSheet.pdf",
+      resourceName: "CheatSheet-Guide.pdf",
     });
     setIsLessonModalOpen(true);
   };
 
-  const handleOpenEditLesson = (moduleId: string, lesson: Lesson) => {
-    setTargetModuleId(moduleId);
+  const handleOpenEditLesson = (sessionId: string, lesson: Lesson) => {
+    setTargetSessionId(sessionId);
     setEditingLesson(lesson);
+    setVideoSourceType((lesson as any).videoUrl?.startsWith("blob:") ? "upload" : "url");
+    setUploadedVideoFileName(null);
+    setUploadedVideoFileSize(null);
     setLessonForm({
       name: lesson.name,
       duration: lesson.duration,
@@ -201,12 +343,38 @@ export default function SuperAdminCoursesManager() {
     setIsLessonModalOpen(true);
   };
 
+  const handleVideoFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+      setUploadedVideoFileName(file.name);
+      setUploadedVideoFileSize(`${sizeMb} MB`);
+      setLessonForm((prev) => ({
+        ...prev,
+        videoUrl: url,
+        name: prev.name || file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
+      }));
+      showNotification(`Video file selected: ${file.name} (${sizeMb} MB)`);
+    }
+  };
+
   const handleSaveLesson = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedCourse || !targetModuleId) return;
+    if (!selectedCourse || !targetSessionId) return;
+
+    // Standardize YouTube embed links if user pasted watch URL
+    let finalVideoUrl = lessonForm.videoUrl.trim();
+    if (finalVideoUrl.includes("youtube.com/watch?v=")) {
+      const videoId = finalVideoUrl.split("v=")[1]?.split("&")[0];
+      if (videoId) finalVideoUrl = `https://www.youtube.com/embed/${videoId}`;
+    } else if (finalVideoUrl.includes("youtu.be/")) {
+      const videoId = finalVideoUrl.split("youtu.be/")[1]?.split("?")[0];
+      if (videoId) finalVideoUrl = `https://www.youtube.com/embed/${videoId}`;
+    }
 
     const updatedModules = selectedCourse.modules.map((mod) => {
-      if (mod.id !== targetModuleId) return mod;
+      if (mod.id !== targetSessionId) return mod;
 
       if (editingLesson) {
         return {
@@ -218,9 +386,9 @@ export default function SuperAdminCoursesManager() {
                   name: lessonForm.name,
                   duration: lessonForm.duration,
                   description: lessonForm.description,
-                  videoUrl: lessonForm.videoUrl,
+                  videoUrl: finalVideoUrl,
                   resources: lessonForm.resourceName
-                    ? [{ name: lessonForm.resourceName, size: "2.5 MB" }]
+                    ? [{ name: lessonForm.resourceName, size: "2.4 MB" }]
                     : [],
                 }
               : les
@@ -233,11 +401,11 @@ export default function SuperAdminCoursesManager() {
           duration: lessonForm.duration,
           completed: false,
           description: lessonForm.description,
+          videoUrl: finalVideoUrl,
           resources: lessonForm.resourceName
-            ? [{ name: lessonForm.resourceName, size: "2.5 MB" }]
+            ? [{ name: lessonForm.resourceName, size: "2.4 MB" }]
             : [],
         };
-        (newLesson as any).videoUrl = lessonForm.videoUrl;
         return {
           ...mod,
           lessons: [...mod.lessons, newLesson],
@@ -254,16 +422,17 @@ export default function SuperAdminCoursesManager() {
     };
 
     setSelectedCourse(updatedCourse);
-    setCourses((prev) => prev.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
+    saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
     setIsLessonModalOpen(false);
+    showNotification("Video lesson saved and ready for student streaming!");
   };
 
-  const handleDeleteLesson = (moduleId: string, lessonId: string) => {
+  const handleDeleteLesson = (sessionId: string, lessonId: string) => {
     if (!selectedCourse) return;
     if (!confirm("Are you sure you want to delete this video lesson?")) return;
 
     const updatedModules = selectedCourse.modules.map((mod) => {
-      if (mod.id !== moduleId) return mod;
+      if (mod.id !== sessionId) return mod;
       return {
         ...mod,
         lessons: mod.lessons.filter((l) => l.id !== lessonId),
@@ -279,22 +448,45 @@ export default function SuperAdminCoursesManager() {
     };
 
     setSelectedCourse(updatedCourse);
-    setCourses((prev) => prev.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
+    saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
+    showNotification("Video lesson removed.");
+  };
+
+  const getTargetSessionName = () => {
+    if (!selectedCourse || !targetSessionId) return "Session";
+    const found = selectedCourse.modules.find((m) => m.id === targetSessionId);
+    return found ? found.title : "Session";
   };
 
   return (
-    <div className="space-y-4 font-sans">
+    <div className="space-y-4 font-sans text-slate-800 dark:text-slate-100">
+      {/* Toast Notification */}
+      {notification && (
+        <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-bold rounded-[4px] flex items-center justify-between shadow-xs animate-in fade-in">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <span>{notification}</span>
+          </div>
+          <button
+            onClick={() => setNotification(null)}
+            className="text-emerald-700 dark:text-emerald-400 hover:text-emerald-900 cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Top Controls Bar */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-[#116E63] dark:text-emerald-400" />
             <h2 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
-              Courses &amp; Video Lesson Studio
+              Courses, Sessions &amp; Video Lesson Studio
             </h2>
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Create and edit masterclass courses, manage curriculum modules, and attach video URLs
+            Create courses with custom thumbnails, organize sessions/modules, and upload video lessons for student streaming
           </p>
         </div>
 
@@ -309,7 +501,7 @@ export default function SuperAdminCoursesManager() {
         </div>
       </div>
 
-      {/* Main 2-Column Studio: Left Course Catalog (5 Cols), Right Module & Video Inspector (7 Cols) */}
+      {/* Main 2-Column Studio: Left Course Catalog (5 Cols), Right Session & Video Inspector (7 Cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* LEFT COLUMN: COURSE CATALOG */}
         <div className="lg:col-span-5 space-y-3">
@@ -321,7 +513,7 @@ export default function SuperAdminCoursesManager() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search courses by title..."
+                placeholder="Search masterclasses..."
                 className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-[4px] focus:outline-none focus:border-[#116E63]"
               />
             </div>
@@ -354,7 +546,7 @@ export default function SuperAdminCoursesManager() {
           </div>
 
           {/* Courses List */}
-          <div className="space-y-2 max-h-[700px] overflow-y-auto pr-1">
+          <div className="space-y-2 max-h-[750px] overflow-y-auto pr-1">
             {filteredCourses.map((course) => {
               const isSelected = selectedCourse?.id === course.id;
               const totalLessonsCount = course.modules.reduce((a, m) => a + m.lessons.length, 0);
@@ -370,9 +562,10 @@ export default function SuperAdminCoursesManager() {
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className="relative w-16 h-12 rounded-[4px] overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-slate-700">
+                    {/* Course Thumbnail Preview */}
+                    <div className="relative w-20 h-14 rounded-[4px] overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-slate-700">
                       <Image
-                        src={course.image}
+                        src={course.image || "/images/course2.jpg"}
                         alt={course.title}
                         fill
                         className="object-cover"
@@ -389,24 +582,34 @@ export default function SuperAdminCoursesManager() {
                               e.stopPropagation();
                               handleOpenEditCourse(course);
                             }}
-                            className="p-1 text-slate-400 hover:text-slate-800 rounded-[2px]"
-                            title="Edit Course Details"
+                            className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 rounded-[2px]"
+                            title="Edit Course & Change Thumbnail"
                           >
                             <Edit2 className="w-3 h-3" />
                           </button>
                         </div>
                       </div>
 
-                      <h4 className="text-xs font-bold text-slate-900 leading-tight truncate">
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-tight truncate">
                         {course.title}
                       </h4>
 
-                      <div className="flex items-center gap-3 text-[10px] text-slate-500 font-medium mt-1">
-                        <span>{course.modules.length} Modules</span>
+                      <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium mt-1 flex-wrap">
+                        <span className="font-semibold text-[#116E63] dark:text-emerald-400">
+                          {course.modules.length} Sessions
+                        </span>
                         <span>&bull;</span>
-                        <span>{totalLessonsCount} Lessons</span>
+                        <span>{totalLessonsCount} Videos</span>
                         <span>&bull;</span>
                         <span className="font-mono">{course.duration}</span>
+                        {course.price && (
+                          <>
+                            <span>&bull;</span>
+                            <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">
+                              ₹{course.price.toLocaleString()}
+                            </span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -416,111 +619,165 @@ export default function SuperAdminCoursesManager() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: MODULE & VIDEO LESSON INSPECTOR */}
+        {/* RIGHT COLUMN: SESSION-WISE & VIDEO CURRICULUM INSPECTOR */}
         <div className="lg:col-span-7 space-y-3">
           {selectedCourse ? (
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 rounded-[4px] shadow-xs space-y-4">
-              {/* Selected Course Header Strip */}
+              {/* Selected Course Header Strip with Thumbnail Card */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                      Curriculum Editor
-                    </span>
-                    <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                      ID: #{selectedCourse.id}
-                    </span>
+                <div className="flex items-start gap-3">
+                  <div className="relative w-20 h-14 rounded-[4px] overflow-hidden border border-slate-200 dark:border-slate-700 shrink-0 bg-slate-100 dark:bg-slate-800">
+                    <Image
+                      src={selectedCourse.image || "/images/course2.jpg"}
+                      alt={selectedCourse.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white uppercase font-[family-name:var(--font-yantramanav)] mt-0.5 leading-snug">
-                    {selectedCourse.title}
-                  </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Instructor: <strong className="text-slate-700 dark:text-slate-300">{selectedCourse.instructor}</strong> &bull; Total Duration: <strong className="text-slate-700 dark:text-slate-300 font-mono">{selectedCourse.duration}</strong>
-                  </p>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                        {selectedCourse.category}
+                      </span>
+                      <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                        Course ID: #{selectedCourse.id}
+                      </span>
+                    </div>
+                    <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white uppercase font-[family-name:var(--font-yantramanav)] mt-0.5 leading-snug">
+                      {selectedCourse.title}
+                    </h3>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                      Instructor: <strong className="text-slate-700 dark:text-slate-300">{selectedCourse.instructor}</strong> &bull; Total: <strong className="text-slate-700 dark:text-slate-300 font-mono">{selectedCourse.duration}</strong>
+                    </p>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handleAddModule}
-                    className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 cursor-pointer transition-colors"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Add Module</span>
-                  </button>
+                <div className="flex items-center gap-2 shrink-0">
                   <button
                     onClick={() => handleOpenEditCourse(selectedCourse)}
-                    className="px-3 py-1.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 cursor-pointer transition-colors"
+                    className="px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 cursor-pointer"
+                    title="Change Thumbnail & Metadata"
                   >
-                    <Edit2 className="w-3.5 h-3.5" />
-                    <span>Edit Info</span>
+                    <ImageIcon className="w-3.5 h-3.5" />
+                    <span>Thumbnail</span>
+                  </button>
+                  <button
+                    onClick={handleOpenAddSession}
+                    className="px-3 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 cursor-pointer transition-colors shadow-xs"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Add Session</span>
                   </button>
                 </div>
               </div>
 
-              {/* Modules List */}
+              {/* Sessions List */}
               <div className="space-y-4">
-                {selectedCourse.modules.map((module, mIdx) => (
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider text-[11px]">
+                    Curriculum Sessions ({selectedCourse.modules.length} Sessions &bull; {selectedCourse.totalLessons} Lessons)
+                  </span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Click &ldquo;+ Upload Video&rdquo; to add video lessons to any session
+                  </span>
+                </div>
+
+                {selectedCourse.modules.map((session, sIdx) => (
                   <div
-                    key={module.id}
-                    className="border border-slate-200 dark:border-slate-800 rounded-[4px] overflow-hidden bg-slate-50/30 dark:bg-slate-800/30"
+                    key={session.id}
+                    className="border border-slate-200 dark:border-slate-800 rounded-[4px] overflow-hidden bg-slate-50/50 dark:bg-slate-900/60"
                   >
-                    {/* Module Title & Actions */}
-                    <div className="p-3 bg-slate-100/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                    {/* Session Header Strip */}
+                    <div className="p-3 bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <Layers className="w-4 h-4 text-[#116E63] dark:text-emerald-400" />
-                        <span className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white font-[family-name:var(--font-yantramanav)]">
-                          {module.title}
-                        </span>
-                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono font-semibold hidden sm:inline">
-                          ({module.lessons.length} Lessons &bull; {module.duration})
-                        </span>
+                        <div className="w-6 h-6 rounded-[3px] bg-[#116E63] text-white flex items-center justify-center font-bold text-xs">
+                          {sIdx + 1}
+                        </div>
+                        <div>
+                          <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">
+                            {session.title}
+                          </div>
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
+                            {session.lessons.length} Video Lessons &bull; {session.duration}
+                          </div>
+                        </div>
                       </div>
 
-                      <button
-                        onClick={() => handleOpenAddLesson(module.id)}
-                        className="bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1 cursor-pointer transition-colors shadow-2xs"
-                      >
-                        <Plus className="w-3 h-3" />
-                        <span>Add Video Lesson</span>
-                      </button>
+                      <div className="flex items-center gap-1.5 self-end sm:self-auto">
+                        <button
+                          onClick={() => handleOpenAddLesson(session.id)}
+                          className="px-2.5 py-1 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-[11px] font-bold uppercase rounded-[3px] flex items-center gap-1 cursor-pointer transition-colors shadow-xs"
+                          title="Upload video lesson to this session"
+                        >
+                          <Upload className="w-3 h-3" />
+                          <span>Upload Video</span>
+                        </button>
+                        <button
+                          onClick={() => handleOpenEditSession(session)}
+                          className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-[2px]"
+                          title="Edit Session Name & Duration"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteSession(session.id)}
+                          className="p-1 text-slate-400 hover:text-rose-600 rounded-[2px]"
+                          title="Delete Session"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
 
-                    {/* Lessons inside Module */}
-                    <div className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
-                      {module.lessons.length === 0 ? (
-                        <div className="p-4 text-center text-xs text-slate-400 dark:text-slate-500">
-                          No lessons added to this module yet. Click &quot;Add Video Lesson&quot; above.
+                    {/* Lessons / Videos inside this Session */}
+                    <div className="p-2 sm:p-3 divide-y divide-slate-100 dark:divide-slate-800/70">
+                      {session.lessons.length === 0 ? (
+                        <div className="py-6 text-center space-y-1.5">
+                          <Film className="w-6 h-6 text-slate-400 mx-auto" />
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
+                            No videos in this session yet.
+                          </p>
+                          <button
+                            onClick={() => handleOpenAddLesson(session.id)}
+                            className="text-xs font-bold text-[#116E63] dark:text-emerald-400 hover:underline uppercase inline-flex items-center gap-1"
+                          >
+                            <Upload className="w-3 h-3" />
+                            <span>Upload First Video</span>
+                          </button>
                         </div>
                       ) : (
-                        module.lessons.map((lesson, lIdx) => (
+                        session.lessons.map((lesson, lIdx) => (
                           <div
                             key={lesson.id}
-                            className="p-3 flex items-center justify-between gap-3 hover:bg-slate-50/70 dark:hover:bg-slate-800/50 transition-colors"
+                            className="py-2.5 flex items-center justify-between gap-3 hover:bg-white dark:hover:bg-slate-800/50 px-2 rounded-[3px] transition-colors"
                           >
-                            <div className="flex items-center gap-3 min-w-0">
-                              <span className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono font-bold flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700">
-                                {lIdx + 1}
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <span className="font-mono font-bold text-slate-400 text-xs w-5 text-right shrink-0">
+                                {sIdx + 1}.{lIdx + 1}
                               </span>
+
                               <div className="min-w-0">
-                                <div className="flex items-center gap-2">
-                                  <h5 className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                                    {lesson.name}
-                                  </h5>
-                                  {(lesson as any).videoUrl && (
-                                    <span className="text-[10px] font-bold text-teal-700 dark:text-emerald-400 flex items-center gap-1">
-                                      <Video className="w-3 h-3" /> Video Linked
-                                    </span>
-                                  )}
+                                <div className="font-semibold text-slate-900 dark:text-white text-xs truncate">
+                                  {lesson.name}
                                 </div>
-                                <div className="flex items-center gap-2 text-[10px] text-slate-500 mt-0.5">
+                                <div className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-2 mt-0.5 font-mono">
                                   <span className="flex items-center gap-1">
-                                    <Clock className="w-2.5 h-2.5" /> {lesson.duration}
+                                    <Clock className="w-3 h-3" /> {lesson.duration}
                                   </span>
-                                  {lesson.resources && lesson.resources.length > 0 && (
+                                  {(lesson as any).videoUrl && (
                                     <>
                                       <span>&bull;</span>
-                                      <span className="flex items-center gap-1">
-                                        <FileText className="w-2.5 h-2.5" /> {lesson.resources[0].name}
+                                      <span className="text-emerald-700 dark:text-emerald-400 font-sans font-semibold flex items-center gap-0.5">
+                                        <Check className="w-3 h-3" /> Video Attached
+                                      </span>
+                                    </>
+                                  )}
+                                  {lesson.resources?.[0]?.name && (
+                                    <>
+                                      <span>&bull;</span>
+                                      <span className="text-slate-600 dark:text-slate-400 flex items-center gap-0.5">
+                                        <FileText className="w-3 h-3" /> {lesson.resources[0].name}
                                       </span>
                                     </>
                                   )}
@@ -528,30 +785,27 @@ export default function SuperAdminCoursesManager() {
                               </div>
                             </div>
 
-                            {/* Actions */}
-                            <div className="flex items-center gap-1.5 shrink-0">
+                            <div className="flex items-center gap-1 shrink-0">
+                              {(lesson as any).videoUrl && (
+                                <button
+                                  onClick={() => setPreviewVideoUrl((lesson as any).videoUrl)}
+                                  className="px-2 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[3px] flex items-center gap-1 cursor-pointer transition-colors"
+                                  title="Test & Preview Video Playback"
+                                >
+                                  <Play className="w-3 h-3 fill-current" />
+                                  <span className="hidden xs:inline">Preview</span>
+                                </button>
+                              )}
                               <button
-                                onClick={() =>
-                                  setPreviewVideoUrl(
-                                    (lesson as any).videoUrl ||
-                                      "https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                  )
-                                }
-                                className="p-1.5 text-slate-600 hover:text-[#116E63] hover:bg-teal-50 rounded-[3px] transition-colors"
-                                title="Preview Video"
-                              >
-                                <Play className="w-3.5 h-3.5" />
-                              </button>
-                              <button
-                                onClick={() => handleOpenEditLesson(module.id, lesson)}
-                                className="p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-[3px] transition-colors"
-                                title="Edit Lesson & Video URL"
+                                onClick={() => handleOpenEditLesson(session.id, lesson)}
+                                className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 rounded-[2px]"
+                                title="Edit Video Lesson"
                               >
                                 <Edit2 className="w-3.5 h-3.5" />
                               </button>
                               <button
-                                onClick={() => handleDeleteLesson(module.id, lesson.id)}
-                                className="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-[3px] transition-colors"
+                                onClick={() => handleDeleteLesson(session.id, lesson.id)}
+                                className="p-1 text-slate-400 hover:text-rose-600 rounded-[2px]"
                                 title="Delete Lesson"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -566,45 +820,136 @@ export default function SuperAdminCoursesManager() {
               </div>
             </div>
           ) : (
-            <div className="bg-white border border-slate-200 p-8 text-center text-slate-400 rounded-[4px]">
-              Select a course from the left catalog to inspect or edit lessons.
+            <div className="p-12 text-center border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[4px] text-slate-500">
+              Select a course from the left catalog to edit its sessions and upload videos.
             </div>
           )}
         </div>
       </div>
 
-      {/* MODAL 1: ADD / EDIT COURSE */}
+      {/* ================= MODAL 1: ADD / EDIT COURSE & THUMBNAIL UPLOAD ================= */}
       {isCourseModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <div className="bg-white dark:bg-slate-900 max-w-lg w-full p-5 border border-slate-300 dark:border-slate-700 shadow-xl space-y-4 rounded-[4px]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 animate-in fade-in">
+          <div className="bg-white dark:bg-slate-900 max-w-xl w-full p-5 border border-slate-300 dark:border-slate-700 shadow-xl space-y-4 rounded-[4px] max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
-              <h3 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
-                {editingCourse ? "Edit Masterclass Course" : "Create New Masterclass Course"}
+              <h3 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider font-[family-name:var(--font-yantramanav)] flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-[#116E63] dark:text-emerald-400" />
+                <span>{editingCourse ? "Edit Masterclass Details & Thumbnail" : "Create New Masterclass Course"}</span>
               </h3>
               <button
                 onClick={() => setIsCourseModalOpen(false)}
-                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold"
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleSaveCourse} className="space-y-3 text-xs">
+            <form onSubmit={handleSaveCourse} className="space-y-4 text-xs">
+              {/* Course Title */}
               <div>
                 <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                  Course Title
+                  Masterclass Course Title
                 </label>
                 <input
                   type="text"
                   required
                   value={courseForm.title}
                   onChange={(e) => setCourseForm({ ...courseForm, title: e.target.value })}
-                  placeholder="e.g. AI Prompt Engineering & Automation Mastery"
+                  placeholder="e.g. High-Ticket Closing & Business Sales Mastery"
                   className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-semibold text-slate-800 dark:text-white"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* MAIN COURSE THUMBNAIL UPLOAD SECTION (Dedicated) */}
+              <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-[4px] space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                    <ImageIcon className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
+                    Main Course Thumbnail / Poster
+                  </label>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
+                    16:9 Recommended (1280x720)
+                  </span>
+                </div>
+
+                {/* Live Thumbnail Preview */}
+                <div className="flex flex-col sm:flex-row items-center gap-3">
+                  <div className="relative w-full sm:w-44 h-28 rounded-[4px] overflow-hidden border-2 border-slate-300 dark:border-slate-600 bg-slate-900 shrink-0 shadow-xs">
+                    <Image
+                      src={courseForm.image || "/images/course2.jpg"}
+                      alt="Thumbnail Preview"
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span className="absolute bottom-1.5 left-2 text-[10px] text-white font-bold uppercase drop-shadow-md">
+                      Live Preview
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 flex-1 w-full">
+                    {/* File Upload Button */}
+                    <label className="w-full py-2 px-3 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-[4px] flex items-center justify-center gap-2 cursor-pointer transition-colors text-xs font-bold text-slate-700 dark:text-slate-200">
+                      <Upload className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
+                      <span>Upload Image from Device (PNG / JPG / WEBP)</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleThumbnailUpload}
+                        className="hidden"
+                      />
+                    </label>
+
+                    {/* Or URL input */}
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium block">
+                        Or paste external image URL / path:
+                      </span>
+                      <input
+                        type="text"
+                        value={courseForm.image}
+                        onChange={(e) => setCourseForm({ ...courseForm, image: e.target.value })}
+                        placeholder="/images/course1.jpg or https://..."
+                        className="w-full px-2.5 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-[4px] font-mono text-[11px] text-slate-800 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Preset Thumbnails Picker */}
+                <div className="space-y-1.5 pt-1">
+                  <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 block">
+                    Or select from library preset thumbnails:
+                  </span>
+                  <div className="grid grid-cols-5 gap-1.5">
+                    {PRESET_THUMBNAILS.map((preset) => {
+                      const isSelected = courseForm.image === preset.url;
+                      return (
+                        <button
+                          key={preset.url}
+                          type="button"
+                          onClick={() => setCourseForm({ ...courseForm, image: preset.url })}
+                          className={`relative aspect-video rounded-[3px] overflow-hidden border-2 transition-all cursor-pointer ${
+                            isSelected
+                              ? "border-[#116E63] ring-2 ring-[#116E63]/40 scale-105"
+                              : "border-slate-200 dark:border-slate-700 opacity-70 hover:opacity-100"
+                          }`}
+                        >
+                          <Image src={preset.url} alt={preset.name} fill className="object-cover" />
+                          {isSelected && (
+                            <div className="absolute inset-0 bg-[#116E63]/40 flex items-center justify-center">
+                              <Check className="w-3.5 h-3.5 text-white" />
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Category & Duration */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
                     Category
@@ -612,16 +957,31 @@ export default function SuperAdminCoursesManager() {
                   <select
                     value={courseForm.category}
                     onChange={(e) => setCourseForm({ ...courseForm, category: e.target.value })}
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-bold text-slate-700 dark:text-slate-200"
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-semibold text-slate-800 dark:text-white text-xs"
                   >
                     <option value="Business & Sales">Business &amp; Sales</option>
                     <option value="Video Editing">Video Editing</option>
                     <option value="Graphic Design">Graphic Design</option>
-                    <option value="Social Media">Social Media</option>
+                    <option value="Content Creation">Content Creation</option>
                     <option value="Digital Marketing">Digital Marketing</option>
                     <option value="Web Development">Web Development</option>
                   </select>
                 </div>
+
+                <div>
+                  <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
+                    Course Fee (₹)
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    value={courseForm.price}
+                    onChange={(e) => setCourseForm({ ...courseForm, price: Number(e.target.value) })}
+                    placeholder="4999"
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-mono font-bold text-slate-800 dark:text-white"
+                  />
+                </div>
+
                 <div>
                   <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
                     Total Duration
@@ -631,37 +991,25 @@ export default function SuperAdminCoursesManager() {
                     required
                     value={courseForm.duration}
                     onChange={(e) => setCourseForm({ ...courseForm, duration: e.target.value })}
-                    placeholder="e.g. 50 Hours"
+                    placeholder="e.g. 60 Hours"
                     className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-mono text-slate-800 dark:text-white"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                    Instructor
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={courseForm.instructor}
-                    onChange={(e) => setCourseForm({ ...courseForm, instructor: e.target.value })}
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] text-slate-800 dark:text-white"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                    Cover Image URL / Asset
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={courseForm.image}
-                    onChange={(e) => setCourseForm({ ...courseForm, image: e.target.value })}
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] text-slate-800 dark:text-white font-mono text-[11px]"
-                  />
-                </div>
+              {/* Instructor */}
+              <div>
+                <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
+                  Lead Instructor / Mentor
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={courseForm.instructor}
+                  onChange={(e) => setCourseForm({ ...courseForm, instructor: e.target.value })}
+                  placeholder="e.g. SkillAura Master Team"
+                  className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] text-slate-800 dark:text-white"
+                />
               </div>
 
               <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
@@ -676,7 +1024,7 @@ export default function SuperAdminCoursesManager() {
                   type="submit"
                   className="px-5 py-2 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] cursor-pointer shadow-xs"
                 >
-                  {editingCourse ? "Save Course Changes" : "Create Course"}
+                  {editingCourse ? "Save Course Changes" : "Create Masterclass"}
                 </button>
               </div>
             </form>
@@ -684,55 +1032,198 @@ export default function SuperAdminCoursesManager() {
         </div>
       )}
 
-      {/* MODAL 2: ADD / EDIT VIDEO LESSON */}
-      {isLessonModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <div className="bg-white dark:bg-slate-900 max-w-lg w-full p-5 border border-slate-300 dark:border-slate-700 shadow-xl space-y-4 rounded-[4px]">
+      {/* ================= MODAL 2: ADD / EDIT SESSION (MODULE) ================= */}
+      {isSessionModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 animate-in fade-in">
+          <div className="bg-white dark:bg-slate-900 max-w-md w-full p-5 border border-slate-300 dark:border-slate-700 shadow-xl space-y-4 rounded-[4px]">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
               <h3 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider font-[family-name:var(--font-yantramanav)] flex items-center gap-2">
-                <Video className="w-4 h-4 text-[#116E63] dark:text-emerald-400" />
-                <span>{editingLesson ? "Edit Video Lesson" : "Add New Video Lesson"}</span>
+                <FolderPlus className="w-4 h-4 text-[#116E63] dark:text-emerald-400" />
+                <span>{editingSession ? "Edit Session Details" : "Add New Curriculum Session"}</span>
               </h3>
               <button
-                onClick={() => setIsLessonModalOpen(false)}
-                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold"
+                onClick={() => setIsSessionModalOpen(false)}
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleSaveLesson} className="space-y-3 text-xs">
+            <form onSubmit={handleSaveSession} className="space-y-3 text-xs">
               <div>
                 <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                  Lesson Name / Title
+                  Session Title
                 </label>
                 <input
                   type="text"
                   required
-                  value={lessonForm.name}
-                  onChange={(e) => setLessonForm({ ...lessonForm, name: e.target.value })}
-                  placeholder="e.g. High-Ticket Closing Scripts & Rebuttals"
+                  value={sessionForm.title}
+                  onChange={(e) => setSessionForm({ ...sessionForm, title: e.target.value })}
+                  placeholder="e.g. Session 3: Closing Scripts & Objection Handling"
                   className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-semibold text-slate-800 dark:text-white"
                 />
               </div>
 
               <div>
                 <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                  Video URL (YouTube, Vimeo, MP4, or Embed)
+                  Estimated Session Duration
                 </label>
                 <input
-                  type="url"
+                  type="text"
                   required
-                  value={lessonForm.videoUrl}
-                  onChange={(e) => setLessonForm({ ...lessonForm, videoUrl: e.target.value })}
-                  placeholder="https://www.youtube.com/watch?v=..."
-                  className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-mono text-slate-800 dark:text-white text-xs"
+                  value={sessionForm.duration}
+                  onChange={(e) => setSessionForm({ ...sessionForm, duration: e.target.value })}
+                  placeholder="e.g. 12 Hours"
+                  className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-mono text-slate-800 dark:text-white"
                 />
-                <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 block">
-                  Supports YouTube embed, Vimeo, Google Drive video, or direct MP4 CDN links.
-                </span>
               </div>
 
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setIsSessionModalOpen(false)}
+                  className="px-3 py-1.5 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold uppercase rounded-[4px] cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] cursor-pointer"
+                >
+                  {editingSession ? "Save Session" : "Create Session"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL 3: UPLOAD VIDEO LESSON (Session-Wise) ================= */}
+      {isLessonModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 animate-in fade-in">
+          <div className="bg-white dark:bg-slate-900 max-w-lg w-full p-5 border border-slate-300 dark:border-slate-700 shadow-xl space-y-4 rounded-[4px] max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+              <div>
+                <h3 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider font-[family-name:var(--font-yantramanav)] flex items-center gap-2">
+                  <Film className="w-4 h-4 text-[#116E63] dark:text-emerald-400" />
+                  <span>{editingLesson ? "Edit Video Lesson" : "Upload Video to Session"}</span>
+                </h3>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  Target: <strong className="text-slate-700 dark:text-slate-300">{getTargetSessionName()}</strong>
+                </p>
+              </div>
+              <button
+                onClick={() => setIsLessonModalOpen(false)}
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveLesson} className="space-y-3.5 text-xs">
+              {/* Lesson Name */}
+              <div>
+                <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
+                  Video Lesson Name / Title
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={lessonForm.name}
+                  onChange={(e) => setLessonForm({ ...lessonForm, name: e.target.value })}
+                  placeholder="e.g. Overcoming Price Objections with Value Anchoring"
+                  className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-semibold text-slate-800 dark:text-white"
+                />
+              </div>
+
+              {/* VIDEO UPLOAD & SOURCE SELECTOR TABS */}
+              <div className="p-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-[4px] space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                    <Video className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
+                    Video Media Source
+                  </span>
+                  <div className="flex items-center gap-1 bg-white dark:bg-slate-900 p-0.5 border border-slate-200 dark:border-slate-700 rounded-[3px]">
+                    <button
+                      type="button"
+                      onClick={() => setVideoSourceType("upload")}
+                      className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-[2px] cursor-pointer ${
+                        videoSourceType === "upload"
+                          ? "bg-[#116E63] text-white"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                      }`}
+                    >
+                      Upload File
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setVideoSourceType("url")}
+                      className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-[2px] cursor-pointer ${
+                        videoSourceType === "url"
+                          ? "bg-[#116E63] text-white"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                      }`}
+                    >
+                      Stream URL
+                    </button>
+                  </div>
+                </div>
+
+                {videoSourceType === "upload" ? (
+                  <div className="space-y-2">
+                    <label className="w-full py-4 px-3 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-[4px] flex flex-col items-center justify-center gap-1.5 cursor-pointer transition-colors text-center">
+                      <Upload className="w-6 h-6 text-[#116E63] dark:text-emerald-400 animate-bounce" />
+                      <span className="text-xs font-bold text-slate-800 dark:text-white">
+                        Click to Browse Video File
+                      </span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                        Supports MP4, MOV, WEBM, MKV (Full 1080p / 4K)
+                      </span>
+                      <input
+                        type="file"
+                        accept="video/mp4,video/webm,video/mkv,video/quicktime"
+                        onChange={handleVideoFileUpload}
+                        className="hidden"
+                      />
+                    </label>
+
+                    {uploadedVideoFileName && (
+                      <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-[3px] flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-2 truncate">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                          <div className="truncate">
+                            <span className="font-semibold text-slate-900 dark:text-white block truncate">
+                              {uploadedVideoFileName}
+                            </span>
+                            <span className="text-[10px] text-slate-500 font-mono">
+                              File Size: {uploadedVideoFileSize} &bull; Ready for CDN encoding
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block">
+                      Video Stream URL (YouTube, Vimeo, Cloudflare, S3, MP4)
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={lessonForm.videoUrl}
+                      onChange={(e) => setLessonForm({ ...lessonForm, videoUrl: e.target.value })}
+                      placeholder="https://www.youtube.com/watch?v=... or direct .mp4 link"
+                      className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-[4px] font-mono text-slate-800 dark:text-white text-xs"
+                    />
+                    <span className="text-[10px] text-slate-400 dark:text-slate-500 block">
+                      Paste YouTube video URL, Vimeo link, or Cloudflare direct stream URL.
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Duration & Resource */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
@@ -743,87 +1234,112 @@ export default function SuperAdminCoursesManager() {
                     required
                     value={lessonForm.duration}
                     onChange={(e) => setLessonForm({ ...lessonForm, duration: e.target.value })}
-                    placeholder="e.g. 45 mins"
+                    placeholder="e.g. 35 mins or 24:15"
                     className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-mono text-slate-800 dark:text-white"
                   />
                 </div>
                 <div>
                   <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                    Downloadable Resource (Optional)
+                    Downloadable Handout (Optional)
                   </label>
                   <input
                     type="text"
                     value={lessonForm.resourceName}
                     onChange={(e) => setLessonForm({ ...lessonForm, resourceName: e.target.value })}
-                    placeholder="e.g. Sales-Blueprint.pdf"
+                    placeholder="e.g. Closing-Script.pdf"
                     className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] text-slate-800 dark:text-white"
                   />
                 </div>
               </div>
 
+              {/* Synopsis */}
               <div>
                 <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                  Lesson Synopsis / Key Takeaways
+                  Video Synopsis &amp; Key Takeaways
                 </label>
                 <textarea
                   rows={2}
                   value={lessonForm.description}
                   onChange={(e) => setLessonForm({ ...lessonForm, description: e.target.value })}
-                  placeholder="Brief summary of what students learn in this video lesson..."
+                  placeholder="Summary of what the student learns in this video lesson..."
                   className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] text-slate-800 dark:text-white"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
-                <button
-                  type="button"
-                  onClick={() => setIsLessonModalOpen(false)}
-                  className="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold uppercase rounded-[4px] cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] cursor-pointer shadow-xs"
-                >
-                  {editingLesson ? "Save Lesson" : "Add Video Lesson"}
-                </button>
+              <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800">
+                {lessonForm.videoUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setPreviewVideoUrl(lessonForm.videoUrl)}
+                    className="text-xs font-bold text-[#116E63] dark:text-emerald-400 hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <Play className="w-3.5 h-3.5" />
+                    <span>Test Video Playback</span>
+                  </button>
+                )}
+                <div className="flex items-center gap-2 ml-auto">
+                  <button
+                    type="button"
+                    onClick={() => setIsLessonModalOpen(false)}
+                    className="px-4 py-1.5 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold uppercase rounded-[4px] cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] cursor-pointer shadow-xs"
+                  >
+                    {editingLesson ? "Save Lesson" : "Upload & Save Video"}
+                  </button>
+                </div>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* MODAL 3: VIDEO LIVE PREVIEW */}
+      {/* ================= MODAL 4: VIDEO LIVE PREVIEW PLAYER ================= */}
       {previewVideoUrl && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 animate-in fade-in">
           <div className="bg-slate-900 max-w-2xl w-full p-4 border border-slate-700 shadow-2xl space-y-3 rounded-[4px]">
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <span className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                <Play className="w-3.5 h-3.5 text-teal-400" /> Video Player Preview
+                <Play className="w-3.5 h-3.5 text-emerald-400 fill-current" /> Video Player Preview Test
               </span>
               <button
                 onClick={() => setPreviewVideoUrl(null)}
-                className="text-slate-400 hover:text-white font-bold"
+                className="text-slate-400 hover:text-white font-bold cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
             <div className="relative aspect-video w-full bg-black rounded-[4px] overflow-hidden">
-              <iframe
-                src={previewVideoUrl}
-                className="w-full h-full"
-                title="Lesson Video Preview"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              {previewVideoUrl.startsWith("blob:") || previewVideoUrl.endsWith(".mp4") ? (
+                <video
+                  src={previewVideoUrl}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <iframe
+                  src={previewVideoUrl}
+                  className="w-full h-full"
+                  title="Lesson Video Preview"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              )}
             </div>
 
-            <div className="text-right">
+            <div className="flex items-center justify-between pt-1">
+              <span className="text-[11px] text-slate-400 font-mono truncate max-w-md">
+                Source: {previewVideoUrl}
+              </span>
               <button
                 onClick={() => setPreviewVideoUrl(null)}
-                className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold uppercase rounded-[4px]"
+                className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold uppercase rounded-[4px] cursor-pointer"
               >
                 Close Preview
               </button>
