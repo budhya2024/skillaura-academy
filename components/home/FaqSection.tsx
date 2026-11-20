@@ -1,49 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
-
-export interface FaqItem {
-  id: number;
-  question: string;
-  answer: string;
-}
-
-const FAQ_LIST: FaqItem[] = [
-  {
-    id: 1,
-    question: "How does Skill Aura Academy provide freelancing job opportunities?",
-    answer:
-      "Upon completing your practical masterclass and mastering the required tools, our dedicated mentorship team directly connects you to live client projects, gig assignments, and remote freelance opportunities to help you start earning immediately.",
-  },
-  {
-    id: 2,
-    question: "Are the masterclasses conducted 100% online?",
-    answer:
-      "Yes! All 7 masterclasses are delivered through our 100% online practical learning system. You can join live interactive sessions or watch high-definition recordings flexibly from your mobile phone or laptop at any time.",
-  },
-  {
-    id: 3,
-    question: "How do I enroll and confirm my admission?",
-    answer:
-      "Simply click the 'ENROLL NOW' button on any course. Fill out the short registration form, and your enrollment request will be processed immediately with instant WhatsApp confirmation and support from our admissions team.",
-  },
-  {
-    id: 4,
-    question: "Will I receive an accredited certification upon completion?",
-    answer:
-      "Yes! After successfully completing all module assignments and the capstone portfolio project, you will receive a verified Skill Aura Academy Certificate of Completion to showcase to global clients.",
-  },
-  {
-    id: 5,
-    question: "What kind of student support and mentorship is provided?",
-    answer:
-      "You receive direct 1-on-1 problem-solving support, WhatsApp community access, live feedback on client work, and personal guidance from Founder & CEO Subha Kumar Mahata.",
-  },
-];
+import { getCmsData, CMS_UPDATE_EVENT, FaqContentItem, DEFAULT_CMS_DATA } from "../../lib/cmsData";
 
 export default function FaqSection() {
+  const [faqs, setFaqs] = useState<FaqContentItem[]>(DEFAULT_CMS_DATA.faqs);
   const [openId, setOpenId] = useState<number | null>(1);
+
+  useEffect(() => {
+    setFaqs(getCmsData().faqs);
+    const handleUpdate = () => {
+      setFaqs(getCmsData().faqs);
+    };
+    window.addEventListener(CMS_UPDATE_EVENT, handleUpdate);
+    return () => window.removeEventListener(CMS_UPDATE_EVENT, handleUpdate);
+  }, []);
 
   const toggleFaq = (id: number) => {
     setOpenId(openId === id ? null : id);
@@ -65,7 +37,7 @@ export default function FaqSection() {
 
         {/* Full-Width Accordion List */}
         <div className="max-w-4xl mx-auto space-y-4">
-          {FAQ_LIST.map((faq) => {
+          {faqs.map((faq) => {
             const isOpen = openId === faq.id;
             return (
               <div

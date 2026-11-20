@@ -1,41 +1,23 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { BookOpen, GraduationCap, UserCheck, Trophy } from "lucide-react";
+import { getCmsData, CMS_UPDATE_EVENT, CounterMetricItem, DEFAULT_CMS_DATA } from "../../lib/cmsData";
 
-export interface CounterItem {
-  id: number;
-  icon: React.ElementType;
-  count: string;
-  label: string;
-}
-
-const COUNTERS: CounterItem[] = [
-  {
-    id: 1,
-    icon: GraduationCap,
-    count: "25,000+",
-    label: "Students Guided",
-  },
-  {
-    id: 2,
-    icon: BookOpen,
-    count: "7+",
-    label: "Practical Masterclasses",
-  },
-  {
-    id: 3,
-    icon: UserCheck,
-    count: "100%",
-    label: "Online Practical System",
-  },
-  {
-    id: 4,
-    icon: Trophy,
-    count: "98%",
-    label: "Client Work Success Rate",
-  },
-];
+const ICON_MAP = [GraduationCap, BookOpen, UserCheck, Trophy];
 
 export default function CounterSection() {
+  const [counters, setCounters] = useState<CounterMetricItem[]>(DEFAULT_CMS_DATA.counterMetrics);
+
+  useEffect(() => {
+    setCounters(getCmsData().counterMetrics);
+    const handleUpdate = () => {
+      setCounters(getCmsData().counterMetrics);
+    };
+    window.addEventListener(CMS_UPDATE_EVENT, handleUpdate);
+    return () => window.removeEventListener(CMS_UPDATE_EVENT, handleUpdate);
+  }, []);
+
   return (
     <section
       className="relative py-8 md:py-16 bg-cover bg-center bg-fixed text-white overflow-hidden"
@@ -46,8 +28,8 @@ export default function CounterSection() {
 
       <div className="container relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
-          {COUNTERS.map((item) => {
-            const Icon = item.icon;
+          {counters.map((item, idx) => {
+            const Icon = ICON_MAP[idx % ICON_MAP.length];
             return (
               <div
                 key={item.id}

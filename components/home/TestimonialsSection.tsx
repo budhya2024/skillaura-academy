@@ -1,95 +1,26 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import { FaQuoteLeft } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
+import { getCmsData, CMS_UPDATE_EVENT, TestimonialContentItem, DEFAULT_CMS_DATA } from "../../lib/cmsData";
 
 import "swiper/css";
 import "swiper/css/pagination";
 
-export interface TestimonialItem {
-  id: number;
-  name: string;
-  initials: string;
-  role: string;
-  enrolledCourse: string;
-  quote: string;
-  avatarBg: string;
-  rating: number;
-}
-
-const TESTIMONIALS: TestimonialItem[] = [
-  {
-    id: 1,
-    name: "Rahul Sharma",
-    initials: "RS",
-    role: "Freelance Video Editor",
-    enrolledCourse: "Video Editing Mastery",
-    quote:
-      "After completing the Video Editing Mastery masterclass in Premiere Pro & CapCut, the academy connected me directly to my first freelance clients. I am now editing full-time from home!",
-    avatarBg: "from-[#116E63] to-[#1a9385]",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Priya Patel",
-    initials: "PP",
-    role: "Graphic & Logo Designer",
-    enrolledCourse: "Poster & Logo Design",
-    quote:
-      "Learning vector branding in Illustrator and social creatives in Photoshop gave me an elite portfolio. The 1-on-1 mentorship and client assistance were truly game-changing!",
-    avatarBg: "from-[#FDA31B] to-[#f98207]",
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: "Ankit Verma",
-    initials: "AV",
-    role: "Content Creator & YouTuber",
-    enrolledCourse: "Content Creation Mastery",
-    quote:
-      "The viral hook frameworks and video retention scripting strategies completely transformed my channel. My audience grew by over 30,000 engaged subscribers in just 60 days!",
-    avatarBg: "from-[#116E63] to-[#0d554c]",
-    rating: 5,
-  },
-  {
-    id: 4,
-    name: "Sneha Mukherjee",
-    initials: "SM",
-    role: "Freelance Brand Designer",
-    enrolledCourse: "Poster & Logo Design",
-    quote:
-      "Skill Aura Academy delivered on its promise 100%. Right after graduating, I was handed real commercial design projects. Huge thanks to Subha Sir for the guidance!",
-    avatarBg: "from-[#FDA31B] to-[#e67e22]",
-    rating: 5,
-  },
-  {
-    id: 5,
-    name: "Rohan Das",
-    initials: "RD",
-    role: "Performance Marketer",
-    enrolledCourse: "Facebook Ads Mastery",
-    quote:
-      "Mastered Meta pixel setup, custom audience targeting, and Google search ads. I am now managing live ad spend for e-commerce brands with high ROAS.",
-    avatarBg: "from-[#116E63] to-[#158074]",
-    rating: 5,
-  },
-  {
-    id: 6,
-    name: "Pooja Banerjee",
-    initials: "PB",
-    role: "Business & Sales Specialist",
-    enrolledCourse: "Knowledge & Business Mastery",
-    quote:
-      "The sales psychology, objection handling, and affiliate monetization strategies gave me the confidence to close high-ticket clients remotely with ease.",
-    avatarBg: "from-[#FDA31B] to-[#d35400]",
-    rating: 5,
-  },
-];
-
 export default function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState<TestimonialContentItem[]>(DEFAULT_CMS_DATA.testimonials);
+
+  useEffect(() => {
+    setTestimonials(getCmsData().testimonials);
+    const handleUpdate = () => {
+      setTestimonials(getCmsData().testimonials);
+    };
+    window.addEventListener(CMS_UPDATE_EVENT, handleUpdate);
+    return () => window.removeEventListener(CMS_UPDATE_EVENT, handleUpdate);
+  }, []);
   return (
     <section
       id="testimonials"
@@ -144,7 +75,7 @@ export default function TestimonialsSection() {
             }}
             className="w-full pb-10 [&_.swiper-wrapper]:!flex [&_.swiper-wrapper]:items-stretch [&_.swiper-slide]:!h-auto [&_.swiper-slide]:flex"
           >
-            {TESTIMONIALS.map((item) => (
+            {testimonials.map((item) => (
               <SwiperSlide key={item.id} className="!h-auto flex flex-col">
                 <div className="w-full bg-white rounded-tl-[50px] rounded-tr-[24px] rounded-bl-[24px] rounded-br-[50px] p-6 sm:p-7 text-slate-800 relative flex flex-col justify-between shadow-xl border-b-4 border-[#FDA31B] flex-1 h-full min-h-[290px] sm:min-h-[310px]">
                   {/* Top-Right Quotation Icon Badge */}
@@ -174,7 +105,7 @@ export default function TestimonialsSection() {
                   {/* Student Profile Info with Initials Avatar */}
                   <div className="flex items-center gap-3.5 pt-5 mt-6 border-t border-slate-100">
                     <div
-                      className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr ${item.avatarBg} text-white flex items-center justify-center font-extrabold text-sm sm:text-base shadow-md shrink-0 font-[family-name:var(--font-yantramanav)] tracking-wider border-2 border-white ring-2 ring-[#FDA31B]/40`}
+                      className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr ${item.avatarBg || "from-[#116E63] to-[#1a9385]"} text-white flex items-center justify-center font-extrabold text-sm sm:text-base shadow-md shrink-0 font-[family-name:var(--font-yantramanav)] tracking-wider border-2 border-white ring-2 ring-[#FDA31B]/40`}
                     >
                       <span>{item.initials}</span>
                     </div>

@@ -1,11 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BookOpen, GraduationCap, Award, ChevronRight, Headphones } from "lucide-react";
+import { getCmsData, CMS_UPDATE_EVENT, AboutContentConfig, DEFAULT_CMS_DATA } from "../../lib/cmsData";
 
 export default function AboutSection() {
+  const [about, setAbout] = useState<AboutContentConfig>(DEFAULT_CMS_DATA.aboutSection);
+
+  useEffect(() => {
+    setAbout(getCmsData().aboutSection);
+    const handleUpdate = () => {
+      setAbout(getCmsData().aboutSection);
+    };
+    window.addEventListener(CMS_UPDATE_EVENT, handleUpdate);
+    return () => window.removeEventListener(CMS_UPDATE_EVENT, handleUpdate);
+  }, []);
   return (
     <section id="about" className="py-12 md:py-20 bg-[#F8F9FA] overflow-hidden font-sans">
       <div className="container">
@@ -74,10 +85,10 @@ export default function AboutSection() {
               </div>
               <div className="pr-1">
                 <h4 className="text-sm md:text-base font-extrabold font-[family-name:var(--font-yantramanav)] leading-tight text-white">
-                  15+ Years Of
+                  {about.badgeYears}
                 </h4>
                 <p className="text-xs md:text-sm font-bold text-white/95 leading-tight">
-                  Quality Education Service
+                  {about.badgeSubtitle}
                 </p>
               </div>
             </div>
@@ -87,12 +98,12 @@ export default function AboutSection() {
           <div className="lg:col-span-6 space-y-5 pt-6 lg:pt-0">
             {/* Headline */}
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#19232B] font-[family-name:var(--font-yantramanav)] leading-[1.15] tracking-tight">
-              Learn High-Income Skills. <span className="text-[#FDA31B]">Get Freelance Work.</span>
+              {about.headlinePrefix}<span className="text-[#FDA31B]">{about.headlineHighlight}</span>
             </h2>
 
             {/* Subtext Paragraph */}
             <p className="text-[#6C757D] text-sm md:text-base leading-relaxed font-normal">
-              Skill Aura Academy is a 100% online practical academy. Our mission is simple: teach in-demand digital skills and provide direct freelancing job & client project opportunities for every dedicated student.
+              {about.description}
             </p>
 
             {/* Features Row & Quote Callout Grid */}
@@ -106,10 +117,10 @@ export default function AboutSection() {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-bold text-[#19232B] font-[family-name:var(--font-yantramanav)]">
-                      100% Practical Curriculum
+                      {about.feature1Title}
                     </h3>
                     <p className="text-[#6C757D] text-sm md:text-base leading-relaxed mt-0.5">
-                      Hands-on projects with CapCut, Photoshop, Illustrator, Premiere Pro, and Meta Ads.
+                      {about.feature1Desc}
                     </p>
                   </div>
                 </div>
@@ -121,10 +132,10 @@ export default function AboutSection() {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-bold text-[#19232B] font-[family-name:var(--font-yantramanav)]">
-                      Direct Client & Job Support
+                      {about.feature2Title}
                     </h3>
                     <p className="text-[#6C757D] text-sm md:text-base leading-relaxed mt-0.5">
-                      Personalized assistance with client acquisition, portfolio building, and live freelancing gigs.
+                      {about.feature2Desc}
                     </p>
                   </div>
                 </div>

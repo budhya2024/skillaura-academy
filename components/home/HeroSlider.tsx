@@ -4,67 +4,33 @@ import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
-
-export interface SlideData {
-  id: number;
-  tagline: string;
-  titlePrefix: string;
-  titleHighlight: string;
-  titleSuffix: string;
-  description: string;
-  bgImage: string;
-  primaryBtnText: string;
-  primaryBtnHref: string;
-  secondaryBtnText: string;
-  secondaryBtnHref: string;
-}
-
-const SLIDES: SlideData[] = [
-  {
-    id: 1,
-    tagline: "100% FREELANCING & CLIENT JOB OPPORTUNITY GUARANTEE",
-    titlePrefix: "Master In-Demand Skills & ",
-    titleHighlight: "Earn",
-    titleSuffix: " Online",
-    description:
-      "Skill Aura Academy provides guaranteed freelancing & client job opportunities to every enrolled student who masters high-income practical skills in Video Editing, Design, Content Creation, Performance Ads, and Sales.",
-    bgImage: "/images/hero1.jpg",
-    primaryBtnText: "ABOUT MORE",
-    primaryBtnHref: "#about",
-    secondaryBtnText: "EXPLORE COURSES",
-    secondaryBtnHref: "#courses",
-  },
-  {
-    id: 2,
-    tagline: "LEARN PRACTICAL SKILLS • GET CLIENT PROJECTS",
-    titlePrefix: "Launch Your High-Income ",
-    titleHighlight: "Freelancing",
-    titleSuffix: " Career",
-    description:
-      "Join over 25,000+ ambitious students. Learn 100% online through live hands-on projects, industry tools, and dedicated 1-on-1 freelancing client acquisition mentorship.",
-    bgImage: "/images/hero2.jpg",
-    primaryBtnText: "EXPLORE COURSES",
-    primaryBtnHref: "#courses",
-    secondaryBtnText: "APPLY NOW",
-    secondaryBtnHref: "#courses",
-  },
-];
+import { getCmsData, CMS_UPDATE_EVENT, HeroSlideItem, DEFAULT_CMS_DATA } from "../../lib/cmsData";
 
 export default function HeroSlider() {
+  const [slides, setSlides] = useState<HeroSlideItem[]>(DEFAULT_CMS_DATA.heroSlides);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+  useEffect(() => {
+    setSlides(getCmsData().heroSlides);
+    const handleUpdate = () => {
+      setSlides(getCmsData().heroSlides);
+    };
+    window.addEventListener(CMS_UPDATE_EVENT, handleUpdate);
+    return () => window.removeEventListener(CMS_UPDATE_EVENT, handleUpdate);
   }, []);
 
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, [slides.length]);
+
   const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-  }, []);
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  }, [slides.length]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000);
+    }, 5500);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
@@ -73,7 +39,7 @@ export default function HeroSlider() {
       className="relative w-full min-h-[520px] sm:min-h-[580px] lg:h-160 flex items-center justify-center overflow-hidden select-none bg-[#19232B]"
     >
       {/* Slides Background Images */}
-      {SLIDES.map((slide, index) => (
+      {slides.map((slide, index) => (
         <div
           key={slide.id}
           className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
@@ -96,7 +62,7 @@ export default function HeroSlider() {
       {/* Main Slide Content Layer */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-0">
         <div className="max-w-3xl space-y-6 sm:space-y-8">
-          {SLIDES.map((slide, index) => {
+          {slides.map((slide, index) => {
             if (index !== currentSlide) return null;
             return (
               <div
@@ -162,7 +128,7 @@ export default function HeroSlider() {
 
       {/* Pagination Indicators */}
       <div className="absolute bottom-5 sm:bottom-28 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2.5">
-        {SLIDES.map((_, index) => (
+        {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}

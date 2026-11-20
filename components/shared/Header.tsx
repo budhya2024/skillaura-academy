@@ -21,6 +21,7 @@ import {
   FaInstagram,
   FaWhatsapp,
 } from "react-icons/fa6";
+import { getCmsData, CMS_UPDATE_EVENT, WebsiteCmsData, DEFAULT_CMS_DATA } from "../../lib/cmsData";
 
 import HeaderSearch from "./HeaderSearch";
 import EnrollModal from "./EnrollModal";
@@ -60,11 +61,21 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 export default function Header() {
+  const [cms, setCms] = useState<WebsiteCmsData>(DEFAULT_CMS_DATA);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    setCms(getCmsData());
+    const handleUpdate = () => {
+      setCms(getCmsData());
+    };
+    window.addEventListener(CMS_UPDATE_EVENT, handleUpdate);
+    return () => window.removeEventListener(CMS_UPDATE_EVENT, handleUpdate);
+  }, []);
 
   const handleSmoothScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -112,6 +123,26 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-[60] w-full font-sans bg-white shadow-xs border-b border-slate-100">
+      {/* ================= TOP ANNOUNCEMENT BANNER (Dynamic via CMS) ================= */}
+      {cms.announcement.active && (
+        <div className="w-full bg-[#0d554c] text-white text-[11px] sm:text-xs py-1.5 px-3 border-b border-emerald-900/40">
+          <div className="container flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5 truncate">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FDA31B] animate-pulse shrink-0"></span>
+              <span className="truncate font-medium">{cms.announcement.headline}</span>
+            </div>
+            {cms.announcement.actionText && (
+              <Link
+                href={cms.announcement.actionHref || "/#courses"}
+                className="text-[10px] font-extrabold uppercase bg-[#FDA31B] hover:bg-amber-400 text-slate-950 px-2 py-0.5 rounded-[3px] shrink-0 transition-colors"
+              >
+                {cms.announcement.actionText}
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* ================= TOP BAR (Desktop Only) ================= */}
       <div
         className={`hidden md:block w-full bg-[#116E63] text-white text-xs sm:text-sm transition-all duration-300 overflow-hidden ${
@@ -128,7 +159,7 @@ export default function Header() {
             </span>
             <div className="flex items-center gap-2">
               <a
-                href="https://www.facebook.com/share/1EQZ7zHQaZ/"
+                href={cms.contactInfo.facebookUrl || "https://www.facebook.com/share/1EQZ7zHQaZ/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
@@ -137,7 +168,7 @@ export default function Header() {
                 <FaFacebookF className="w-3.5 h-3.5" />
               </a>
               <a
-                href="https://www.instagram.com/skillaura.academy_?stkn=c3N5eW1uamp1bndu"
+                href={cms.contactInfo.instagramUrl || "https://www.instagram.com/skillaura.academy_?stkn=c3N5eW1uamp1bndu"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -146,7 +177,7 @@ export default function Header() {
                 <FaInstagram className="w-3.5 h-3.5" />
               </a>
               <a
-                href="https://whatsapp.com/channel/0029Vb8yz5uG8l55QwjXzE0w"
+                href={cms.contactInfo.telegramUrl || "https://whatsapp.com/channel/0029Vb8yz5uG8l55QwjXzE0w"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp Channel"
@@ -161,22 +192,22 @@ export default function Header() {
           <div className="flex items-center justify-end gap-6 text-white font-medium text-xs sm:text-sm whitespace-nowrap">
             {/* Email */}
             <a
-              href="mailto:skillauraacademy.in@gmail.com"
+              href={`mailto:${cms.contactInfo.supportEmail || "skillauraacademy.in@gmail.com"}`}
               className="flex items-center gap-2 group hover:text-[#FDA31B] transition-colors"
             >
               <Mail className="w-5 h-5 text-[#FDA31B] shrink-0" />
-              <span>skillauraacademy.in@gmail.com</span>
+              <span>{cms.contactInfo.supportEmail || "skillauraacademy.in@gmail.com"}</span>
             </a>
 
             <span className="text-white/30 h-4 border-r border-white/20"></span>
 
             {/* Phone */}
             <a
-              href="tel:+919144288641"
+              href={`tel:${cms.contactInfo.supportPhone || "+919144288641"}`}
               className="flex items-center gap-2 group hover:text-[#FDA31B] transition-colors"
             >
               <Phone className="w-5 h-5 text-[#FDA31B] shrink-0" />
-              <span>+91 91442 88641</span>
+              <span>{cms.contactInfo.supportPhone || "+91 91442 88641"}</span>
             </a>
           </div>
         </div>
