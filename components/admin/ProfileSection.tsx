@@ -17,6 +17,7 @@ import {
   Phone,
   MapPin,
   Sparkles,
+  Lock,
 } from "lucide-react";
 
 export default function ProfileSection() {
@@ -70,7 +71,13 @@ export default function ProfileSection() {
     e.preventDefault();
     setProfile((prev) => ({
       ...prev,
-      ...infoForm,
+      name: infoForm.name,
+      role: infoForm.role,
+      address: infoForm.address,
+      package: infoForm.package,
+      // Email and phone number cannot be changed
+      email: prev.email,
+      phone: prev.phone,
     }));
     setIsEditingInfo(false);
     showNotification("Personal information saved successfully!");
@@ -221,28 +228,44 @@ export default function ProfileSection() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[10px] font-bold text-slate-600 uppercase block mb-1">
-                    Email
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-[10px] font-bold text-slate-600 uppercase">
+                      Official Email
+                    </label>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                      <Lock className="w-2.5 h-2.5" /> Locked
+                    </span>
+                  </div>
                   <input
                     type="email"
-                    required
-                    value={infoForm.email}
-                    onChange={(e) => setInfoForm({ ...infoForm, email: e.target.value })}
-                    className="w-full px-2.5 py-1.5 border border-slate-200 rounded-[4px] focus:outline-none focus:border-[#116E63] font-mono text-xs text-slate-800"
+                    disabled
+                    value={profile.email}
+                    className="w-full px-2.5 py-1.5 border border-slate-200 bg-slate-50 text-slate-500 font-mono text-xs rounded-[4px] cursor-not-allowed select-none"
+                    title="Official Email ID is verified and cannot be changed"
                   />
+                  <span className="text-[9px] text-slate-400 mt-0.5 block">
+                    Verified email cannot be changed
+                  </span>
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold text-slate-600 uppercase block mb-1">
-                    Phone / WhatsApp
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-[10px] font-bold text-slate-600 uppercase">
+                      Phone / WhatsApp
+                    </label>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                      <Lock className="w-2.5 h-2.5" /> Locked
+                    </span>
+                  </div>
                   <input
                     type="text"
-                    required
-                    value={infoForm.phone}
-                    onChange={(e) => setInfoForm({ ...infoForm, phone: e.target.value })}
-                    className="w-full px-2.5 py-1.5 border border-slate-200 rounded-[4px] focus:outline-none focus:border-[#116E63] font-mono text-xs text-slate-800"
+                    disabled
+                    value={profile.phone}
+                    className="w-full px-2.5 py-1.5 border border-slate-200 bg-slate-50 text-slate-500 font-mono text-xs rounded-[4px] cursor-not-allowed select-none"
+                    title="Phone number is registered and cannot be changed"
                   />
+                  <span className="text-[9px] text-slate-400 mt-0.5 block">
+                    Registered WhatsApp number cannot be changed
+                  </span>
                 </div>
               </div>
 
@@ -300,11 +323,21 @@ export default function ProfileSection() {
               </div>
               <div className="py-2 flex items-center justify-between">
                 <span className="text-slate-500 font-medium">Official Email:</span>
-                <span className="font-mono text-slate-800">{profile.email}</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-mono text-slate-800">{profile.email}</span>
+                  <span className="text-[9px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-1.5 py-0.2 rounded-[3px] flex items-center gap-0.5">
+                    <Lock className="w-2.5 h-2.5" /> Locked
+                  </span>
+                </div>
               </div>
               <div className="py-2 flex items-center justify-between">
                 <span className="text-slate-500 font-medium">Phone / WhatsApp:</span>
-                <span className="font-mono text-slate-800">{profile.phone}</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-mono text-slate-800">{profile.phone}</span>
+                  <span className="text-[9px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-1.5 py-0.2 rounded-[3px] flex items-center gap-0.5">
+                    <Lock className="w-2.5 h-2.5" /> Locked
+                  </span>
+                </div>
               </div>
               <div className="py-2 flex items-center justify-between">
                 <span className="text-slate-500 font-medium">Joining Date:</span>
