@@ -844,9 +844,9 @@ export default function SuperAdminStudentsManager() {
 
         {/* Master Student Roster Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs min-w-[960px]">
+          <table className="w-full text-left border-collapse text-[13px] min-w-[960px]">
             <thead>
-              <tr className="bg-slate-100/80 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-xs tracking-wider">
+              <tr className="bg-slate-100/80 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-[13px] tracking-wider">
                 <th className="py-3 px-3 w-12 text-center">SL No.</th>
                 <th className="py-3 px-3">Student</th>
                 <th className="py-3 px-3">Course Purchased</th>
@@ -879,7 +879,7 @@ export default function SuperAdminStudentsManager() {
                       className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
                     >
                       {/* 1. SL No. */}
-                      <td className="py-3 px-3 text-center font-mono font-semibold text-slate-500 dark:text-slate-400 text-xs">
+                      <td className="py-3 px-3 text-center font-mono font-semibold text-slate-500 dark:text-slate-400 text-[13px]">
                         {idx + 1}
                       </td>
 
@@ -896,10 +896,10 @@ export default function SuperAdminStudentsManager() {
                             />
                           </div>
                           <div className="min-w-0">
-                            <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm truncate leading-tight">
+                            <div className="font-bold text-slate-900 dark:text-white text-sm truncate leading-tight">
                               {student.name}
                             </div>
-                            <span className="font-mono text-xs text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5">
+                            <span className="font-mono text-[13px] text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5">
                               {student.id}
                             </span>
                           </div>
@@ -909,12 +909,12 @@ export default function SuperAdminStudentsManager() {
                       {/* 3. Course Purchased: Course Name, Purchase Date, and Amount (Extra Content Removed) */}
                       <td className="py-3 px-3">
                         <div
-                          className="font-bold text-slate-900 dark:text-white text-xs truncate max-w-[210px]"
+                          className="font-bold text-slate-900 dark:text-white text-[13px] truncate max-w-[210px]"
                           title={student.purchasedCourse.courseName}
                         >
                           {student.purchasedCourse.courseName}
                         </div>
-                        <div className="flex items-center gap-1.5 mt-0.5 text-xs">
+                        <div className="flex items-center gap-1.5 mt-0.5 text-[13px]">
                           <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">
                             ₹{student.purchasedCourse.courseFee.toLocaleString()}
                           </span>
@@ -928,33 +928,33 @@ export default function SuperAdminStudentsManager() {
                       {/* 4. Sponsor (Minimized: Name & ID only) */}
                       <td className="py-3 px-3">
                         <div
-                          className="font-semibold text-slate-900 dark:text-white text-xs truncate max-w-[170px]"
+                          className="font-semibold text-slate-900 dark:text-white text-[13px] truncate max-w-[170px]"
                           title={student.sponsor.sponsorName}
                         >
                           {student.sponsor.sponsorName.split(" (")[0]}
                         </div>
-                        <span className="font-mono text-xs text-slate-500 dark:text-slate-400 block mt-0.5">
+                        <span className="font-mono text-[13px] text-slate-500 dark:text-slate-400 block mt-0.5">
                           {student.sponsor.sponsorId}
                         </span>
                       </td>
 
                       {/* 5. Students Added (Minimized: Clean count) */}
                       <td className="py-3 px-3 text-center">
-                        <span className="font-mono font-bold text-slate-900 dark:text-white text-xs">
+                        <span className="font-mono font-bold text-slate-900 dark:text-white text-[13px]">
                           {student.referrals.totalDirects}
                         </span>
                       </td>
 
                       {/* 6. Income Generated (Minimized: Clean amount) */}
                       <td className="py-3 px-3 text-center">
-                        <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm">
+                        <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-[13px] sm:text-sm">
                           ₹{student.referrals.totalCommissionEarned.toLocaleString()}
                         </span>
                       </td>
 
                       {/* 7. Company Profit (Minimized: Clean profit) */}
                       <td className="py-3 px-3 text-center">
-                        <span className="font-mono font-bold text-[#116E63] dark:text-teal-300 text-xs sm:text-sm">
+                        <span className="font-mono font-bold text-[#116E63] dark:text-teal-300 text-[13px] sm:text-sm">
                           +₹{companyProfitGenerated.toLocaleString()}
                         </span>
                       </td>
@@ -963,7 +963,7 @@ export default function SuperAdminStudentsManager() {
                       <td className="py-3 px-3 text-center">
                         <button
                           onClick={() => handleToggleKyc(student.id)}
-                          className={`inline-flex items-center gap-1 text-[11px] font-bold cursor-pointer transition-colors ${
+                          className={`inline-flex items-center gap-1 text-[13px] font-bold cursor-pointer transition-colors ${
                             student.kycVerified
                               ? "text-emerald-700 dark:text-emerald-400 hover:text-emerald-900"
                               : "text-amber-700 dark:text-amber-400 hover:text-amber-900"
@@ -991,7 +991,7 @@ export default function SuperAdminStudentsManager() {
                             setSelectedStudent(student);
                             setDrawerTab("purchase");
                           }}
-                          className="px-2.5 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[4px] transition-colors cursor-pointer inline-flex items-center gap-1"
+                          className="px-3 py-1.5 text-xs font-bold text-white bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[4px] transition-colors cursor-pointer inline-flex items-center gap-1.5 shadow-xs"
                         >
                           <Eye className="w-3.5 h-3.5" />
                           <span>Inspect</span>

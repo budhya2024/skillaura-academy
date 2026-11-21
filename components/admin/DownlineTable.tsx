@@ -176,11 +176,11 @@ export default function DownlineTable() {
                     </span>
                   </td>
 
-                  {/* Action View Button -> Opens Right-Side Drawer */}
+                  {/* Action View Button -> Opens Right-Side Drawer (Full Deep Color Background) */}
                   <td className="py-3 px-4 text-right">
                     <button
                       onClick={() => setSelectedMember(member)}
-                      className="px-3 py-1.5 text-xs font-bold text-[#116E63] dark:text-emerald-400 bg-[#116E63]/10 dark:bg-[#116E63]/25 hover:bg-[#116E63] hover:text-white border border-[#116E63]/30 rounded-[4px] inline-flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                      className="px-3 py-1.5 text-xs font-bold text-white bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[4px] inline-flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
                       title="View Member Details on Right Side"
                     >
                       <Eye className="w-3.5 h-3.5" />

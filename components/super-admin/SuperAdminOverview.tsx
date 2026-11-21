@@ -646,9 +646,10 @@ export default function SuperAdminOverview({
                       <td className="py-2.5 px-3 text-right">
                         <button
                           onClick={() => onNavigate("students")}
-                          className="px-2 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[4px] transition-colors cursor-pointer"
+                          className="px-3 py-1.5 text-xs font-bold text-white bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[4px] transition-colors cursor-pointer shadow-xs inline-flex items-center gap-1.5"
                         >
-                          Inspect
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>Inspect</span>
                         </button>
                       </td>
                     </tr>
@@ -781,7 +782,7 @@ export default function SuperAdminOverview({
 
                     <button
                       onClick={() => onNavigate("kyc")}
-                      className="px-2.5 py-1 text-[11px] font-bold uppercase text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[4px] transition-colors cursor-pointer shrink-0"
+                      className="px-3 py-1.5 text-xs font-bold uppercase text-white bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[4px] transition-colors cursor-pointer shrink-0 shadow-xs"
                     >
                       Verify
                     </button>

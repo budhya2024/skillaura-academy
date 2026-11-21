@@ -789,7 +789,7 @@ export default function SuperAdminCoursesManager() {
                               {(lesson as any).videoUrl && (
                                 <button
                                   onClick={() => setPreviewVideoUrl((lesson as any).videoUrl)}
-                                  className="px-2.5 py-1 text-xs font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[3px] flex items-center gap-1.5 cursor-pointer transition-colors"
+                                  className="px-2.5 py-1 text-xs font-bold text-white bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[3px] flex items-center gap-1.5 cursor-pointer transition-colors shadow-xs"
                                   title="Test & Preview Video Playback"
                                 >
                                   <Play className="w-3 h-3 fill-current" />

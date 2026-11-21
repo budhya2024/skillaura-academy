@@ -370,9 +370,9 @@ export default function SuperAdminKYCManager() {
 
         {/* KYC Registry Table - Minimized Clean Layout */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs min-w-[880px]">
+          <table className="w-full text-left border-collapse text-[13px] min-w-[880px]">
             <thead>
-              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-xs tracking-wider">
+              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-[13px] tracking-wider">
                 <th className="py-3 px-3 w-12 text-center">SL No.</th>
                 <th className="py-3 px-3">Student</th>
                 <th className="py-3 px-3">Document</th>
@@ -385,7 +385,7 @@ export default function SuperAdminKYCManager() {
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
               {filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-10 text-center text-slate-400 text-xs">
+                  <td colSpan={7} className="py-10 text-center text-slate-400 text-[13px]">
                     No KYC verification records match the selected filter or search query.
                   </td>
                 </tr>
@@ -396,7 +396,7 @@ export default function SuperAdminKYCManager() {
                     className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors"
                   >
                     {/* 1. SL No. */}
-                    <td className="py-3 px-3 text-center font-mono font-semibold text-slate-500 dark:text-slate-400 text-xs">
+                    <td className="py-3 px-3 text-center font-mono font-semibold text-slate-500 dark:text-slate-400 text-[13px]">
                       {idx + 1}
                     </td>
 
@@ -413,10 +413,10 @@ export default function SuperAdminKYCManager() {
                           />
                         </div>
                         <div className="min-w-0">
-                          <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm truncate leading-tight">
+                          <div className="font-bold text-slate-900 dark:text-white text-sm truncate leading-tight">
                             {item.studentName}
                           </div>
-                          <span className="font-mono text-xs text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5">
+                          <span className="font-mono text-[13px] text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5">
                             {item.studentId}
                           </span>
                         </div>
@@ -425,43 +425,43 @@ export default function SuperAdminKYCManager() {
 
                     {/* 3. Government Document (Clean: Type & Number only) */}
                     <td className="py-3 px-3">
-                      <div className="font-semibold text-slate-900 dark:text-white text-xs">
+                      <div className="font-semibold text-slate-900 dark:text-white text-[13px]">
                         {item.docType}
                       </div>
-                      <span className="font-mono text-xs text-slate-500 dark:text-slate-400 block mt-0.5">
+                      <span className="font-mono text-[13px] text-slate-500 dark:text-slate-400 block mt-0.5">
                         {item.docNumber}
                       </span>
                     </td>
 
                     {/* 4. Bank / Payout (Clean: Bank Name & UPI only) */}
                     <td className="py-3 px-3">
-                      <div className="font-semibold text-slate-900 dark:text-white text-xs truncate max-w-[160px]">
+                      <div className="font-semibold text-slate-900 dark:text-white text-[13px] truncate max-w-[160px]">
                         {item.bankName}
                       </div>
-                      <span className="font-mono text-xs text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5 truncate max-w-[160px]">
+                      <span className="font-mono text-[13px] text-[#116E63] dark:text-emerald-400 font-semibold block mt-0.5 truncate max-w-[160px]">
                         {item.upiId}
                       </span>
                     </td>
 
                     {/* 5. Submission Date (Clean single line) */}
-                    <td className="py-3 px-3 font-mono text-xs text-slate-600 dark:text-slate-400">
+                    <td className="py-3 px-3 font-mono text-[13px] text-slate-600 dark:text-slate-400">
                       {item.submittedDate}
                     </td>
 
                     {/* 6. Verification Status */}
                     <td className="py-3 px-3 text-center">
                       {item.status === "verified" ? (
-                        <span className="text-emerald-700 dark:text-emerald-400 font-bold inline-flex items-center gap-1 text-[11px]">
+                        <span className="text-emerald-700 dark:text-emerald-400 font-bold inline-flex items-center gap-1 text-[13px]">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                           <span>Verified</span>
                         </span>
                       ) : item.status === "rejected" ? (
-                        <span className="text-rose-700 dark:text-rose-400 font-bold inline-flex items-center gap-1 text-[11px]">
+                        <span className="text-rose-700 dark:text-rose-400 font-bold inline-flex items-center gap-1 text-[13px]">
                           <XCircle className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
                           <span>Rejected</span>
                         </span>
                       ) : (
-                        <span className="text-amber-700 dark:text-amber-400 font-bold inline-flex items-center gap-1 text-[11px]">
+                        <span className="text-amber-700 dark:text-amber-400 font-bold inline-flex items-center gap-1 text-[13px]">
                           <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                           <span>Pending</span>
                         </span>
@@ -475,7 +475,7 @@ export default function SuperAdminKYCManager() {
                           setSelectedRecord(item);
                           setIsDrawerOpen(true);
                         }}
-                        className="px-2.5 py-1 text-[11px] font-bold text-[#116E63] dark:text-emerald-400 hover:text-white bg-teal-50 dark:bg-teal-950/60 hover:bg-[#116E63] dark:hover:bg-emerald-600 border border-teal-200 dark:border-teal-800 rounded-[4px] transition-colors cursor-pointer inline-flex items-center gap-1 shadow-2xs"
+                        className="px-3 py-1.5 text-xs font-bold text-white bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[4px] transition-colors cursor-pointer inline-flex items-center gap-1.5 shadow-xs"
                         title="Inspect full documents, bank proofs & verification actions"
                       >
                         <Eye className="w-3.5 h-3.5" />

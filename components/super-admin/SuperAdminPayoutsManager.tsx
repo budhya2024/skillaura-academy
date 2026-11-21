@@ -183,9 +183,9 @@ export default function SuperAdminPayoutsManager() {
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs min-w-[720px]">
+          <table className="w-full text-left border-collapse text-[13px] min-w-[720px]">
             <thead>
-              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] tracking-wider">
+              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-[13px] tracking-wider">
                 <th className="py-2.5 px-3 w-12 sm:w-14 text-center">SL No.</th>
                 <th className="py-2.5 px-4">Payout ID / Date</th>
                 <th className="py-2.5 px-3">Requested Amount</th>
@@ -199,47 +199,47 @@ export default function SuperAdminPayoutsManager() {
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
               {filteredPayouts.map((pay, idx) => (
                 <tr key={pay.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                  <td className="py-2.5 px-3 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                  <td className="py-2.5 px-3 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-[13px]">
                     {idx + 1}
                   </td>
                   <td className="py-2.5 px-4">
-                    <span className="font-bold text-slate-900 dark:text-white font-mono block">
+                    <span className="font-bold text-slate-900 dark:text-white font-mono block text-[13px]">
                       {pay.id}
                     </span>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
                       {pay.requestedDate}
                     </span>
                   </td>
 
-                  <td className="py-2.5 px-3 font-mono font-black text-slate-900 dark:text-white text-sm">
+                  <td className="py-2.5 px-3 font-mono font-black text-slate-900 dark:text-white text-base">
                     ₹{pay.amount.toLocaleString()}
                   </td>
 
                   <td className="py-2.5 px-3">
-                    <span className="inline-block text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase font-mono">
+                    <span className="inline-block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase font-mono">
                       {pay.method}
                     </span>
                   </td>
 
-                  <td className="py-2.5 px-3 font-mono text-slate-700 dark:text-slate-300">
+                  <td className="py-2.5 px-3 font-mono text-slate-700 dark:text-slate-300 text-[13px]">
                     {pay.accountDetails}
                   </td>
 
-                  <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600 dark:text-slate-400">
+                  <td className="py-2.5 px-3 font-mono text-xs text-slate-600 dark:text-slate-400">
                     {pay.payoutRef || "—"}
                   </td>
 
                   <td className="py-2.5 px-3 text-center">
                     {pay.status === "approved" ? (
-                      <span className="inline-block text-[11px] font-bold uppercase text-emerald-700 dark:text-emerald-400">
+                      <span className="inline-block text-xs font-bold uppercase text-emerald-700 dark:text-emerald-400">
                         PAID ✓
                       </span>
                     ) : pay.status === "rejected" ? (
-                      <span className="inline-block text-[11px] font-bold uppercase text-rose-700 dark:text-rose-400">
+                      <span className="inline-block text-xs font-bold uppercase text-rose-700 dark:text-rose-400">
                         REJECTED
                       </span>
                     ) : (
-                      <span className="inline-block text-[11px] font-bold uppercase text-amber-700 dark:text-amber-400">
+                      <span className="inline-block text-xs font-bold uppercase text-amber-700 dark:text-amber-400">
                         PENDING
                       </span>
                     )}
@@ -250,19 +250,19 @@ export default function SuperAdminPayoutsManager() {
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={() => handleApprove(pay.id, pay.amount)}
-                          className="bg-[#116E63] hover:bg-[#0c5c53] text-white font-bold px-2.5 py-1 text-[11px] uppercase tracking-wider rounded-[3px] cursor-pointer transition-colors shadow-2xs"
+                          className="bg-[#116E63] hover:bg-[#0c5c53] text-white font-bold px-3 py-1.5 text-xs uppercase tracking-wider rounded-[3px] cursor-pointer transition-colors shadow-2xs"
                         >
                           Approve &amp; Pay
                         </button>
                         <button
                           onClick={() => handleReject(pay.id)}
-                          className="border border-slate-300 hover:bg-rose-50 text-rose-600 hover:text-rose-700 font-bold px-2 py-1 text-[11px] uppercase tracking-wider rounded-[3px] cursor-pointer transition-colors"
+                          className="border border-slate-300 hover:bg-rose-50 text-rose-600 hover:text-rose-700 font-bold px-2.5 py-1.5 text-xs uppercase tracking-wider rounded-[3px] cursor-pointer transition-colors"
                         >
                           Reject
                         </button>
                       </div>
                     ) : (
-                      <span className="text-[11px] text-slate-400 font-medium">
+                      <span className="text-xs text-slate-400 font-medium">
                         Completed
                       </span>
                     )}
