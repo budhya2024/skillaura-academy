@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { FaPaperPlane, FaWhatsapp } from "react-icons/fa6";
+import { FaPaperPlane } from "react-icons/fa6";
 import { CheckCircle2 } from "lucide-react";
 import { addContactInquiry } from "../../lib/contactData";
 
@@ -28,7 +28,6 @@ export default function ContactFormSection() {
     subject: "",
     message: "",
   });
-  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   const validateEmail = (emailStr: string) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -78,7 +77,7 @@ export default function ContactFormSection() {
 
     setErrors({ name: "", email: "", mobile: "", message: "" });
 
-    // 1. Save Inquiry / SMS to platform storage for Super Admin
+    // 1. Save Inquiry to platform storage for Super Admin
     try {
       addContactInquiry({
         name: formData.name.trim(),
@@ -91,15 +90,6 @@ export default function ContactFormSection() {
       console.error("Failed to record inquiry:", err);
     }
 
-    const currentDate = new Date().toLocaleString("en-IN", {
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
-
-    const textPayload = `📩 *NEW CONTACT INQUIRY - SKILL AURA ACADEMY* 📩\n--------------------------------------------\n👤 *Name:* ${formData.name.trim()}\n📱 *Phone / WhatsApp:* ${formData.mobile.trim() || "Not provided"}\n📧 *Email:* ${formData.email.trim()}\n📌 *Subject:* ${formData.subject.trim() || "Course & Admission Inquiry"}\n📅 *Time:* ${currentDate}\n💬 *Message:*\n${formData.message.trim()}\n--------------------------------------------\n✅ *Status:* Inquiry Received.`;
-
-    const waLink = `https://wa.me/919144288641?text=${encodeURIComponent(textPayload)}`;
-    setWhatsappUrl(waLink);
     setSubmittedData({
       name: formData.name,
       mobile: formData.mobile,
@@ -108,12 +98,6 @@ export default function ContactFormSection() {
     });
     setIsSubmitted(true);
     setFormData({ name: "", email: "", mobile: "", subject: "", message: "" });
-
-    try {
-      window.open(waLink, "_blank");
-    } catch {
-      // Fallback
-    }
   };
 
   return (
@@ -142,7 +126,7 @@ export default function ContactFormSection() {
                   Send Us A Message Anytime
                 </h2>
                 <p className="text-[#757F95] text-xs sm:text-sm leading-relaxed">
-                  Have questions about our courses, enrollment, or freelancing career support? Fill out the form below or reach out directly on WhatsApp.
+                  Have questions about our courses or enrollment? Send us a message and our team will get back to you.
                 </p>
               </div>
 
@@ -153,29 +137,20 @@ export default function ContactFormSection() {
                   </div>
                   <div className="space-y-1">
                     <span className="text-emerald-700 text-xs font-extrabold uppercase tracking-wide">
-                      ✓ Message Sent Successfully (SMS Receipt)
+                      ✓ Message Sent Successfully
                     </span>
                     <h3 className="text-lg font-bold text-slate-900 font-[family-name:var(--font-yantramanav)]">
                       Thank You, {submittedData.name}!
                     </h3>
                     <p className="text-xs text-slate-600">
-                      Your message has been received and forwarded to our support team on WhatsApp.
+                      Your message has been received. Our team will contact you shortly.
                     </p>
                   </div>
 
-                  <div className="pt-2 flex flex-wrap gap-3 justify-center">
-                    <a
-                      href={whatsappUrl || "https://wa.me/919144288641"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-extrabold text-xs uppercase px-5 py-2.5 rounded-full shadow-md transition-all"
-                    >
-                      <FaWhatsapp className="w-4 h-4" />
-                      <span>Chat on WhatsApp</span>
-                    </a>
+                  <div className="pt-2 flex justify-center">
                     <button
                       onClick={() => setIsSubmitted(false)}
-                      className="text-xs font-bold text-slate-600 hover:text-slate-900 border border-slate-300 rounded-full px-4 py-2.5 bg-white cursor-pointer"
+                      className="text-xs font-bold text-white bg-[#116E63] hover:bg-[#0c5c53] rounded-full px-5 py-2.5 cursor-pointer transition-colors shadow-xs"
                     >
                       Send Another Message
                     </button>

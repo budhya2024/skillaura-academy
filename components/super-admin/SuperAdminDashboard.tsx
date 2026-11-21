@@ -68,7 +68,7 @@ export default function SuperAdminDashboard() {
       case "payouts":
         return "Payout Approvals & Banking Disbursements";
       case "inquiries":
-        return "Contact Inquiries & SMS Hub";
+        return "Contact Messages";
       case "cms":
         return "Website Announcements & CMS";
       case "profile":

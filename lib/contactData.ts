@@ -7,7 +7,7 @@ export interface ContactInquiry {
   message: string;
   createdAt: string;
   timestamp: number;
-  status: "unread" | "read" | "replied";
+  status: "unread" | "read";
 }
 
 export const INITIAL_CONTACT_INQUIRIES: ContactInquiry[] = [
@@ -17,7 +17,7 @@ export const INITIAL_CONTACT_INQUIRIES: ContactInquiry[] = [
     email: "rohan.sharma99@gmail.com",
     mobile: "+91 98765 43210",
     subject: "Digital Marketing & Performance Ads Enrollment",
-    message: "Hi SkillAura team, I want to enroll in the Digital Marketing course. Does it cover live budget training on Facebook Ads and Google Ads? Can I access classes from mobile?",
+    message: "I want to enroll in the Digital Marketing course. Does it cover practical campaigns on Facebook Ads and Google Ads? Can I access classes from mobile?",
     createdAt: "Today, 10:24 AM",
     timestamp: Date.now() - 1000 * 60 * 45,
     status: "unread",
@@ -28,7 +28,7 @@ export const INITIAL_CONTACT_INQUIRIES: ContactInquiry[] = [
     email: "priya.patel.creatives@gmail.com",
     mobile: "+91 97654 32109",
     subject: "Video Editing Mastery Software Requirements",
-    message: "Hello! Are Premiere Pro and CapCut included in the curriculum? Also, do I need a high-end laptop or can I start with 8GB RAM?",
+    message: "Are Premiere Pro and CapCut included in the curriculum? Also, do I need a high-end laptop or can I start with 8GB RAM?",
     createdAt: "Today, 09:15 AM",
     timestamp: Date.now() - 1000 * 60 * 120,
     status: "unread",
@@ -53,7 +53,7 @@ export const INITIAL_CONTACT_INQUIRIES: ContactInquiry[] = [
     message: "Is the certificate verified and verifiable by employers? Also what portfolio projects are created during the logo and branding modules?",
     createdAt: "Yesterday, 02:10 PM",
     timestamp: Date.now() - 1000 * 60 * 60 * 22,
-    status: "replied",
+    status: "read",
   },
   {
     id: "inq-105",
@@ -121,7 +121,7 @@ export const addContactInquiry = (
 
 export const updateInquiryStatus = (
   id: string,
-  status: "unread" | "read" | "replied"
+  status: "unread" | "read"
 ): void => {
   const current = getContactInquiries();
   const updated = current.map((item) =>

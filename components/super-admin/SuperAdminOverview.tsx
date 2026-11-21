@@ -264,13 +264,13 @@ export default function SuperAdminOverview({
             <button
               onClick={() => onNavigate("inquiries")}
               className="px-3.5 py-2 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-2 cursor-pointer shadow-xs transition-colors"
-              title="Open Contact Us Inquiries & SMS Hub"
+              title="Open Contact Messages"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>Contact Inquiries &amp; SMS</span>
+              <span>Messages</span>
               {unreadInquiriesCount > 0 && (
                 <span className="px-1.5 py-0.2 bg-amber-500 text-slate-950 rounded-full font-mono font-bold text-[10px]">
-                  {unreadInquiriesCount} New
+                  {unreadInquiriesCount}
                 </span>
               )}
             </button>

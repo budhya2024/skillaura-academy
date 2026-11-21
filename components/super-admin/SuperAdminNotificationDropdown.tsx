@@ -42,12 +42,12 @@ const INITIAL_NOTIFICATIONS: SuperAdminNotificationItem[] = [
   {
     id: "notif-sa-0",
     type: "inquiry",
-    title: "New Contact Form Inquiry / SMS",
-    message: "Rohan Sharma submitted inquiry for Digital Marketing & Performance Ads enrollment.",
+    title: "New Contact Message",
+    message: "Rohan Sharma submitted inquiry for Digital Marketing enrollment.",
     time: "10 mins ago",
     read: false,
     targetTab: "inquiries",
-    linkText: "View & Reply to SMS →",
+    linkText: "View Message →",
   },
   {
     id: "notif-sa-1",
@@ -215,7 +215,7 @@ export default function SuperAdminNotificationDropdown({
       case "inquiry":
         return (
           <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded-[3px] border border-emerald-200 dark:border-emerald-800">
-            SMS / Inquiry
+            Contact
           </span>
         );
       case "payout":

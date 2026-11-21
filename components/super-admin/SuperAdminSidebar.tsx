@@ -65,7 +65,7 @@ export const SUPER_ADMIN_NAV_ITEMS = [
   },
   {
     id: "inquiries" as SuperAdminTab,
-    label: "Contact Inquiries & SMS",
+    label: "Contact Messages",
     icon: MessageSquare,
   },
   {
