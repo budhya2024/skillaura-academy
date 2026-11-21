@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { MOCK_PAYOUTS, PayoutRequest } from "../../lib/networkData";
 import {
   Wallet,
@@ -15,11 +15,25 @@ import {
   Building2,
   ShieldCheck,
   Send,
+  ChevronDown,
 } from "lucide-react";
 
 export default function SuperAdminPayoutsManager() {
   const [payouts, setPayouts] = useState<PayoutRequest[]>(MOCK_PAYOUTS);
   const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "approved">("all");
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
+  const statusDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (statusDropdownRef.current && !statusDropdownRef.current.contains(e.target as Node)) {
+        setIsStatusDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
 
@@ -147,37 +161,108 @@ export default function SuperAdminPayoutsManager() {
             </div>
           </div>
 
-          <div className="flex items-center gap-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-[4px] p-0.5">
+          {/* Smooth Shadcn Status Dropdown */}
+          <div className="relative" ref={statusDropdownRef}>
             <button
-              onClick={() => setFilterStatus("all")}
-              className={`px-3 py-1 text-[11px] font-bold uppercase rounded-[3px] cursor-pointer ${
-                filterStatus === "all"
-                  ? "bg-[#116E63] text-white"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-              }`}
+              type="button"
+              onClick={() => setIsStatusDropdownOpen((prev) => !prev)}
+              className={`inline-flex items-center justify-between gap-2 px-3 py-1.5 text-xs font-semibold rounded-md border transition-all cursor-pointer ${
+                filterStatus !== "all"
+                  ? "border-[#116E63] text-[#116E63] bg-teal-50/50 dark:border-emerald-600 dark:text-emerald-400 dark:bg-emerald-950/30"
+                  : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+              } shadow-xs`}
             >
-              All ({payouts.length})
+              <div className="flex items-center gap-1.5">
+                <Wallet className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                <span>
+                  {filterStatus === "all"
+                    ? "All Payouts"
+                    : filterStatus === "pending"
+                    ? "Pending"
+                    : "Paid Out"}
+                </span>
+              </div>
+              <div className="flex items-center gap-1 shrink-0 ml-1">
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold">
+                  {filterStatus === "all"
+                    ? payouts.length
+                    : filterStatus === "pending"
+                    ? pendingCount
+                    : payouts.length - pendingCount}
+                </span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                    isStatusDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
             </button>
-            <button
-              onClick={() => setFilterStatus("pending")}
-              className={`px-3 py-1 text-[11px] font-bold uppercase rounded-[3px] cursor-pointer ${
-                filterStatus === "pending"
-                  ? "bg-[#116E63] text-white"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-              }`}
-            >
-              Pending ({pendingCount})
-            </button>
-            <button
-              onClick={() => setFilterStatus("approved")}
-              className={`px-3 py-1 text-[11px] font-bold uppercase rounded-[3px] cursor-pointer ${
-                filterStatus === "approved"
-                  ? "bg-[#116E63] text-white"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-              }`}
-            >
-              Paid Out
-            </button>
+
+            {isStatusDropdownOpen && (
+              <div className="absolute right-0 z-50 mt-1.5 w-52 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1 shadow-xl text-xs animate-in fade-in-0 zoom-in-95">
+                <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 mb-1">
+                  Filter by Payout Status
+                </div>
+                <div className="space-y-0.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFilterStatus("all");
+                      setIsStatusDropdownOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                      filterStatus === "all"
+                        ? "bg-[#116E63] text-white font-bold"
+                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Wallet className="w-3.5 h-3.5" />
+                      <span>All ({payouts.length})</span>
+                    </div>
+                    {filterStatus === "all" && <Check className="w-3.5 h-3.5 text-white" />}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFilterStatus("pending");
+                      setIsStatusDropdownOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                      filterStatus === "pending"
+                        ? "bg-[#116E63] text-white font-bold"
+                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-3.5 h-3.5 text-amber-500" />
+                      <span>Pending ({pendingCount})</span>
+                    </div>
+                    {filterStatus === "pending" && <Check className="w-3.5 h-3.5 text-white" />}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFilterStatus("approved");
+                      setIsStatusDropdownOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                      filterStatus === "approved"
+                        ? "bg-[#116E63] text-white font-bold"
+                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                      <span>Paid Out ({payouts.length - pendingCount})</span>
+                    </div>
+                    {filterStatus === "approved" && <Check className="w-3.5 h-3.5 text-white" />}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

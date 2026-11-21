@@ -250,7 +250,7 @@ export default function DownlineTable() {
               </span>
               <button
                 onClick={() => setSelectedMember(null)}
-                className="w-7 h-7 rounded-[4px] bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center cursor-pointer transition-colors"
+                className="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center cursor-pointer transition-colors"
                 aria-label="Close"
               >
                 <X className="w-4 h-4" />

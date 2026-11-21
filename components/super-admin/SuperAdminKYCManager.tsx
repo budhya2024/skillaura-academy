@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   ShieldCheck,
@@ -13,6 +13,7 @@ import {
   Download,
   ExternalLink,
   ChevronRight,
+  ChevronDown,
   Eye,
   Check,
   X,
@@ -57,6 +58,23 @@ export default function SuperAdminKYCManager() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "pending" | "verified" | "rejected">("all");
   const [docFilter, setDocFilter] = useState<string>("all");
+  const [isDocDropdownOpen, setIsDocDropdownOpen] = useState(false);
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
+  const docDropdownRef = useRef<HTMLDivElement>(null);
+  const statusDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (docDropdownRef.current && !docDropdownRef.current.contains(e.target as Node)) {
+        setIsDocDropdownOpen(false);
+      }
+      if (statusDropdownRef.current && !statusDropdownRef.current.contains(e.target as Node)) {
+        setIsStatusDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Inspection Drawer & Modal state
   const [selectedRecord, setSelectedRecord] = useState<KycRecord | null>(null);
@@ -308,62 +326,193 @@ export default function SuperAdminKYCManager() {
             />
           </div>
 
-          {/* Right Filters: Status Tabs & Doc Type Dropdown */}
-          <div className="flex flex-wrap items-center gap-2">
-            <select
-              value={docFilter}
-              onChange={(e) => setDocFilter(e.target.value)}
-              className="text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-[4px] px-2.5 py-1.5 focus:outline-none focus:border-[#116E63]"
-            >
-              <option value="all">All ID Types</option>
-              <option value="Aadhaar Card">Aadhaar Card</option>
-              <option value="PAN Card">PAN Card</option>
-              <option value="Voter ID">Voter ID</option>
-              <option value="Passport">Passport</option>
-            </select>
+          {/* Right Filters: Smooth Shadcn Dropdowns for ID Type & Status */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* ID Type Dropdown */}
+            <div className="relative" ref={docDropdownRef}>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsDocDropdownOpen((prev) => !prev);
+                  setIsStatusDropdownOpen(false);
+                }}
+                className={`inline-flex items-center justify-between gap-2 px-3 py-1.5 text-xs font-semibold rounded-md border transition-all cursor-pointer ${
+                  docFilter !== "all"
+                    ? "border-[#116E63] text-[#116E63] bg-teal-50/50 dark:border-emerald-600 dark:text-emerald-400 dark:bg-emerald-950/30"
+                    : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                } shadow-xs`}
+              >
+                <div className="flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                  <span>{docFilter === "all" ? "All ID Types" : docFilter}</span>
+                </div>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                    isDocDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
 
-            {/* Status Tabs */}
-            <div className="flex items-center gap-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-[4px] p-0.5">
+              {isDocDropdownOpen && (
+                <div className="absolute right-0 sm:left-0 z-50 mt-1.5 w-48 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1 shadow-xl text-xs animate-in fade-in-0 zoom-in-95">
+                  <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 mb-1">
+                    Select Document Type
+                  </div>
+                  <div className="space-y-0.5">
+                    {["all", "Aadhaar Card", "PAN Card", "Voter ID", "Passport"].map((type) => {
+                      const isSelected = docFilter === type;
+                      return (
+                        <button
+                          key={type}
+                          type="button"
+                          onClick={() => {
+                            setDocFilter(type);
+                            setIsDocDropdownOpen(false);
+                          }}
+                          className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                            isSelected
+                              ? "bg-[#116E63] text-white font-bold"
+                              : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                          }`}
+                        >
+                          <span>{type === "all" ? "All ID Types" : type}</span>
+                          {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Status Dropdown */}
+            <div className="relative" ref={statusDropdownRef}>
               <button
-                onClick={() => setStatusFilter("all")}
-                className={`px-2.5 py-1 text-xs font-bold uppercase transition-colors cursor-pointer rounded-[3px] ${
-                  statusFilter === "all"
-                    ? "bg-[#116E63] text-white"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                }`}
+                type="button"
+                onClick={() => {
+                  setIsStatusDropdownOpen((prev) => !prev);
+                  setIsDocDropdownOpen(false);
+                }}
+                className={`inline-flex items-center justify-between gap-2 px-3 py-1.5 text-xs font-semibold rounded-md border transition-all cursor-pointer ${
+                  statusFilter !== "all"
+                    ? "border-[#116E63] text-[#116E63] bg-teal-50/50 dark:border-emerald-600 dark:text-emerald-400 dark:bg-emerald-950/30"
+                    : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                } shadow-xs`}
               >
-                All ({records.length})
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                  <span>
+                    {statusFilter === "all"
+                      ? "All Statuses"
+                      : statusFilter === "pending"
+                      ? "Pending"
+                      : statusFilter === "verified"
+                      ? "Verified"
+                      : "Rejected"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1 shrink-0 ml-1">
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold">
+                    {statusFilter === "all"
+                      ? records.length
+                      : statusFilter === "pending"
+                      ? pendingCount
+                      : statusFilter === "verified"
+                      ? verifiedCount
+                      : rejectedCount}
+                  </span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                      isStatusDropdownOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </div>
               </button>
-              <button
-                onClick={() => setStatusFilter("pending")}
-                className={`px-2.5 py-1 text-xs font-bold uppercase transition-colors cursor-pointer rounded-[3px] ${
-                  statusFilter === "pending"
-                    ? "bg-[#116E63] text-white"
-                    : "text-amber-700 dark:text-amber-400 hover:text-amber-900"
-                }`}
-              >
-                Pending ({pendingCount})
-              </button>
-              <button
-                onClick={() => setStatusFilter("verified")}
-                className={`px-2.5 py-1 text-xs font-bold uppercase transition-colors cursor-pointer rounded-[3px] ${
-                  statusFilter === "verified"
-                    ? "bg-[#116E63] text-white"
-                    : "text-emerald-700 dark:text-emerald-400 hover:text-emerald-900"
-                }`}
-              >
-                Verified ({verifiedCount})
-              </button>
-              <button
-                onClick={() => setStatusFilter("rejected")}
-                className={`px-2.5 py-1 text-xs font-bold uppercase transition-colors cursor-pointer rounded-[3px] ${
-                  statusFilter === "rejected"
-                    ? "bg-[#116E63] text-white"
-                    : "text-rose-700 dark:text-rose-400 hover:text-rose-900"
-                }`}
-              >
-                Rejected ({rejectedCount})
-              </button>
+
+              {isStatusDropdownOpen && (
+                <div className="absolute right-0 z-50 mt-1.5 w-52 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1 shadow-xl text-xs animate-in fade-in-0 zoom-in-95">
+                  <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 mb-1">
+                    Filter by Status
+                  </div>
+                  <div className="space-y-0.5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setStatusFilter("all");
+                        setIsStatusDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                        statusFilter === "all"
+                          ? "bg-[#116E63] text-white font-bold"
+                          : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        <span>All ({records.length})</span>
+                      </div>
+                      {statusFilter === "all" && <Check className="w-3.5 h-3.5 text-white" />}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setStatusFilter("pending");
+                        setIsStatusDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                        statusFilter === "pending"
+                          ? "bg-[#116E63] text-white font-bold"
+                          : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-3.5 h-3.5 text-amber-500" />
+                        <span>Pending ({pendingCount})</span>
+                      </div>
+                      {statusFilter === "pending" && <Check className="w-3.5 h-3.5 text-white" />}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setStatusFilter("verified");
+                        setIsStatusDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                        statusFilter === "verified"
+                          ? "bg-[#116E63] text-white font-bold"
+                          : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>Verified ({verifiedCount})</span>
+                      </div>
+                      {statusFilter === "verified" && <Check className="w-3.5 h-3.5 text-white" />}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setStatusFilter("rejected");
+                        setIsStatusDropdownOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                        statusFilter === "rejected"
+                          ? "bg-[#116E63] text-white font-bold"
+                          : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <XCircle className="w-3.5 h-3.5 text-rose-500" />
+                        <span>Rejected ({rejectedCount})</span>
+                      </div>
+                      {statusFilter === "rejected" && <Check className="w-3.5 h-3.5 text-white" />}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

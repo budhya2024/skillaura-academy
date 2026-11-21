@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   Users,
@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   ExternalLink,
   ChevronRight,
+  ChevronDown,
   UserCheck,
   Award,
   Receipt,
@@ -502,6 +503,24 @@ export default function SuperAdminStudentsManager() {
   const [searchQuery, setSearchQuery] = useState("");
   const [kycFilter, setKycFilter] = useState<"all" | "verified" | "pending">("all");
   const [courseFilter, setCourseFilter] = useState<string>("all");
+  const [isCourseDropdownOpen, setIsCourseDropdownOpen] = useState(false);
+  const [isKycDropdownOpen, setIsKycDropdownOpen] = useState(false);
+  const courseDropdownRef = useRef<HTMLDivElement>(null);
+  const kycDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (courseDropdownRef.current && !courseDropdownRef.current.contains(e.target as Node)) {
+        setIsCourseDropdownOpen(false);
+      }
+      if (kycDropdownRef.current && !kycDropdownRef.current.contains(e.target as Node)) {
+        setIsKycDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const [selectedStudent, setSelectedStudent] = useState<SuperAdminStudent | null>(null);
   const [drawerTab, setDrawerTab] = useState<"purchase" | "details" | "referrals">("purchase");
   const [copiedId, setCopiedId] = useState(false);
@@ -754,8 +773,8 @@ export default function SuperAdminStudentsManager() {
 
       {/* ================= 2. MAIN DIRECTORY TABLE CONTAINER ================= */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[4px] shadow-xs overflow-hidden">
-        {/* Controls Bar: Search, Course Filter, KYC Filter, Action Buttons */}
-        <div className="p-3 sm:p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/60 space-y-3">
+        {/* Controls Bar: Search & Smooth Shadcn Filter Dropdowns */}
+        <div className="p-3 sm:p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/60">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
@@ -765,79 +784,226 @@ export default function SuperAdminStudentsManager() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by student, ID, email, phone, course, sponsor..."
-                className="w-full pl-9 pr-3 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-[4px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-[#116E63] dark:focus:border-emerald-500"
+                className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#116E63] focus:border-[#116E63] dark:focus:ring-emerald-500 shadow-xs"
               />
             </div>
 
-            {/* Quick Actions: Export & Enroll */}
-            <div className="flex items-center gap-2 self-end md:self-auto">
-              <button
-                onClick={handleExportCSV}
-                className="px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-[4px] flex items-center gap-1.5 cursor-pointer transition-colors"
-                title="Export Student Directory to CSV"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Export CSV</span>
-              </button>
+            {/* Smooth Shadcn Filter Dropdowns */}
+            <div className="flex items-center gap-2.5 flex-wrap">
+              {/* Course Filter Dropdown */}
+              <div className="relative" ref={courseDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCourseDropdownOpen((prev) => !prev);
+                    setIsKycDropdownOpen(false);
+                  }}
+                  className={`inline-flex items-center justify-between gap-2 px-3 py-2 text-xs font-semibold rounded-md border transition-all cursor-pointer ${
+                    courseFilter !== "all"
+                      ? "border-[#116E63] text-[#116E63] bg-teal-50/50 dark:border-emerald-600 dark:text-emerald-400 dark:bg-emerald-950/30"
+                      : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                  } shadow-xs`}
+                >
+                  <div className="flex items-center gap-1.5 truncate max-w-[180px] sm:max-w-[220px]">
+                    <BookOpen className="w-3.5 h-3.5 shrink-0 text-slate-500 dark:text-slate-400" />
+                    <span className="truncate">
+                      {courseFilter === "all" ? "All Courses" : courseFilter}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0 ml-1">
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold">
+                      {courseFilter === "all"
+                        ? students.length
+                        : students.filter((s) => s.purchasedCourse.courseName === courseFilter).length}
+                    </span>
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                        isCourseDropdownOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </div>
+                </button>
 
-              <button
-                onClick={() => setIsAddStudentOpen(true)}
-                className="px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white bg-[#116E63] hover:bg-[#0c5950] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[4px] flex items-center gap-1.5 cursor-pointer transition-colors shadow-xs"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Enroll Student</span>
-              </button>
-            </div>
-          </div>
+                {isCourseDropdownOpen && (
+                  <div className="absolute right-0 sm:left-0 z-50 mt-1.5 w-64 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1 shadow-xl text-xs animate-in fade-in-0 zoom-in-95">
+                    <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 mb-1">
+                      Filter by Course
+                    </div>
+                    <div className="max-h-60 overflow-y-auto space-y-0.5">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCourseFilter("all");
+                          setIsCourseDropdownOpen(false);
+                        }}
+                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                          courseFilter === "all"
+                            ? "bg-[#116E63] text-white font-bold"
+                            : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                        }`}
+                      >
+                        <span className="truncate">All Courses</span>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`text-[10px] font-mono ${courseFilter === "all" ? "text-white/80" : "text-slate-400"}`}>
+                            {students.length}
+                          </span>
+                          {courseFilter === "all" && <Check className="w-3.5 h-3.5 text-white" />}
+                        </div>
+                      </button>
 
-          {/* Filter Bar: Course Dropdown & KYC Tabs */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pt-1 text-xs">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Filter Course:
-              </span>
-              <select
-                value={courseFilter}
-                onChange={(e) => setCourseFilter(e.target.value)}
-                className="text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-[4px] px-2.5 py-1 focus:outline-none focus:border-[#116E63]"
-              >
-                <option value="all">All Courses ({students.length})</option>
-                {AVAILABLE_COURSES.map((c) => (
-                  <option key={c.name} value={c.name}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                      {AVAILABLE_COURSES.map((c) => {
+                        const count = students.filter((s) => s.purchasedCourse.courseName === c.name).length;
+                        const isSelected = courseFilter === c.name;
+                        return (
+                          <button
+                            key={c.name}
+                            type="button"
+                            onClick={() => {
+                              setCourseFilter(c.name);
+                              setIsCourseDropdownOpen(false);
+                            }}
+                            className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                              isSelected
+                                ? "bg-[#116E63] text-white font-bold"
+                                : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                            }`}
+                          >
+                            <span className="truncate">{c.name}</span>
+                            <div className="flex items-center gap-1.5">
+                              <span className={`text-[10px] font-mono ${isSelected ? "text-white/80" : "text-slate-400"}`}>
+                                {count}
+                              </span>
+                              {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
 
-            <div className="flex items-center gap-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-[4px] p-0.5 self-start sm:self-auto">
-              <button
-                onClick={() => setKycFilter("all")}
-                className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-[3px] transition-colors cursor-pointer ${kycFilter === "all"
-                  ? "bg-[#116E63] dark:bg-emerald-600 text-white"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-              >
-                All ({students.length})
-              </button>
-              <button
-                onClick={() => setKycFilter("verified")}
-                className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-[3px] transition-colors cursor-pointer ${kycFilter === "verified"
-                  ? "bg-[#116E63] dark:bg-emerald-600 text-white"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-              >
-                Verified ({totalVerifiedCount})
-              </button>
-              <button
-                onClick={() => setKycFilter("pending")}
-                className={`px-2.5 py-1 text-[11px] font-bold uppercase rounded-[3px] transition-colors cursor-pointer ${kycFilter === "pending"
-                  ? "bg-[#116E63] dark:bg-emerald-600 text-white"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-              >
-                Pending ({students.length - totalVerifiedCount})
-              </button>
+              {/* KYC Status Filter Dropdown */}
+              <div className="relative" ref={kycDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsKycDropdownOpen((prev) => !prev);
+                    setIsCourseDropdownOpen(false);
+                  }}
+                  className={`inline-flex items-center justify-between gap-2 px-3 py-2 text-xs font-semibold rounded-md border transition-all cursor-pointer ${
+                    kycFilter !== "all"
+                      ? "border-[#116E63] text-[#116E63] bg-teal-50/50 dark:border-emerald-600 dark:text-emerald-400 dark:bg-emerald-950/30"
+                      : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                  } shadow-xs`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 shrink-0 text-slate-500 dark:text-slate-400" />
+                    <span>
+                      {kycFilter === "all"
+                        ? "All KYC"
+                        : kycFilter === "verified"
+                        ? "Verified"
+                        : "Pending"}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0 ml-1">
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold">
+                      {kycFilter === "all"
+                        ? students.length
+                        : kycFilter === "verified"
+                        ? totalVerifiedCount
+                        : students.length - totalVerifiedCount}
+                    </span>
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                        isKycDropdownOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </div>
+                </button>
+
+                {isKycDropdownOpen && (
+                  <div className="absolute right-0 z-50 mt-1.5 w-52 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1 shadow-xl text-xs animate-in fade-in-0 zoom-in-95">
+                    <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800 mb-1">
+                      Filter by KYC Status
+                    </div>
+                    <div className="space-y-0.5">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setKycFilter("all");
+                          setIsKycDropdownOpen(false);
+                        }}
+                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                          kycFilter === "all"
+                            ? "bg-[#116E63] text-white font-bold"
+                            : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                          <span>All Statuses</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`text-[10px] font-mono ${kycFilter === "all" ? "text-white/80" : "text-slate-400"}`}>
+                            {students.length}
+                          </span>
+                          {kycFilter === "all" && <Check className="w-3.5 h-3.5 text-white" />}
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setKycFilter("verified");
+                          setIsKycDropdownOpen(false);
+                        }}
+                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                          kycFilter === "verified"
+                            ? "bg-[#116E63] text-white font-bold"
+                            : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                          <span>Verified</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`text-[10px] font-mono ${kycFilter === "verified" ? "text-white/80" : "text-slate-400"}`}>
+                            {totalVerifiedCount}
+                          </span>
+                          {kycFilter === "verified" && <Check className="w-3.5 h-3.5 text-white" />}
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setKycFilter("pending");
+                          setIsKycDropdownOpen(false);
+                        }}
+                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[4px] text-left transition-colors cursor-pointer ${
+                          kycFilter === "pending"
+                            ? "bg-[#116E63] text-white font-bold"
+                            : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-3.5 h-3.5 text-amber-500" />
+                          <span>Pending</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`text-[10px] font-mono ${kycFilter === "pending" ? "text-white/80" : "text-slate-400"}`}>
+                            {students.length - totalVerifiedCount}
+                          </span>
+                          {kycFilter === "pending" && <Check className="w-3.5 h-3.5 text-white" />}
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

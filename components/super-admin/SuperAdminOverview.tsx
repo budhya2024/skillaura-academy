@@ -372,31 +372,28 @@ export default function SuperAdminOverview({
             <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-[3px] text-xs self-start sm:self-auto">
               <button
                 onClick={() => setChartMetric("all")}
-                className={`px-2 py-1 text-[10px] font-bold uppercase rounded-[2px] transition-colors cursor-pointer ${
-                  chartMetric === "all"
-                    ? "bg-[#116E63] text-white"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                }`}
+                className={`px-2 py-1 text-[10px] font-bold uppercase rounded-[2px] transition-colors cursor-pointer ${chartMetric === "all"
+                  ? "bg-[#116E63] text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
               >
                 All Metrics
               </button>
               <button
                 onClick={() => setChartMetric("sales")}
-                className={`px-2 py-1 text-[10px] font-bold uppercase rounded-[2px] transition-colors cursor-pointer ${
-                  chartMetric === "sales"
-                    ? "bg-[#116E63] text-white"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                }`}
+                className={`px-2 py-1 text-[10px] font-bold uppercase rounded-[2px] transition-colors cursor-pointer ${chartMetric === "sales"
+                  ? "bg-[#116E63] text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
               >
                 Course Sales
               </button>
               <button
                 onClick={() => setChartMetric("profit")}
-                className={`px-2 py-1 text-[10px] font-bold uppercase rounded-[2px] transition-colors cursor-pointer ${
-                  chartMetric === "profit"
-                    ? "bg-[#116E63] text-white"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                }`}
+                className={`px-2 py-1 text-[10px] font-bold uppercase rounded-[2px] transition-colors cursor-pointer ${chartMetric === "profit"
+                  ? "bg-[#116E63] text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  }`}
               >
                 Company Profit
               </button>
@@ -422,11 +419,10 @@ export default function SuperAdminOverview({
                   >
                     {/* Tooltip on active */}
                     <div
-                      className={`text-[10px] font-mono font-bold transition-opacity whitespace-nowrap ${
-                        isSelected
-                          ? "text-[#116E63] dark:text-emerald-400 opacity-100"
-                          : "opacity-0 group-hover:opacity-100 text-slate-500"
-                      }`}
+                      className={`text-[10px] font-mono font-bold transition-opacity whitespace-nowrap ${isSelected
+                        ? "text-[#116E63] dark:text-emerald-400 opacity-100"
+                        : "opacity-0 group-hover:opacity-100 text-slate-500"
+                        }`}
                     >
                       ₹{(item.sales / 1000).toFixed(0)}k
                     </div>
@@ -436,42 +432,38 @@ export default function SuperAdminOverview({
                       {(chartMetric === "all" || chartMetric === "sales") && (
                         <div
                           style={{ height: `${salesHeight}%` }}
-                          className={`w-full rounded-t-[3px] transition-all duration-300 ${
-                            isSelected
-                              ? "bg-[#116E63] dark:bg-emerald-500 shadow-sm"
-                              : "bg-slate-300 dark:bg-slate-700 group-hover:bg-[#116E63]/70"
-                          }`}
+                          className={`w-full rounded-t-[3px] transition-all duration-300 ${isSelected
+                            ? "bg-[#116E63] dark:bg-emerald-500 shadow-sm"
+                            : "bg-slate-300 dark:bg-slate-700 group-hover:bg-[#116E63]/70"
+                            }`}
                         />
                       )}
                       {chartMetric === "all" && (
                         <div
                           style={{ height: `${commissionHeight}%` }}
-                          className={`w-full rounded-t-[3px] transition-all duration-300 ${
-                            isSelected
-                              ? "bg-teal-400 dark:bg-teal-500"
-                              : "bg-teal-200/80 dark:bg-teal-900/60 group-hover:bg-teal-400/80"
-                          }`}
+                          className={`w-full rounded-t-[3px] transition-all duration-300 ${isSelected
+                            ? "bg-teal-400 dark:bg-teal-500"
+                            : "bg-teal-200/80 dark:bg-teal-900/60 group-hover:bg-teal-400/80"
+                            }`}
                         />
                       )}
                       {(chartMetric === "all" || chartMetric === "profit") && (
                         <div
                           style={{ height: `${profitHeight}%` }}
-                          className={`w-full rounded-t-[3px] transition-all duration-300 ${
-                            isSelected
-                              ? "bg-amber-500 dark:bg-amber-400"
-                              : "bg-amber-200 dark:bg-amber-900/60 group-hover:bg-amber-400"
-                          }`}
+                          className={`w-full rounded-t-[3px] transition-all duration-300 ${isSelected
+                            ? "bg-amber-500 dark:bg-amber-400"
+                            : "bg-amber-200 dark:bg-amber-900/60 group-hover:bg-amber-400"
+                            }`}
                         />
                       )}
                     </div>
 
                     {/* Month Label */}
                     <span
-                      className={`text-[10px] sm:text-xs font-mono font-bold uppercase transition-colors ${
-                        isSelected
-                          ? "text-slate-900 dark:text-white underline underline-offset-4 decoration-[#116E63]"
-                          : "text-slate-400 dark:text-slate-500 group-hover:text-slate-800 dark:group-hover:text-slate-200"
-                      }`}
+                      className={`text-[10px] sm:text-xs font-mono font-bold uppercase transition-colors ${isSelected
+                        ? "text-slate-900 dark:text-white underline underline-offset-4 decoration-[#116E63]"
+                        : "text-slate-400 dark:text-slate-500 group-hover:text-slate-800 dark:group-hover:text-slate-200"
+                        }`}
                     >
                       {item.month}
                     </span>
@@ -857,30 +849,6 @@ export default function SuperAdminOverview({
             </div>
           </div>
 
-          {/* Section E: Platform System Health Status */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[4px] p-3.5 shadow-xs space-y-2.5">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white font-[family-name:var(--font-yantramanav)]">
-              Core Platform Infrastructure
-            </h4>
-            <div className="grid grid-cols-2 gap-2 text-[11px]">
-              <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>Next.js 16 Turbopack</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>Video Streaming CDN</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>IMPS / UPI Payout Webhook</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>KYC Registry Synced</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
