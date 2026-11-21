@@ -392,22 +392,6 @@ export default function SuperAdminCMS() {
                   />
                 </div>
               </div>
-
-              {/* Live Preview */}
-              <div className="pt-2">
-                <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1.5">
-                  Live Banner Preview on Public Header
-                </span>
-                <div className="p-3 bg-gradient-to-r from-[#116E63] via-teal-800 to-[#116E63] text-white text-xs font-semibold rounded-[4px] flex items-center justify-between shadow-xs">
-                  <div className="flex items-center gap-2 truncate pr-2">
-                    <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
-                    <span className="truncate">{cms.announcement.headline}</span>
-                  </div>
-                  <span className="px-2.5 py-1 bg-white text-slate-900 text-[10px] font-extrabold uppercase rounded-[3px] shrink-0">
-                    {cms.announcement.actionText}
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -640,34 +624,6 @@ export default function SuperAdminCMS() {
                       className="px-2.5 py-1.5 border border-slate-200 rounded-[4px] bg-white font-mono"
                     />
                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Visual Preview */}
-            <div className="pt-2">
-              <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1.5">
-                Slide Live Preview
-              </span>
-              <div className="p-5 sm:p-6 bg-slate-900 text-white rounded-[4px] space-y-2.5 shadow-md">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FDA31B] block font-mono">
-                  {currentSlide.tagline}
-                </span>
-                <h4 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-yantramanav)] uppercase leading-tight">
-                  {currentSlide.titlePrefix}
-                  <span className="text-[#FDA31B]">{currentSlide.titleHighlight}</span>
-                  {currentSlide.titleSuffix}
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
-                  {currentSlide.description}
-                </p>
-                <div className="flex items-center gap-3 pt-2">
-                  <span className="px-3.5 py-1.5 bg-[#FDA31B] text-slate-950 font-bold text-xs uppercase rounded-[3px]">
-                    {currentSlide.primaryBtnText}
-                  </span>
-                  <span className="px-3.5 py-1.5 border border-white/40 text-white font-bold text-xs uppercase rounded-[3px]">
-                    {currentSlide.secondaryBtnText}
-                  </span>
                 </div>
               </div>
             </div>

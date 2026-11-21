@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { FaPaperPlane, FaWhatsapp } from "react-icons/fa6";
 import { CheckCircle2 } from "lucide-react";
+import { addContactInquiry } from "../../lib/contactData";
 
 export default function ContactFormSection() {
   const [formData, setFormData] = useState({
@@ -76,6 +77,19 @@ export default function ContactFormSection() {
     }
 
     setErrors({ name: "", email: "", mobile: "", message: "" });
+
+    // 1. Save Inquiry / SMS to platform storage for Super Admin
+    try {
+      addContactInquiry({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        mobile: formData.mobile.trim(),
+        subject: formData.subject.trim() || "Course & Admission Inquiry",
+        message: formData.message.trim(),
+      });
+    } catch (err) {
+      console.error("Failed to record inquiry:", err);
+    }
 
     const currentDate = new Date().toLocaleString("en-IN", {
       dateStyle: "medium",

@@ -14,9 +14,18 @@ import {
   LogOut,
   ChevronRight,
   X,
+  MessageSquare,
 } from "lucide-react";
 
-export type SuperAdminTab = "overview" | "courses" | "students" | "kyc" | "payouts" | "cms" | "profile";
+export type SuperAdminTab =
+  | "overview"
+  | "courses"
+  | "students"
+  | "kyc"
+  | "payouts"
+  | "cms"
+  | "inquiries"
+  | "profile";
 
 interface SuperAdminSidebarProps {
   activeTab: SuperAdminTab;
@@ -25,6 +34,7 @@ interface SuperAdminSidebarProps {
   setIsMobileOpen: (open: boolean) => void;
   pendingPayoutCount?: number;
   pendingKycCount?: number;
+  unreadInquiriesCount?: number;
 }
 
 export const SUPER_ADMIN_NAV_ITEMS = [
@@ -54,6 +64,11 @@ export const SUPER_ADMIN_NAV_ITEMS = [
     icon: Wallet,
   },
   {
+    id: "inquiries" as SuperAdminTab,
+    label: "Contact Inquiries & SMS",
+    icon: MessageSquare,
+  },
+  {
     id: "cms" as SuperAdminTab,
     label: "Website & Banner CMS",
     icon: Megaphone,
@@ -67,6 +82,7 @@ export default function SuperAdminSidebar({
   setIsMobileOpen,
   pendingPayoutCount = 2,
   pendingKycCount = 3,
+  unreadInquiriesCount = 0,
 }: SuperAdminSidebarProps) {
   const handleTabClick = (tab: SuperAdminTab) => {
     setActiveTab(tab);
@@ -136,6 +152,11 @@ export default function SuperAdminSidebar({
               {item.id === "kyc" && pendingKycCount !== undefined && pendingKycCount > 0 && (
                 <span className="text-xs font-mono font-bold text-amber-700 dark:text-amber-400">
                   ({pendingKycCount})
+                </span>
+              )}
+              {item.id === "inquiries" && unreadInquiriesCount !== undefined && unreadInquiriesCount > 0 && (
+                <span className="text-xs font-mono font-bold text-amber-700 dark:text-amber-400">
+                  ({unreadInquiriesCount})
                 </span>
               )}
             </button>

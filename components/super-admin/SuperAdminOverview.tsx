@@ -29,10 +29,12 @@ import {
   DollarSign,
   UserCheck,
   ArrowUpRight,
+  MessageSquare,
 } from "lucide-react";
 import { SuperAdminTab } from "./SuperAdminSidebar";
 import { MOCK_PAYOUTS, MOCK_LEADERBOARD } from "../../lib/networkData";
 import { getKycRecords, KycRecord } from "../../lib/kycData";
+import { getContactInquiries } from "../../lib/contactData";
 
 interface SuperAdminOverviewProps {
   onNavigate: (tab: SuperAdminTab) => void;
@@ -201,19 +203,24 @@ export default function SuperAdminOverview({
   totalCourses,
 }: SuperAdminOverviewProps) {
   const [kycList, setKycList] = useState<KycRecord[]>([]);
+  const [unreadInquiriesCount, setUnreadInquiriesCount] = useState<number>(0);
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(MONTHLY_CHART_DATA.length - 1);
   const [chartMetric, setChartMetric] = useState<"all" | "sales" | "profit">("all");
 
   useEffect(() => {
-    const refreshKyc = () => {
+    const refreshData = () => {
       setKycList(getKycRecords());
+      const inqs = getContactInquiries();
+      setUnreadInquiriesCount(inqs.filter((i) => i.status === "unread").length);
     };
-    refreshKyc();
-    window.addEventListener("skillaura_kyc_updated", refreshKyc);
-    window.addEventListener("storage", refreshKyc);
+    refreshData();
+    window.addEventListener("skillaura_kyc_updated", refreshData);
+    window.addEventListener("skillaura_inquiries_updated", refreshData);
+    window.addEventListener("storage", refreshData);
     return () => {
-      window.removeEventListener("skillaura_kyc_updated", refreshKyc);
-      window.removeEventListener("storage", refreshKyc);
+      window.removeEventListener("skillaura_kyc_updated", refreshData);
+      window.removeEventListener("skillaura_inquiries_updated", refreshData);
+      window.removeEventListener("storage", refreshData);
     };
   }, []);
 
@@ -251,6 +258,22 @@ export default function SuperAdminOverview({
             <p className="text-xs text-slate-500 dark:text-slate-400 max-w-2xl">
               Platform analytics, student referral income generation, course curriculum studio, and company profit tracking.
             </p>
+          </div>
+
+          <div className="flex items-center gap-2 self-start lg:self-auto shrink-0">
+            <button
+              onClick={() => onNavigate("inquiries")}
+              className="px-3.5 py-2 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-2 cursor-pointer shadow-xs transition-colors"
+              title="Open Contact Us Inquiries & SMS Hub"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>Contact Inquiries &amp; SMS</span>
+              {unreadInquiriesCount > 0 && (
+                <span className="px-1.5 py-0.2 bg-amber-500 text-slate-950 rounded-full font-mono font-bold text-[10px]">
+                  {unreadInquiriesCount} New
+                </span>
+              )}
+            </button>
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ import {
   Check,
   Mail,
   MailOpen,
+  MessageSquare,
 } from "lucide-react";
 
 export type SuperAdminTab =
@@ -23,11 +24,12 @@ export type SuperAdminTab =
   | "kyc"
   | "payouts"
   | "cms"
+  | "inquiries"
   | "profile";
 
 export interface SuperAdminNotificationItem {
   id: string;
-  type: "kyc" | "payout" | "student" | "course" | "system";
+  type: "kyc" | "payout" | "student" | "course" | "system" | "inquiry";
   title: string;
   message: string;
   time: string;
@@ -37,6 +39,16 @@ export interface SuperAdminNotificationItem {
 }
 
 const INITIAL_NOTIFICATIONS: SuperAdminNotificationItem[] = [
+  {
+    id: "notif-sa-0",
+    type: "inquiry",
+    title: "New Contact Form Inquiry / SMS",
+    message: "Rohan Sharma submitted inquiry for Digital Marketing & Performance Ads enrollment.",
+    time: "10 mins ago",
+    read: false,
+    targetTab: "inquiries",
+    linkText: "View & Reply to SMS →",
+  },
   {
     id: "notif-sa-1",
     type: "payout",
@@ -191,6 +203,8 @@ export default function SuperAdminNotificationDropdown({
         return <Users className="w-4 h-4 text-sky-600 dark:text-sky-400" />;
       case "course":
         return <BookOpen className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />;
+      case "inquiry":
+        return <MessageSquare className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />;
       default:
         return <Bell className="w-4 h-4 text-slate-500" />;
     }
@@ -198,6 +212,12 @@ export default function SuperAdminNotificationDropdown({
 
   const getTypeBadge = (type: SuperAdminNotificationItem["type"]) => {
     switch (type) {
+      case "inquiry":
+        return (
+          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded-[3px] border border-emerald-200 dark:border-emerald-800">
+            SMS / Inquiry
+          </span>
+        );
       case "payout":
         return (
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded-[3px] border border-amber-200 dark:border-amber-800">

@@ -11,10 +11,12 @@ import SuperAdminPayoutsManager from "./SuperAdminPayoutsManager";
 import SuperAdminCMS from "./SuperAdminCMS";
 import SuperAdminKYCManager from "./SuperAdminKYCManager";
 import SuperAdminProfileSettings from "./SuperAdminProfileSettings";
+import SuperAdminInquiriesManager from "./SuperAdminInquiriesManager";
 import SuperAdminNotificationDropdown from "./SuperAdminNotificationDropdown";
 import { ENROLLED_COURSES_DATA } from "../../lib/coursesData";
 import { MOCK_DOWNLINE_LIST, MOCK_PAYOUTS } from "../../lib/networkData";
 import { getKycRecords } from "../../lib/kycData";
+import { getContactInquiries } from "../../lib/contactData";
 import ThemeToggle from "../shared/ThemeToggle";
 import {
   Menu,
@@ -29,18 +31,24 @@ export default function SuperAdminDashboard() {
   const [activeTab, setActiveTab] = useState<SuperAdminTab>("overview");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [pendingKycCount, setPendingKycCount] = useState(4);
+  const [unreadInquiriesCount, setUnreadInquiriesCount] = useState(0);
 
   useEffect(() => {
     const updateCount = () => {
       const records = getKycRecords();
       setPendingKycCount(records.filter((k) => k.status === "pending").length);
+
+      const inqs = getContactInquiries();
+      setUnreadInquiriesCount(inqs.filter((i) => i.status === "unread").length);
     };
 
     updateCount();
     window.addEventListener("skillaura_kyc_updated", updateCount);
+    window.addEventListener("skillaura_inquiries_updated", updateCount);
     window.addEventListener("storage", updateCount);
     return () => {
       window.removeEventListener("skillaura_kyc_updated", updateCount);
+      window.removeEventListener("skillaura_inquiries_updated", updateCount);
       window.removeEventListener("storage", updateCount);
     };
   }, []);
@@ -59,6 +67,8 @@ export default function SuperAdminDashboard() {
         return "KYC & Identity Verification Console";
       case "payouts":
         return "Payout Approvals & Banking Disbursements";
+      case "inquiries":
+        return "Contact Inquiries & SMS Hub";
       case "cms":
         return "Website Announcements & CMS";
       case "profile":
@@ -79,6 +89,7 @@ export default function SuperAdminDashboard() {
         setIsMobileOpen={setIsMobileSidebarOpen}
         pendingPayoutCount={pendingPayoutCount}
         pendingKycCount={pendingKycCount}
+        unreadInquiriesCount={unreadInquiriesCount}
       />
 
       {/* 2. Main Workspace (Offset for Left Sidebar with lg:pl-64) */}
@@ -163,6 +174,8 @@ export default function SuperAdminDashboard() {
           {activeTab === "kyc" && <SuperAdminKYCManager />}
 
           {activeTab === "payouts" && <SuperAdminPayoutsManager />}
+
+          {activeTab === "inquiries" && <SuperAdminInquiriesManager />}
 
           {activeTab === "cms" && <SuperAdminCMS />}
 
