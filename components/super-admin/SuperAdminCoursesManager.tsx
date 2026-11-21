@@ -459,45 +459,7 @@ export default function SuperAdminCoursesManager() {
             </div>
           </div>
 
-          {/* Search & Filter Strip */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 sm:p-4 rounded-[4px] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="relative flex-1 max-w-md">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search masterclasses by title, category, or instructor..."
-                className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-[4px] focus:outline-none focus:border-[#116E63]"
-              />
-            </div>
 
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs scrollbar-none">
-              <button
-                onClick={() => setFilterCategory("all")}
-                className={`px-3 py-1.5 text-xs font-bold uppercase rounded-[3px] border cursor-pointer shrink-0 transition-colors ${
-                  filterCategory === "all"
-                    ? "bg-[#116E63] text-white border-[#116E63]"
-                    : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300"
-                }`}
-              >
-                All ({courses.length})
-              </button>
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setFilterCategory(cat)}
-                  className={`px-3 py-1.5 text-xs font-bold uppercase rounded-[3px] border cursor-pointer shrink-0 transition-colors ${
-                    filterCategory === cat
-                      ? "bg-[#116E63] text-white border-[#116E63]"
-                      : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
 
           {/* Full Courses Directory Grid / List */}
           <div className="space-y-3">
