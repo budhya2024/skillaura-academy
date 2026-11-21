@@ -51,25 +51,33 @@ export default function SuperAdminCoursesManager() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
 
-  // Selection for Session/Lesson view
+  // Selection for Module/Lesson view
   const [selectedCourse, setSelectedCourse] = useState<EnrolledCourse | null>(null);
 
   // Modal states
   const [isCourseModalOpen, setIsCourseModalOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<EnrolledCourse | null>(null);
 
-  // Session (Module) Modal
-  const [isSessionModalOpen, setIsSessionModalOpen] = useState(false);
-  const [editingSession, setEditingSession] = useState<CourseModule | null>(null);
-  const [sessionForm, setSessionForm] = useState({
+  // Module Modal (Curriculum Module e.g. "Facebook Ads", "Google Ads")
+  const [isModuleModalOpen, setIsModuleModalOpen] = useState(false);
+  const [editingModule, setEditingModule] = useState<CourseModule | null>(null);
+  const [moduleForm, setModuleForm] = useState({
     title: "",
     duration: "10 Hours",
   });
 
-  // Video Lesson Modal
+  // Video Lesson Modal (Upload video to specific module)
   const [isLessonModalOpen, setIsLessonModalOpen] = useState(false);
-  const [targetSessionId, setTargetSessionId] = useState<string | null>(null);
+  const [targetModuleId, setTargetModuleId] = useState<string | null>(null);
   const [editingLesson, setEditingLesson] = useState<Lesson | null>(null);
+
+  // Delete Confirmation Modal (Module or Lesson)
+  const [deleteConfirm, setDeleteConfirm] = useState<{
+    type: "module" | "lesson";
+    moduleId: string;
+    lessonId?: string;
+    title: string;
+  } | null>(null);
 
   // Live video preview
   const [previewVideoUrl, setPreviewVideoUrl] = useState<string | null>(null);
@@ -217,8 +225,8 @@ export default function SuperAdminCoursesManager() {
         status: "in-progress",
         modules: [
           {
-            id: `session-1`,
-            title: "Session 1: Foundations & Orientation",
+            id: `mod-1`,
+            title: "Module 1: Foundations & Orientation",
             duration: "8 Hours",
             lessons: [],
           },
@@ -227,57 +235,57 @@ export default function SuperAdminCoursesManager() {
       const updated = [newCourse, ...courses];
       saveAndSyncCourses(updated);
       setSelectedCourse(newCourse);
-      showNotification("New course created with Session 1 workspace ready!");
+      showNotification("New course created with Module 1 ready!");
     }
     setIsCourseModalOpen(false);
   };
 
-  // Handlers for Sessions (Modules)
-  const handleOpenAddSession = () => {
+  // Handlers for Modules
+  const handleOpenAddModule = () => {
     if (!selectedCourse) return;
-    const nextSessionNum = selectedCourse.modules.length + 1;
-    setEditingSession(null);
-    setSessionForm({
-      title: `Session ${nextSessionNum}: Advanced Strategies & Tactical Blueprint`,
+    const nextModNum = selectedCourse.modules.length + 1;
+    setEditingModule(null);
+    setModuleForm({
+      title: `Module ${nextModNum}: `,
       duration: "10 Hours",
     });
-    setIsSessionModalOpen(true);
+    setIsModuleModalOpen(true);
   };
 
-  const handleOpenEditSession = (session: CourseModule) => {
-    setEditingSession(session);
-    setSessionForm({
-      title: session.title,
-      duration: session.duration,
+  const handleOpenEditModule = (mod: CourseModule) => {
+    setEditingModule(mod);
+    setModuleForm({
+      title: mod.title,
+      duration: mod.duration,
     });
-    setIsSessionModalOpen(true);
+    setIsModuleModalOpen(true);
   };
 
-  const handleSaveSession = (e: React.FormEvent) => {
+  const handleSaveModule = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedCourse) return;
 
     let updatedModules: CourseModule[];
-    if (editingSession) {
+    if (editingModule) {
       updatedModules = selectedCourse.modules.map((m) =>
-        m.id === editingSession.id
+        m.id === editingModule.id
           ? {
               ...m,
-              title: sessionForm.title,
-              duration: sessionForm.duration,
+              title: moduleForm.title,
+              duration: moduleForm.duration,
             }
           : m
       );
-      showNotification("Session title and duration updated!");
+      showNotification("Module updated!");
     } else {
-      const newSession: CourseModule = {
-        id: `session-${Date.now()}`,
-        title: sessionForm.title,
-        duration: sessionForm.duration,
+      const newModule: CourseModule = {
+        id: `mod-${Date.now()}`,
+        title: moduleForm.title,
+        duration: moduleForm.duration,
         lessons: [],
       };
-      updatedModules = [...selectedCourse.modules, newSession];
-      showNotification("New session added to course curriculum!");
+      updatedModules = [...selectedCourse.modules, newModule];
+      showNotification("New module added!");
     }
 
     const updatedCourse: EnrolledCourse = {
@@ -286,33 +294,74 @@ export default function SuperAdminCoursesManager() {
     };
     setSelectedCourse(updatedCourse);
     saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
-    setIsSessionModalOpen(false);
+    setIsModuleModalOpen(false);
   };
 
-  const handleDeleteSession = (sessionId: string) => {
+  const handleDeleteModuleClick = (moduleId: string, moduleTitle: string) => {
     if (!selectedCourse) return;
     if (selectedCourse.modules.length <= 1) {
-      alert("A course must have at least one session.");
+      alert("A course must have at least one module.");
       return;
     }
-    if (!confirm("Are you sure you want to delete this session and all its video lessons?")) return;
+    setDeleteConfirm({
+      type: "module",
+      moduleId,
+      title: moduleTitle,
+    });
+  };
 
-    const updatedModules = selectedCourse.modules.filter((m) => m.id !== sessionId);
-    const totalLes = updatedModules.reduce((acc, m) => acc + m.lessons.length, 0);
+  const handleDeleteLessonClick = (moduleId: string, lessonId: string, lessonName: string) => {
+    setDeleteConfirm({
+      type: "lesson",
+      moduleId,
+      lessonId,
+      title: lessonName,
+    });
+  };
 
-    const updatedCourse: EnrolledCourse = {
-      ...selectedCourse,
-      modules: updatedModules,
-      totalLessons: totalLes,
-    };
-    setSelectedCourse(updatedCourse);
-    saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
-    showNotification("Session deleted.");
+  const handleConfirmDelete = () => {
+    if (!selectedCourse || !deleteConfirm) return;
+
+    if (deleteConfirm.type === "module") {
+      const updatedModules = selectedCourse.modules.filter((m) => m.id !== deleteConfirm.moduleId);
+      const totalLes = updatedModules.reduce((acc, m) => acc + m.lessons.length, 0);
+
+      const updatedCourse: EnrolledCourse = {
+        ...selectedCourse,
+        modules: updatedModules,
+        totalLessons: totalLes,
+      };
+      setSelectedCourse(updatedCourse);
+      saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
+      showNotification(`Module "${deleteConfirm.title}" deleted.`);
+    } else if (deleteConfirm.type === "lesson" && deleteConfirm.lessonId) {
+      const updatedModules = selectedCourse.modules.map((mod) => {
+        if (mod.id !== deleteConfirm.moduleId) return mod;
+        return {
+          ...mod,
+          lessons: mod.lessons.filter((l) => l.id !== deleteConfirm.lessonId),
+        };
+      });
+
+      const totalLes = updatedModules.reduce((acc, m) => acc + m.lessons.length, 0);
+
+      const updatedCourse: EnrolledCourse = {
+        ...selectedCourse,
+        modules: updatedModules,
+        totalLessons: totalLes,
+      };
+
+      setSelectedCourse(updatedCourse);
+      saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
+      showNotification(`Video lesson "${deleteConfirm.title}" deleted.`);
+    }
+
+    setDeleteConfirm(null);
   };
 
   // Handlers for Video Lessons
-  const handleOpenAddLesson = (sessionId: string) => {
-    setTargetSessionId(sessionId);
+  const handleOpenAddLesson = (moduleId: string) => {
+    setTargetModuleId(moduleId);
     setEditingLesson(null);
     setVideoSourceType("upload");
     setUploadedVideoFileName(null);
@@ -322,13 +371,13 @@ export default function SuperAdminCoursesManager() {
       duration: "35 mins",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
       description: "",
-      resourceName: "CheatSheet-Guide.pdf",
+      resourceName: "",
     });
     setIsLessonModalOpen(true);
   };
 
-  const handleOpenEditLesson = (sessionId: string, lesson: Lesson) => {
-    setTargetSessionId(sessionId);
+  const handleOpenEditLesson = (moduleId: string, lesson: Lesson) => {
+    setTargetModuleId(moduleId);
     setEditingLesson(lesson);
     setVideoSourceType((lesson as any).videoUrl?.startsWith("blob:") ? "upload" : "url");
     setUploadedVideoFileName(null);
@@ -355,13 +404,13 @@ export default function SuperAdminCoursesManager() {
         videoUrl: url,
         name: prev.name || file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
       }));
-      showNotification(`Video file selected: ${file.name} (${sizeMb} MB)`);
+      showNotification(`Video selected: ${file.name} (${sizeMb} MB)`);
     }
   };
 
   const handleSaveLesson = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedCourse || !targetSessionId) return;
+    if (!selectedCourse || !targetModuleId) return;
 
     // Standardize YouTube embed links if user pasted watch URL
     let finalVideoUrl = lessonForm.videoUrl.trim();
@@ -374,7 +423,7 @@ export default function SuperAdminCoursesManager() {
     }
 
     const updatedModules = selectedCourse.modules.map((mod) => {
-      if (mod.id !== targetSessionId) return mod;
+      if (mod.id !== targetModuleId) return mod;
 
       if (editingLesson) {
         return {
@@ -424,38 +473,13 @@ export default function SuperAdminCoursesManager() {
     setSelectedCourse(updatedCourse);
     saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
     setIsLessonModalOpen(false);
-    showNotification("Video lesson saved and ready for student streaming!");
+    showNotification("Video lesson saved successfully!");
   };
 
-  const handleDeleteLesson = (sessionId: string, lessonId: string) => {
-    if (!selectedCourse) return;
-    if (!confirm("Are you sure you want to delete this video lesson?")) return;
-
-    const updatedModules = selectedCourse.modules.map((mod) => {
-      if (mod.id !== sessionId) return mod;
-      return {
-        ...mod,
-        lessons: mod.lessons.filter((l) => l.id !== lessonId),
-      };
-    });
-
-    const totalLes = updatedModules.reduce((acc, m) => acc + m.lessons.length, 0);
-
-    const updatedCourse: EnrolledCourse = {
-      ...selectedCourse,
-      modules: updatedModules,
-      totalLessons: totalLes,
-    };
-
-    setSelectedCourse(updatedCourse);
-    saveAndSyncCourses(courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c)));
-    showNotification("Video lesson removed.");
-  };
-
-  const getTargetSessionName = () => {
-    if (!selectedCourse || !targetSessionId) return "Session";
-    const found = selectedCourse.modules.find((m) => m.id === targetSessionId);
-    return found ? found.title : "Session";
+  const getTargetModuleName = () => {
+    if (!selectedCourse || !targetModuleId) return "Module";
+    const found = selectedCourse.modules.find((m) => m.id === targetModuleId);
+    return found ? found.title : "Module";
   };
 
   return (
@@ -482,12 +506,9 @@ export default function SuperAdminCoursesManager() {
           <div className="flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-[#116E63] dark:text-emerald-400" />
             <h2 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider font-[family-name:var(--font-yantramanav)]">
-              Courses, Sessions &amp; Video Lesson Studio
+              Courses &amp; Module Studio
             </h2>
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Create courses with custom thumbnails, organize sessions/modules, and upload video lessons for student streaming
-          </p>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
@@ -501,7 +522,7 @@ export default function SuperAdminCoursesManager() {
         </div>
       </div>
 
-      {/* Main 2-Column Studio: Left Course Catalog (5 Cols), Right Session & Video Inspector (7 Cols) */}
+      {/* Main 2-Column Studio: Left Course Catalog (5 Cols), Right Module & Video Inspector (7 Cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* LEFT COLUMN: COURSE CATALOG */}
         <div className="lg:col-span-5 space-y-3">
@@ -596,7 +617,7 @@ export default function SuperAdminCoursesManager() {
 
                       <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 font-medium mt-1.5 flex-wrap">
                         <span className="font-semibold text-[#116E63] dark:text-emerald-400">
-                          {course.modules.length} Sessions
+                          {course.modules.length} Modules
                         </span>
                         <span>&bull;</span>
                         <span>{totalLessonsCount} Videos</span>
@@ -619,7 +640,7 @@ export default function SuperAdminCoursesManager() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: SESSION-WISE & VIDEO CURRICULUM INSPECTOR */}
+        {/* RIGHT COLUMN: MODULE-WISE & VIDEO CURRICULUM INSPECTOR */}
         <div className="lg:col-span-7 space-y-3">
           {selectedCourse ? (
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 rounded-[4px] shadow-xs space-y-4">
@@ -635,20 +656,14 @@ export default function SuperAdminCoursesManager() {
                     />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-400">
-                        {selectedCourse.category}
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-700">&bull;</span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400 font-mono font-semibold">
-                        Course ID: #{selectedCourse.id}
-                      </span>
-                    </div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#116E63] dark:text-emerald-400">
+                      {selectedCourse.category}
+                    </span>
                     <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white uppercase font-[family-name:var(--font-yantramanav)] mt-0.5 leading-snug">
                       {selectedCourse.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
-                      Instructor: <strong className="text-slate-800 dark:text-slate-200">{selectedCourse.instructor}</strong> &bull; Total: <strong className="text-slate-800 dark:text-slate-200 font-mono">{selectedCourse.duration}</strong>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                      {selectedCourse.instructor} &bull; <span className="font-mono">{selectedCourse.duration}</span>
                     </p>
                   </div>
                 </div>
@@ -663,83 +678,80 @@ export default function SuperAdminCoursesManager() {
                     <span>Thumbnail</span>
                   </button>
                   <button
-                    onClick={handleOpenAddSession}
+                    onClick={handleOpenAddModule}
                     className="px-3 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] flex items-center gap-1.5 cursor-pointer transition-colors shadow-xs"
                   >
                     <Plus className="w-3.5 h-3.5" />
-                    <span>Add Session</span>
+                    <span>Add Module</span>
                   </button>
                 </div>
               </div>
 
-              {/* Sessions List */}
+              {/* Modules List */}
               <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+                <div className="flex items-center justify-between text-xs">
                   <span className="font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider text-xs sm:text-sm">
-                    Curriculum Sessions ({selectedCourse.modules.length} Sessions &bull; {selectedCourse.totalLessons} Lessons)
-                  </span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400">
-                    Click &ldquo;+ Upload Video&rdquo; to add video lessons to any session
+                    Course Modules ({selectedCourse.modules.length} Modules &bull; {selectedCourse.totalLessons} Lessons)
                   </span>
                 </div>
 
-                {selectedCourse.modules.map((session, sIdx) => (
+                {selectedCourse.modules.map((mod, mIdx) => (
                   <div
-                    key={session.id}
+                    key={mod.id}
                     className="border border-slate-200 dark:border-slate-800 rounded-[4px] overflow-hidden bg-slate-50/50 dark:bg-slate-900/60"
                   >
-                    {/* Session Header Strip */}
+                    {/* Module Header Strip */}
                     <div className="p-3 bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div className="flex items-center gap-2.5">
                         <div className="w-7 h-7 rounded-[3px] bg-[#116E63] text-white flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">
-                          {sIdx + 1}
+                          {mIdx + 1}
                         </div>
                         <div>
                           <div className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">
-                            {session.title}
+                            {mod.title}
                           </div>
-                          <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-0.5">
-                            {session.lessons.length} Video Lessons &bull; <span className="font-mono">{session.duration}</span>
+                          <div className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5 font-mono">
+                            {mod.lessons.length} Video Lessons &bull; {mod.duration}
                           </div>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-1.5 self-end sm:self-auto">
                         <button
-                          onClick={() => handleOpenAddLesson(session.id)}
+                          onClick={() => handleOpenAddLesson(mod.id)}
                           className="px-3 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase rounded-[3px] flex items-center gap-1.5 cursor-pointer transition-colors shadow-xs"
-                          title="Upload video lesson to this session"
+                          title="Upload video lesson to this module"
                         >
                           <Upload className="w-3.5 h-3.5" />
                           <span>Upload Video</span>
                         </button>
                         <button
-                          onClick={() => handleOpenEditSession(session)}
+                          onClick={() => handleOpenEditModule(mod)}
                           className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-[2px]"
-                          title="Edit Session Name & Duration"
+                          title="Edit Module Name & Duration"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
                         </button>
                         <button
-                          onClick={() => handleDeleteSession(session.id)}
+                          onClick={() => handleDeleteModuleClick(mod.id, mod.title)}
                           className="p-1 text-slate-400 hover:text-rose-600 rounded-[2px]"
-                          title="Delete Session"
+                          title="Delete Module"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>
 
-                    {/* Lessons / Videos inside this Session */}
+                    {/* Lessons / Videos inside this Module */}
                     <div className="p-2 sm:p-3 divide-y divide-slate-100 dark:divide-slate-800/70">
-                      {session.lessons.length === 0 ? (
-                        <div className="py-6 text-center space-y-1.5">
-                          <Film className="w-6 h-6 text-slate-400 mx-auto" />
+                      {mod.lessons.length === 0 ? (
+                        <div className="py-5 text-center space-y-1">
+                          <Film className="w-5 h-5 text-slate-400 mx-auto" />
                           <p className="text-xs text-slate-500 dark:text-slate-400">
-                            No videos in this session yet.
+                            No videos in this module yet.
                           </p>
                           <button
-                            onClick={() => handleOpenAddLesson(session.id)}
+                            onClick={() => handleOpenAddLesson(mod.id)}
                             className="text-xs font-bold text-[#116E63] dark:text-emerald-400 hover:underline uppercase inline-flex items-center gap-1"
                           >
                             <Upload className="w-3 h-3" />
@@ -747,37 +759,37 @@ export default function SuperAdminCoursesManager() {
                           </button>
                         </div>
                       ) : (
-                        session.lessons.map((lesson, lIdx) => (
+                        mod.lessons.map((lesson, lIdx) => (
                           <div
                             key={lesson.id}
                             className="py-2.5 flex items-center justify-between gap-3 hover:bg-white dark:hover:bg-slate-800/50 px-2 rounded-[3px] transition-colors"
                           >
                             <div className="flex items-center gap-3 min-w-0">
-                              <span className="font-mono font-bold text-slate-500 dark:text-slate-400 text-xs sm:text-sm w-6 text-right shrink-0">
-                                {sIdx + 1}.{lIdx + 1}
+                              <span className="font-mono font-bold text-slate-400 text-xs sm:text-sm w-6 text-right shrink-0">
+                                {mIdx + 1}.{lIdx + 1}
                               </span>
 
                               <div className="min-w-0">
                                 <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm leading-snug">
                                   {lesson.name}
                                 </div>
-                                <div className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-2.5 mt-1 font-mono flex-wrap">
+                                <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2 mt-0.5 font-mono flex-wrap">
                                   <span className="flex items-center gap-1">
-                                    <Clock className="w-3.5 h-3.5" /> {lesson.duration}
+                                    <Clock className="w-3 h-3" /> {lesson.duration}
                                   </span>
                                   {(lesson as any).videoUrl && (
                                     <>
                                       <span>&bull;</span>
-                                      <span className="text-emerald-700 dark:text-emerald-400 font-sans font-semibold flex items-center gap-1">
-                                        <Check className="w-3.5 h-3.5" /> Video Attached
+                                      <span className="text-emerald-700 dark:text-emerald-400 font-sans font-semibold flex items-center gap-1 text-[11px]">
+                                        <Check className="w-3 h-3" /> Video Attached
                                       </span>
                                     </>
                                   )}
                                   {lesson.resources?.[0]?.name && (
                                     <>
                                       <span>&bull;</span>
-                                      <span className="text-slate-600 dark:text-slate-400 flex items-center gap-1">
-                                        <FileText className="w-3.5 h-3.5" /> {lesson.resources[0].name}
+                                      <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1 text-[11px]">
+                                        <FileText className="w-3 h-3" /> {lesson.resources[0].name}
                                       </span>
                                     </>
                                   )}
@@ -789,22 +801,22 @@ export default function SuperAdminCoursesManager() {
                               {(lesson as any).videoUrl && (
                                 <button
                                   onClick={() => setPreviewVideoUrl((lesson as any).videoUrl)}
-                                  className="px-2.5 py-1 text-xs font-bold text-white bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[3px] flex items-center gap-1.5 cursor-pointer transition-colors shadow-xs"
+                                  className="px-2.5 py-1 text-xs font-bold text-white bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[3px] flex items-center gap-1 cursor-pointer transition-colors shadow-xs"
                                   title="Test & Preview Video Playback"
                                 >
                                   <Play className="w-3 h-3 fill-current" />
-                                  <span className="hidden xs:inline">Preview</span>
+                                  <span>Preview</span>
                                 </button>
                               )}
                               <button
-                                onClick={() => handleOpenEditLesson(session.id, lesson)}
+                                onClick={() => handleOpenEditLesson(mod.id, lesson)}
                                 className="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 rounded-[2px]"
                                 title="Edit Video Lesson"
                               >
                                 <Edit2 className="w-3.5 h-3.5" />
                               </button>
                               <button
-                                onClick={() => handleDeleteLesson(session.id, lesson.id)}
+                                onClick={() => handleDeleteLessonClick(mod.id, lesson.id, lesson.name)}
                                 className="p-1 text-slate-400 hover:text-rose-600 rounded-[2px]"
                                 title="Delete Lesson"
                               >
@@ -821,7 +833,7 @@ export default function SuperAdminCoursesManager() {
             </div>
           ) : (
             <div className="p-12 text-center border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[4px] text-slate-500">
-              Select a course from the left catalog to edit its sessions and upload videos.
+              Select a course from the left catalog to edit its modules and upload videos.
             </div>
           )}
         </div>
@@ -1032,48 +1044,48 @@ export default function SuperAdminCoursesManager() {
         </div>
       )}
 
-      {/* ================= MODAL 2: ADD / EDIT SESSION (MODULE) ================= */}
-      {isSessionModalOpen && (
+      {/* ================= MODAL 2: ADD / EDIT MODULE ================= */}
+      {isModuleModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 animate-in fade-in">
           <div className="bg-white dark:bg-slate-900 max-w-md w-full p-5 border border-slate-300 dark:border-slate-700 shadow-xl space-y-4 rounded-[4px]">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
               <h3 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider font-[family-name:var(--font-yantramanav)] flex items-center gap-2">
                 <FolderPlus className="w-4 h-4 text-[#116E63] dark:text-emerald-400" />
-                <span>{editingSession ? "Edit Session Details" : "Add New Curriculum Session"}</span>
+                <span>{editingModule ? "Edit Module Details" : "Add New Curriculum Module"}</span>
               </h3>
               <button
-                onClick={() => setIsSessionModalOpen(false)}
+                onClick={() => setIsModuleModalOpen(false)}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleSaveSession} className="space-y-3 text-xs">
+            <form onSubmit={handleSaveModule} className="space-y-3 text-xs">
               <div>
                 <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                  Session Title
+                  Module Title (e.g. Facebook Ads, Google Ads)
                 </label>
                 <input
                   type="text"
                   required
-                  value={sessionForm.title}
-                  onChange={(e) => setSessionForm({ ...sessionForm, title: e.target.value })}
-                  placeholder="e.g. Session 3: Closing Scripts & Objection Handling"
+                  value={moduleForm.title}
+                  onChange={(e) => setModuleForm({ ...moduleForm, title: e.target.value })}
+                  placeholder="e.g. Facebook Ads Mastery & Pixel Setup"
                   className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-semibold text-slate-800 dark:text-white"
                 />
               </div>
 
               <div>
                 <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                  Estimated Session Duration
+                  Estimated Module Duration
                 </label>
                 <input
                   type="text"
                   required
-                  value={sessionForm.duration}
-                  onChange={(e) => setSessionForm({ ...sessionForm, duration: e.target.value })}
-                  placeholder="e.g. 12 Hours"
+                  value={moduleForm.duration}
+                  onChange={(e) => setModuleForm({ ...moduleForm, duration: e.target.value })}
+                  placeholder="e.g. 10 Hours"
                   className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-mono text-slate-800 dark:text-white"
                 />
               </div>
@@ -1081,7 +1093,7 @@ export default function SuperAdminCoursesManager() {
               <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <button
                   type="button"
-                  onClick={() => setIsSessionModalOpen(false)}
+                  onClick={() => setIsModuleModalOpen(false)}
                   className="px-3 py-1.5 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold uppercase rounded-[4px] cursor-pointer"
                 >
                   Cancel
@@ -1090,7 +1102,7 @@ export default function SuperAdminCoursesManager() {
                   type="submit"
                   className="px-4 py-1.5 bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[4px] cursor-pointer"
                 >
-                  {editingSession ? "Save Session" : "Create Session"}
+                  {editingModule ? "Save Module" : "Create Module"}
                 </button>
               </div>
             </form>
@@ -1098,7 +1110,7 @@ export default function SuperAdminCoursesManager() {
         </div>
       )}
 
-      {/* ================= MODAL 3: UPLOAD VIDEO LESSON (Session-Wise) ================= */}
+      {/* ================= MODAL 3: UPLOAD VIDEO LESSON (Module-Wise) ================= */}
       {isLessonModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 animate-in fade-in">
           <div className="bg-white dark:bg-slate-900 max-w-lg w-full p-5 border border-slate-300 dark:border-slate-700 shadow-xl space-y-4 rounded-[4px] max-h-[90vh] overflow-y-auto">
@@ -1106,10 +1118,10 @@ export default function SuperAdminCoursesManager() {
               <div>
                 <h3 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wider font-[family-name:var(--font-yantramanav)] flex items-center gap-2">
                   <Film className="w-4 h-4 text-[#116E63] dark:text-emerald-400" />
-                  <span>{editingLesson ? "Edit Video Lesson" : "Upload Video to Session"}</span>
+                  <span>{editingLesson ? "Edit Video Lesson" : "Upload Video to Module"}</span>
                 </h3>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                  Target: <strong className="text-slate-700 dark:text-slate-300">{getTargetSessionName()}</strong>
+                  Target: <strong className="text-slate-700 dark:text-slate-300">{getTargetModuleName()}</strong>
                 </p>
               </div>
               <button
@@ -1124,14 +1136,14 @@ export default function SuperAdminCoursesManager() {
               {/* Lesson Name */}
               <div>
                 <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                  Video Lesson Name / Title
+                  Video Lesson Title
                 </label>
                 <input
                   type="text"
                   required
                   value={lessonForm.name}
                   onChange={(e) => setLessonForm({ ...lessonForm, name: e.target.value })}
-                  placeholder="e.g. Overcoming Price Objections with Value Anchoring"
+                  placeholder="e.g. Campaign Objectives & Audience Targeting"
                   className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-semibold text-slate-800 dark:text-white"
                 />
               </div>
@@ -1172,12 +1184,12 @@ export default function SuperAdminCoursesManager() {
                 {videoSourceType === "upload" ? (
                   <div className="space-y-2">
                     <label className="w-full py-4 px-3 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-[4px] flex flex-col items-center justify-center gap-1.5 cursor-pointer transition-colors text-center">
-                      <Upload className="w-6 h-6 text-[#116E63] dark:text-emerald-400 animate-bounce" />
+                      <Upload className="w-6 h-6 text-[#116E63] dark:text-emerald-400" />
                       <span className="text-xs font-bold text-slate-800 dark:text-white">
                         Click to Browse Video File
                       </span>
                       <span className="text-[10px] text-slate-500 dark:text-slate-400">
-                        Supports MP4, MOV, WEBM, MKV (Full 1080p / 4K)
+                        Supports MP4, MOV, WEBM (1080p / 4K)
                       </span>
                       <input
                         type="file"
@@ -1196,7 +1208,7 @@ export default function SuperAdminCoursesManager() {
                               {uploadedVideoFileName}
                             </span>
                             <span className="text-[10px] text-slate-500 font-mono">
-                              File Size: {uploadedVideoFileSize} &bull; Ready for CDN encoding
+                              File Size: {uploadedVideoFileSize}
                             </span>
                           </div>
                         </div>
@@ -1206,19 +1218,16 @@ export default function SuperAdminCoursesManager() {
                 ) : (
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block">
-                      Video Stream URL (YouTube, Vimeo, Cloudflare, S3, MP4)
+                      Video Stream URL (YouTube, Vimeo, Cloudflare)
                     </label>
                     <input
                       type="text"
                       required
                       value={lessonForm.videoUrl}
                       onChange={(e) => setLessonForm({ ...lessonForm, videoUrl: e.target.value })}
-                      placeholder="https://www.youtube.com/watch?v=... or direct .mp4 link"
+                      placeholder="https://www.youtube.com/watch?v=... or direct video link"
                       className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-[4px] font-mono text-slate-800 dark:text-white text-xs"
                     />
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500 block">
-                      Paste YouTube video URL, Vimeo link, or Cloudflare direct stream URL.
-                    </span>
                   </div>
                 )}
               </div>
@@ -1234,36 +1243,22 @@ export default function SuperAdminCoursesManager() {
                     required
                     value={lessonForm.duration}
                     onChange={(e) => setLessonForm({ ...lessonForm, duration: e.target.value })}
-                    placeholder="e.g. 35 mins or 24:15"
+                    placeholder="e.g. 35 mins"
                     className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] font-mono text-slate-800 dark:text-white"
                   />
                 </div>
                 <div>
                   <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                    Downloadable Handout (Optional)
+                    Handout Name (Optional)
                   </label>
                   <input
                     type="text"
                     value={lessonForm.resourceName}
                     onChange={(e) => setLessonForm({ ...lessonForm, resourceName: e.target.value })}
-                    placeholder="e.g. Closing-Script.pdf"
+                    placeholder="e.g. Ad-Copy-Template.pdf"
                     className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] text-slate-800 dark:text-white"
                   />
                 </div>
-              </div>
-
-              {/* Synopsis */}
-              <div>
-                <label className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase block mb-1">
-                  Video Synopsis &amp; Key Takeaways
-                </label>
-                <textarea
-                  rows={2}
-                  value={lessonForm.description}
-                  onChange={(e) => setLessonForm({ ...lessonForm, description: e.target.value })}
-                  placeholder="Summary of what the student learns in this video lesson..."
-                  className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] focus:outline-none focus:border-[#116E63] text-slate-800 dark:text-white"
-                />
               </div>
 
               <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800">
@@ -1294,6 +1289,47 @@ export default function SuperAdminCoursesManager() {
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL: DELETE CONFIRMATION ================= */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 animate-in fade-in">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-sm w-full p-5 rounded-[4px] shadow-2xl space-y-4">
+            <div className="text-center space-y-2">
+              <div className="w-11 h-11 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto">
+                <Trash2 className="w-5 h-5" />
+              </div>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white font-[family-name:var(--font-yantramanav)]">
+                Confirm Deletion
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Are you sure you want to delete {deleteConfirm.type === "module" ? "module and all its video lessons" : "video lesson"}{" "}
+                <strong className="text-slate-900 dark:text-white font-semibold">
+                  &ldquo;{deleteConfirm.title}&rdquo;
+                </strong>
+                ? This action cannot be undone.
+              </p>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setDeleteConfirm(null)}
+                className="px-3.5 py-1.5 text-xs font-bold uppercase text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] cursor-pointer transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                className="px-4 py-1.5 text-xs font-bold uppercase text-white bg-rose-600 hover:bg-rose-700 rounded-[4px] cursor-pointer shadow-xs transition-colors flex items-center gap-1.5"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
