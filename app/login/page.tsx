@@ -202,67 +202,57 @@ export default function LoginPage() {
           <ChevronLeft className="w-4 h-4" />
           <span>Back to Home</span>
         </Link>
-        <span className="text-xs font-semibold text-slate-500">
-          Skill Aura Academy
-        </span>
       </div>
 
-      {/* Main Auth Card (with max-height and flex-col for smooth Y-scroll on overflow) */}
+      {/* Main Auth Card */}
       <div className="w-full max-w-md bg-white border border-slate-200 shadow-sm rounded-[4px] flex flex-col max-h-[88vh] sm:max-h-[92vh] overflow-hidden my-auto">
-        {/* Brand Banner Top (Fixed at top) */}
-        <div className="bg-slate-50 p-4 sm:p-5 text-center border-b border-slate-200 shrink-0">
+        {/* Brand Banner Top */}
+        <div className="bg-slate-50 p-4 text-center border-b border-slate-200 shrink-0">
           <div className="flex justify-center mb-2">
             <Link href="/">
               <Image
                 src="/images/brand-logo.png"
                 alt="Skill Aura Academy"
-                width={170}
-                height={42}
-                className="h-8 sm:h-9 w-auto object-contain"
+                width={160}
+                height={40}
+                className="h-8 w-auto object-contain"
                 priority
               />
             </Link>
           </div>
-          <h2 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-yantramanav)] uppercase tracking-wider text-slate-900">
+          <h2 className="text-base sm:text-lg font-bold font-[family-name:var(--font-yantramanav)] uppercase tracking-wider text-slate-900">
             {mode === "login"
-              ? "Account Sign In"
+              ? "Sign In"
               : otpStep
-              ? "Verify Gmail OTP"
-              : "New Partner Registration"}
+              ? "Verify OTP"
+              : "Register"}
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
-            {mode === "login"
-              ? "Direct access to your earning command center & courses"
-              : otpStep
-              ? `Verification code dispatched to ${registerEmail}`
-              : "Register to earn 100% active commissions with live freelancing"}
-          </p>
         </div>
 
-        {/* Tab Switcher: Login vs Register (Fixed at top) */}
+        {/* Tab Switcher: Login vs Register */}
         {!otpStep && (
           <div className="flex border-b border-slate-200 bg-white shrink-0">
             <button
               type="button"
               onClick={() => switchMode("login")}
-              className={`flex-1 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer border-b-2 ${
+              className={`flex-1 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer border-b-2 ${
                 mode === "login"
                   ? "border-[#116E63] text-[#116E63] bg-teal-50/40"
-                  : "border-transparent text-slate-600 hover:text-slate-900"
+                  : "border-transparent text-slate-500 hover:text-slate-800"
               }`}
             >
-              Sign In (Login)
+              Sign In
             </button>
             <button
               type="button"
               onClick={() => switchMode("register")}
-              className={`flex-1 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer border-b-2 ${
+              className={`flex-1 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer border-b-2 ${
                 mode === "register"
                   ? "border-[#116E63] text-[#116E63] bg-teal-50/40"
-                  : "border-transparent text-slate-600 hover:text-slate-900"
+                  : "border-transparent text-slate-500 hover:text-slate-800"
               }`}
             >
-              New Register
+              Register
             </button>
           </div>
         )}
@@ -375,13 +365,13 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full mt-2 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-sm tracking-wider uppercase py-3 px-4 shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 rounded-[4px]"
+                className="w-full mt-2 bg-[#116E63] hover:bg-[#0c5c53] text-white font-extrabold text-sm tracking-wider uppercase py-3 px-4 shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 rounded-[4px]"
               >
                 {isLoading ? (
-                  <span>Activating Account...</span>
+                  <span>Verifying...</span>
                 ) : (
                   <>
-                    <span>Verify OTP &amp; Create Account</span>
+                    <span>Verify OTP</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -394,7 +384,7 @@ export default function LoginPage() {
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
                 <label className="block text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  Member ID / Gmail or Phone
+                  Member ID or Email
                 </label>
                 <div className="relative">
                   <User className="w-4.5 h-4.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -456,10 +446,10 @@ export default function LoginPage() {
                 className="w-full mt-2 bg-[#116E63] hover:bg-[#0c5c53] text-white font-extrabold text-sm tracking-wider uppercase py-3 px-4 shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 rounded-[4px]"
               >
                 {isLoading ? (
-                  <span>Authenticating...</span>
+                  <span>Signing In...</span>
                 ) : (
                   <>
-                    <span>Sign In to Dashboard</span>
+                    <span>Sign In</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -471,7 +461,7 @@ export default function LoginPage() {
                   className="text-[11px] font-bold text-slate-400 hover:text-[#116E63] uppercase tracking-wider inline-flex items-center gap-1 transition-colors"
                 >
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>Switch to Super Admin Console</span>
+                  <span>Super Admin Console</span>
                 </Link>
               </div>
             </form>
@@ -491,7 +481,7 @@ export default function LoginPage() {
                     required
                     value={registerName}
                     onChange={(e) => setRegisterName(e.target.value)}
-                    placeholder="Enter your full legal name"
+                    placeholder="Enter full name"
                     className="w-full pl-10 pr-3 py-2.5 text-sm border border-slate-200 focus:outline-none focus:border-[#116E63] font-medium text-slate-800 rounded-[4px]"
                   />
                 </div>
@@ -499,7 +489,7 @@ export default function LoginPage() {
 
               <div>
                 <label className="block text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Gmail / Email Address *
+                  Email Address *
                 </label>
                 <div className="relative">
                   <Mail className="w-4.5 h-4.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -508,18 +498,15 @@ export default function LoginPage() {
                     required
                     value={registerEmail}
                     onChange={(e) => setRegisterEmail(e.target.value)}
-                    placeholder="e.g. yourname@gmail.com"
+                    placeholder="name@gmail.com"
                     className="w-full pl-10 pr-3 py-2.5 text-sm border border-slate-200 focus:outline-none focus:border-[#116E63] font-medium text-slate-800 rounded-[4px]"
                   />
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">
-                  A 6-digit OTP will be sent to this Gmail to verify your registration.
-                </p>
               </div>
 
               <div>
                 <label className="block text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  WhatsApp / Phone Number *
+                  Phone Number *
                 </label>
                 <div className="relative">
                   <Phone className="w-4.5 h-4.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -528,7 +515,7 @@ export default function LoginPage() {
                     required
                     value={registerPhone}
                     onChange={(e) => setRegisterPhone(e.target.value)}
-                    placeholder="+91 98765 43210"
+                    placeholder="Phone number"
                     className="w-full pl-10 pr-3 py-2.5 text-sm border border-slate-200 focus:outline-none focus:border-[#116E63] font-medium text-slate-800 rounded-[4px]"
                   />
                 </div>
@@ -536,7 +523,7 @@ export default function LoginPage() {
 
               <div>
                 <label className="block text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Create Password *
+                  Password *
                 </label>
                 <div className="relative">
                   <Lock className="w-4.5 h-4.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -545,7 +532,7 @@ export default function LoginPage() {
                     required
                     value={registerPassword}
                     onChange={(e) => setRegisterPassword(e.target.value)}
-                    placeholder="Minimum 6 characters"
+                    placeholder="Min 6 characters"
                     className="w-full pl-10 pr-10 py-2.5 text-sm border border-slate-200 focus:outline-none focus:border-[#116E63] font-medium text-slate-800 rounded-[4px]"
                   />
                   <button
@@ -565,7 +552,7 @@ export default function LoginPage() {
 
               <div>
                 <label className="block text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Sponsor / Referral ID (Optional)
+                  Referral ID (Optional)
                 </label>
                 <div className="relative">
                   <ShieldCheck className="w-4.5 h-4.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -582,14 +569,14 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full mt-2 bg-[#FDA31B] hover:bg-[#116E63] text-white font-extrabold text-sm tracking-wider uppercase py-3 px-4 shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 rounded-[4px]"
+                className="w-full mt-2 bg-[#116E63] hover:bg-[#0c5c53] text-white font-extrabold text-sm tracking-wider uppercase py-3 px-4 shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 rounded-[4px]"
               >
                 {isLoading ? (
-                  <span>Sending Gmail OTP...</span>
+                  <span>Registering...</span>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" />
-                    <span>Send Gmail OTP &amp; Register</span>
+                    <span>Register</span>
+                    <ArrowRight className="w-4 h-4" />
                   </>
                 )}
               </button>
@@ -598,16 +585,16 @@ export default function LoginPage() {
         </div>
 
         {/* Footer info & toggle (Fixed at bottom) */}
-        <div className="p-3.5 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-600 shrink-0">
+        <div className="p-3 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-600 shrink-0">
           {mode === "login" ? (
             <div>
-              Don&apos;t have an account yet?{" "}
+              Don&apos;t have an account?{" "}
               <button
                 type="button"
                 onClick={() => switchMode("register")}
                 className="font-bold text-[#116E63] hover:underline cursor-pointer"
               >
-                Register as an Affiliate
+                Register
               </button>
             </div>
           ) : (
@@ -618,7 +605,7 @@ export default function LoginPage() {
                 onClick={() => switchMode("login")}
                 className="font-bold text-[#116E63] hover:underline cursor-pointer"
               >
-                Sign In to Account
+                Sign In
               </button>
             </div>
           )}
