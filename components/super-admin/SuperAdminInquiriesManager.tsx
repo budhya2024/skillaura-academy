@@ -22,6 +22,7 @@ export default function SuperAdminInquiriesManager() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "unread" | "read">("all");
   const [notification, setNotification] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<ContactInquiry | null>(null);
 
   const loadInquiries = () => {
     setInquiries(getContactInquiries());
@@ -50,12 +51,16 @@ export default function SuperAdminInquiriesManager() {
     loadInquiries();
   };
 
-  const handleDelete = (id: string, name: string) => {
-    if (confirm(`Delete message from "${name}"?`)) {
-      deleteContactInquiry(id);
-      showNotification(`Message deleted`);
-      loadInquiries();
-    }
+  const handleDeleteClick = (inq: ContactInquiry) => {
+    setDeleteTarget(inq);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!deleteTarget) return;
+    deleteContactInquiry(deleteTarget.id);
+    showNotification(`Message from "${deleteTarget.name}" deleted`);
+    setDeleteTarget(null);
+    loadInquiries();
   };
 
   const filteredInquiries = inquiries.filter((inq) => {
@@ -227,9 +232,9 @@ export default function SuperAdminInquiriesManager() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleDelete(inq.id, inq.name)}
+                    onClick={() => handleDeleteClick(inq)}
                     className="p-1 text-slate-400 hover:text-rose-600 rounded-[3px] cursor-pointer"
-                    title="Delete"
+                    title="Delete Message"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -249,6 +254,52 @@ export default function SuperAdminInquiriesManager() {
           ))
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteTarget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 animate-in fade-in">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-sm w-full p-5 rounded-[4px] shadow-2xl space-y-4">
+            <div className="text-center space-y-2">
+              <div className="w-11 h-11 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto">
+                <Trash2 className="w-5 h-5" />
+              </div>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white font-[family-name:var(--font-yantramanav)]">
+                Confirm Deletion
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Are you sure you want to permanently delete the message from{" "}
+                <strong className="text-slate-900 dark:text-white font-semibold">
+                  {deleteTarget.name}
+                </strong>
+                ? This action cannot be undone.
+              </p>
+              {deleteTarget.subject && (
+                <div className="p-2 bg-slate-50 dark:bg-slate-800/80 rounded-[3px] text-[11px] text-slate-500 dark:text-slate-400 italic text-left truncate font-mono">
+                  Subject: &ldquo;{deleteTarget.subject}&rdquo;
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setDeleteTarget(null)}
+                className="px-3.5 py-1.5 text-xs font-bold uppercase text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[4px] cursor-pointer transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                className="px-4 py-1.5 text-xs font-bold uppercase text-white bg-rose-600 hover:bg-rose-700 rounded-[4px] cursor-pointer shadow-xs transition-colors flex items-center gap-1.5"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
