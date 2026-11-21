@@ -8,7 +8,6 @@ import {
   Pause,
   Clock,
   CheckCircle2,
-  Download,
   ChevronDown,
   ChevronUp,
   ArrowRight,
@@ -26,7 +25,6 @@ import {
   Users,
   Wallet,
   CreditCard,
-  Sparkles,
 } from "lucide-react";
 import { ENROLLED_COURSES_DATA, EnrolledCourse } from "../../../../lib/coursesData";
 import AdminSidebar from "../../../../components/admin/AdminSidebar";
@@ -83,7 +81,6 @@ export default function CourseWatchPage({
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [videoProgress, setVideoProgress] = useState<number>(25);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
-  const [mobileActiveTab, setMobileActiveTab] = useState<"curriculum" | "summary" | "resources">("curriculum");
   const [expandedModules, setExpandedModules] = useState<{ [key: number]: boolean }>({
     0: true,
     1: true,
@@ -232,10 +229,22 @@ export default function CourseWatchPage({
 
         {/* Studio Content Area */}
         <main className="p-3 sm:p-5 lg:p-6 space-y-4 flex-1 pb-24 lg:pb-8">
-          {/* 2-Column Responsive Workspace: Video & Lesson (Left) + Module Playlist (Right) */}
+          {/* 2-Column Responsive Workspace: Left (Curriculum Playlist) + Right (Video & Lesson) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
-            {/* Main Video & Lesson Details (8 Cols on Desktop) */}
-            <div className="lg:col-span-8 space-y-4">
+            {/* Left Column: Course Curriculum Playlist (4 Cols on Desktop, Order 2 on Mobile) */}
+            <div className="order-2 lg:order-1 lg:col-span-4 space-y-3">
+              <CurriculumPlaylist
+                course={course}
+                activeModuleIdx={safeModuleIdx}
+                activeLessonIdx={safeLessonIdx}
+                expandedModules={expandedModules}
+                toggleModuleAccordion={toggleModuleAccordion}
+                selectLesson={selectLesson}
+              />
+            </div>
+
+            {/* Right Column: Main Video Stream & Lesson Details (8 Cols on Desktop, Order 1 on Mobile) */}
+            <div className="order-1 lg:order-2 lg:col-span-8 space-y-4">
               {/* Interactive Video Player */}
               <div className="relative aspect-video w-full bg-slate-950 rounded-[4px] overflow-hidden border border-slate-800 shadow-sm select-none group">
                 <Image
@@ -247,7 +256,7 @@ export default function CourseWatchPage({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
 
-                {/* Top Lesson Indicator: Clean Text Without Heavy Badges */}
+                {/* Top Lesson Indicator */}
                 <div className="absolute top-3 left-3 text-[11px] font-bold text-white drop-shadow-md uppercase tracking-wider flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-[#116E63] animate-pulse"></span>
                   <span>Module {safeModuleIdx + 1} • Lesson {safeLessonIdx + 1}</span>
@@ -412,105 +421,6 @@ export default function CourseWatchPage({
                   </button>
                 </div>
               </div>
-
-              {/* Mobile Tabs: Curriculum vs Summary vs Resources (< lg) */}
-              <div className="lg:hidden flex border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-[4px] overflow-hidden text-xs font-bold uppercase tracking-wider">
-                <button
-                  onClick={() => setMobileActiveTab("curriculum")}
-                  className={`flex-1 py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
-                    mobileActiveTab === "curriculum"
-                      ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-[#116E63]/5"
-                      : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-                >
-                  <BookOpen className="w-3.5 h-3.5" />
-                  <span>Curriculum</span>
-                </button>
-                <button
-                  onClick={() => setMobileActiveTab("summary")}
-                  className={`flex-1 py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
-                    mobileActiveTab === "summary"
-                      ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-[#116E63]/5"
-                      : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-                >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>Notes</span>
-                </button>
-                <button
-                  onClick={() => setMobileActiveTab("resources")}
-                  className={`flex-1 py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
-                    mobileActiveTab === "resources"
-                      ? "border-[#116E63] text-[#116E63] dark:text-emerald-400 bg-[#116E63]/5"
-                      : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Resources ({currentLesson.resources?.length || 0})</span>
-                </button>
-              </div>
-
-              {/* Mobile Curriculum View (Rendered when on mobile and tab = curriculum) */}
-              <div className={`lg:hidden space-y-3 ${mobileActiveTab === "curriculum" ? "block" : "hidden"}`}>
-                <CurriculumPlaylist
-                  course={course}
-                  activeModuleIdx={safeModuleIdx}
-                  activeLessonIdx={safeLessonIdx}
-                  expandedModules={expandedModules}
-                  toggleModuleAccordion={toggleModuleAccordion}
-                  selectLesson={selectLesson}
-                />
-              </div>
-
-              {/* Lesson Summary & Overview */}
-              <div className={`space-y-4 ${mobileActiveTab === "summary" || mobileActiveTab === "resources" ? "block" : "hidden lg:block"}`}>
-                {currentLesson.description && (
-                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs space-y-2">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
-                      <span>Lesson Key Takeaways &amp; Overview</span>
-                    </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                      {currentLesson.description}
-                    </p>
-                  </div>
-                )}
-
-                {/* Downloadable Resources */}
-                {currentLesson.resources && currentLesson.resources.length > 0 && (
-                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-[4px] shadow-xs space-y-2.5">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                      <Download className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400" />
-                      <span>Lesson Downloadable Worksheets &amp; Templates</span>
-                    </h4>
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {currentLesson.resources.map((res, rIdx) => (
-                        <button
-                          key={rIdx}
-                          onClick={() => alert(`Starting download for: ${res.name}`)}
-                          className="px-3 py-2 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-[4px] text-xs text-slate-800 dark:text-slate-200 flex items-center gap-2 cursor-pointer font-medium transition-colors"
-                        >
-                          <Download className="w-3.5 h-3.5 text-[#116E63] dark:text-emerald-400 shrink-0" />
-                          <span className="font-semibold">{res.name}</span>
-                          <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">({res.size})</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Desktop Module Playlist (4 Cols on Desktop >= lg) */}
-            <div className="hidden lg:block lg:col-span-4 space-y-3">
-              <CurriculumPlaylist
-                course={course}
-                activeModuleIdx={safeModuleIdx}
-                activeLessonIdx={safeLessonIdx}
-                expandedModules={expandedModules}
-                toggleModuleAccordion={toggleModuleAccordion}
-                selectLesson={selectLesson}
-              />
             </div>
           </div>
         </main>
