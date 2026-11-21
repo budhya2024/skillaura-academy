@@ -268,26 +268,26 @@ export default function SuperAdminPayoutsManager() {
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-[13px] min-w-[720px]">
+          <table className="w-full text-left border-collapse text-[13px] min-w-[680px]">
             <thead>
-              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-[13px] tracking-wider">
-                <th className="py-2.5 px-3 w-12 sm:w-14 text-center">SL No.</th>
-                <th className="py-2.5 px-4">Payout ID / Date</th>
-                <th className="py-2.5 px-3">Requested Amount</th>
-                <th className="py-2.5 px-3">Transfer Mode</th>
-                <th className="py-2.5 px-3">Beneficiary VPA / A/C</th>
-                <th className="py-2.5 px-3">Bank UTR Reference</th>
-                <th className="py-2.5 px-3 text-center">Status</th>
-                <th className="py-2.5 px-4 text-right">Super Admin Action</th>
+              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-[12px] sm:text-[13px] tracking-wider whitespace-nowrap">
+                <th className="py-2.5 px-2 w-10 text-center">#</th>
+                <th className="py-2.5 px-3">Payout &amp; Date</th>
+                <th className="py-2.5 px-2.5">Amount</th>
+                <th className="py-2.5 px-2.5">Mode</th>
+                <th className="py-2.5 px-2.5">Beneficiary / A/C</th>
+                <th className="py-2.5 px-2.5">Bank UTR</th>
+                <th className="py-2.5 px-2.5 text-center">Status</th>
+                <th className="py-2.5 px-3 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
               {filteredPayouts.map((pay, idx) => (
-                <tr key={pay.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                  <td className="py-2.5 px-3 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-[13px]">
+                <tr key={pay.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors whitespace-nowrap">
+                  <td className="py-2.5 px-2 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-[13px]">
                     {idx + 1}
                   </td>
-                  <td className="py-2.5 px-4">
+                  <td className="py-2.5 px-3">
                     <span className="font-bold text-slate-900 dark:text-white font-mono block text-[13px]">
                       {pay.id}
                     </span>
@@ -296,25 +296,25 @@ export default function SuperAdminPayoutsManager() {
                     </span>
                   </td>
 
-                  <td className="py-2.5 px-3 font-mono font-black text-slate-900 dark:text-white text-base">
+                  <td className="py-2.5 px-2.5 font-mono font-black text-slate-900 dark:text-white text-base">
                     ₹{pay.amount.toLocaleString()}
                   </td>
 
-                  <td className="py-2.5 px-3">
+                  <td className="py-2.5 px-2.5">
                     <span className="inline-block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase font-mono">
                       {pay.method}
                     </span>
                   </td>
 
-                  <td className="py-2.5 px-3 font-mono text-slate-700 dark:text-slate-300 text-[13px]">
+                  <td className="py-2.5 px-2.5 font-mono text-slate-700 dark:text-slate-300 text-[13px]">
                     {pay.accountDetails}
                   </td>
 
-                  <td className="py-2.5 px-3 font-mono text-xs text-slate-600 dark:text-slate-400">
+                  <td className="py-2.5 px-2.5 font-mono text-xs text-slate-600 dark:text-slate-400">
                     {pay.payoutRef || "—"}
                   </td>
 
-                  <td className="py-2.5 px-3 text-center">
+                  <td className="py-2.5 px-2.5 text-center">
                     {pay.status === "approved" ? (
                       <span className="inline-block text-xs font-bold uppercase text-emerald-700 dark:text-emerald-400">
                         PAID ✓
@@ -330,7 +330,7 @@ export default function SuperAdminPayoutsManager() {
                     )}
                   </td>
 
-                  <td className="py-2.5 px-4 text-right">
+                  <td className="py-2.5 px-3 text-right">
                     {pay.status === "pending" ? (
                       <div className="flex items-center justify-end gap-1.5">
                         <button

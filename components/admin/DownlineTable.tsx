@@ -102,15 +102,15 @@ export default function DownlineTable() {
 
       {/* Streamlined Table (Personal Sales Removed, Income Shown) */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[580px]">
+        <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[540px]">
           <thead>
-            <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 uppercase font-bold text-xs tracking-wider">
-              <th className="py-3 px-3 sm:px-4 w-12 sm:w-14 text-center">SL No.</th>
-              <th className="py-3 px-4">Member Name &amp; ID</th>
-              <th className="py-3 px-3">Enrolled Course</th>
-              <th className="py-3 px-3">My Earning</th>
-              <th className="py-3 px-3">Status</th>
-              <th className="py-3 px-4 text-right">Action</th>
+            <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 uppercase font-bold text-xs tracking-wider whitespace-nowrap">
+              <th className="py-2.5 px-2 w-10 text-center">#</th>
+              <th className="py-2.5 px-3">Member &amp; ID</th>
+              <th className="py-2.5 px-2.5">Course</th>
+              <th className="py-2.5 px-2.5">Earning</th>
+              <th className="py-2.5 px-2.5">Status</th>
+              <th className="py-2.5 px-3 text-right">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
@@ -118,17 +118,17 @@ export default function DownlineTable() {
               paginatedMembers.map((member, idx) => (
                 <tr
                   key={member.id}
-                  className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                  className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors whitespace-nowrap"
                 >
                   {/* Serial Number */}
-                  <td className="py-3 px-3 sm:px-4 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                  <td className="py-2.5 px-2 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
                     {(currentPage - 1) * itemsPerPage + idx + 1}
                   </td>
 
                   {/* Member Name & ID */}
-                  <td className="py-3 px-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 shrink-0 relative shadow-2xs">
+                  <td className="py-2.5 px-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 shrink-0 relative shadow-2xs">
                         <Image
                           src="/images/founder.jpeg"
                           alt={member.name}
@@ -148,14 +148,14 @@ export default function DownlineTable() {
                   </td>
 
                   {/* Course Package */}
-                  <td className="py-3 px-3">
-                    <span className="text-slate-800 dark:text-slate-300 font-medium line-clamp-1 text-xs sm:text-sm">
+                  <td className="py-2.5 px-2.5">
+                    <span className="text-slate-800 dark:text-slate-300 font-medium text-xs sm:text-sm">
                       {member.package}
                     </span>
                   </td>
 
                   {/* My Earning */}
-                  <td className="py-3 px-3 font-mono">
+                  <td className="py-2.5 px-2.5 font-mono">
                     <span className="font-bold text-emerald-700 dark:text-emerald-400 text-sm sm:text-base block">
                       +₹{member.totalCommission.toLocaleString()}
                     </span>
@@ -165,7 +165,7 @@ export default function DownlineTable() {
                   </td>
 
                   {/* Status */}
-                  <td className="py-3 px-3">
+                  <td className="py-2.5 px-2.5">
                     <span
                       className={`inline-flex items-center text-xs font-bold uppercase ${member.status === "active"
                         ? "text-emerald-700 dark:text-emerald-400"
@@ -177,7 +177,7 @@ export default function DownlineTable() {
                   </td>
 
                   {/* Action View Button -> Opens Right-Side Drawer (Full Deep Color Background) */}
-                  <td className="py-3 px-4 text-right">
+                  <td className="py-2.5 px-3 text-right">
                     <button
                       onClick={() => setSelectedMember(member)}
                       className="px-3 py-1.5 text-xs font-bold text-white bg-[#116E63] hover:bg-[#0c5c53] dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-[4px] inline-flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"

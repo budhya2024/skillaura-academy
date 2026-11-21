@@ -382,25 +382,25 @@ export default function CommissionPlanSection() {
 
         {/* Income Ledger Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[620px]">
+          <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[560px]">
             <thead>
-              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-xs tracking-wider">
-                <th className="py-2.5 sm:py-3 px-3 sm:px-4 w-12 sm:w-14 text-center">SL No.</th>
-                <th className="py-2.5 sm:py-3 px-4">Transaction / Time</th>
-                <th className="py-2.5 sm:py-3 px-3">Student Name</th>
-                <th className="py-2.5 sm:py-3 px-3">Course Package</th>
-                <th className="py-2.5 sm:py-3 px-3">Package Fee</th>
-                <th className="py-2.5 sm:py-3 px-3">Income Credited</th>
-                <th className="py-2.5 sm:py-3 px-4 text-right">Status</th>
+              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-xs tracking-wider whitespace-nowrap">
+                <th className="py-2.5 px-2 w-10 text-center">#</th>
+                <th className="py-2.5 px-3">Transaction &amp; Time</th>
+                <th className="py-2.5 px-2.5">Student</th>
+                <th className="py-2.5 px-2.5">Course</th>
+                <th className="py-2.5 px-2.5">Fee</th>
+                <th className="py-2.5 px-2.5">Income</th>
+                <th className="py-2.5 px-3 text-right">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
               {MOCK_COMMISSIONS.map((rec, idx) => (
-                <tr key={rec.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                  <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                <tr key={rec.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 whitespace-nowrap">
+                  <td className="py-2.5 px-2 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
                     {idx + 1}
                   </td>
-                  <td className="py-2.5 sm:py-3 px-4">
+                  <td className="py-2.5 px-3">
                     <div className="font-bold text-slate-900 dark:text-white font-mono text-xs sm:text-sm">
                       {rec.id}
                     </div>
@@ -408,7 +408,7 @@ export default function CommissionPlanSection() {
                       {rec.date}
                     </div>
                   </td>
-                  <td className="py-2.5 sm:py-3 px-3">
+                  <td className="py-2.5 px-2.5">
                     <div className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">
                       {rec.fromMemberName}
                     </div>
@@ -416,16 +416,16 @@ export default function CommissionPlanSection() {
                       {rec.fromMemberId}
                     </div>
                   </td>
-                  <td className="py-2.5 sm:py-3 px-3 text-slate-800 dark:text-slate-200 text-xs sm:text-sm">
+                  <td className="py-2.5 px-2.5 text-slate-800 dark:text-slate-200 text-xs sm:text-sm">
                     {rec.courseName}
                   </td>
-                  <td className="py-2.5 sm:py-3 px-3 font-mono font-bold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">
+                  <td className="py-2.5 px-2.5 font-mono font-bold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">
                     {rec.coursePrice > 0 ? `₹${rec.coursePrice.toLocaleString()}` : "Milestone Target"}
                   </td>
-                  <td className="py-2.5 sm:py-3 px-3 font-mono font-bold text-emerald-700 dark:text-emerald-400 text-sm sm:text-base">
+                  <td className="py-2.5 px-2.5 font-mono font-bold text-emerald-700 dark:text-emerald-400 text-sm sm:text-base">
                     +₹{rec.commissionAmount.toLocaleString()}
                   </td>
-                  <td className="py-2.5 sm:py-3 px-4 text-right">
+                  <td className="py-2.5 px-3 text-right">
                     <span className="inline-block text-xs font-bold uppercase text-emerald-800 dark:text-emerald-300">
                       Credited
                     </span>

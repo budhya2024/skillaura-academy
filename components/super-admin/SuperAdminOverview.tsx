@@ -607,13 +607,13 @@ export default function SuperAdminOverview({
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs min-w-[540px]">
+              <table className="w-full text-left border-collapse text-xs min-w-[500px]">
                 <thead>
-                  <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] tracking-wider">
-                    <th className="py-2.5 px-3">Student Name &amp; ID</th>
-                    <th className="py-2.5 px-3">Course Purchased</th>
-                    <th className="py-2.5 px-3">Fee Paid</th>
-                    <th className="py-2.5 px-3">Referred By</th>
+                  <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] sm:text-[11px] tracking-wider whitespace-nowrap">
+                    <th className="py-2.5 px-3">Student &amp; ID</th>
+                    <th className="py-2.5 px-2.5">Course</th>
+                    <th className="py-2.5 px-2.5">Fee</th>
+                    <th className="py-2.5 px-2.5">Sponsor</th>
                     <th className="py-2.5 px-3 text-right">Action</th>
                   </tr>
                 </thead>
@@ -621,7 +621,7 @@ export default function SuperAdminOverview({
                   {RECENT_STUDENT_ENROLLMENTS.map((item) => (
                     <tr
                       key={item.id}
-                      className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+                      className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors whitespace-nowrap"
                     >
                       <td className="py-2.5 px-3">
                         <div className="flex items-center gap-2">

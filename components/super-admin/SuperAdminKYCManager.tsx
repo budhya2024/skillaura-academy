@@ -519,16 +519,16 @@ export default function SuperAdminKYCManager() {
 
         {/* KYC Registry Table - Minimized Clean Layout */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-[13px] min-w-[880px]">
+          <table className="w-full text-left border-collapse text-[13px] min-w-[780px]">
             <thead>
-              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-[13px] tracking-wider">
-                <th className="py-3 px-3 w-12 text-center">SL No.</th>
-                <th className="py-3 px-3">Student</th>
-                <th className="py-3 px-3">Document</th>
-                <th className="py-3 px-3">Bank / Payout</th>
-                <th className="py-3 px-3">Submission Date</th>
-                <th className="py-3 px-3 text-center">KYC Status</th>
-                <th className="py-3 px-4 text-center">Actions</th>
+              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase font-bold text-[12px] sm:text-[13px] tracking-wider whitespace-nowrap">
+                <th className="py-2.5 px-2 w-10 text-center">#</th>
+                <th className="py-2.5 px-3">Student</th>
+                <th className="py-2.5 px-2.5">Document</th>
+                <th className="py-2.5 px-2.5">Bank / VPA</th>
+                <th className="py-2.5 px-2.5">Date</th>
+                <th className="py-2.5 px-2.5 text-center">KYC Status</th>
+                <th className="py-2.5 px-3 text-center">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
@@ -542,15 +542,15 @@ export default function SuperAdminKYCManager() {
                 filteredRecords.map((item, idx) => (
                   <tr
                     key={item.id}
-                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors"
+                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors whitespace-nowrap"
                   >
-                    {/* 1. SL No. */}
-                    <td className="py-3 px-3 text-center font-mono font-semibold text-slate-500 dark:text-slate-400 text-[13px]">
+                    {/* 1. # */}
+                    <td className="py-2.5 px-2 text-center font-mono font-semibold text-slate-500 dark:text-slate-400 text-[13px]">
                       {idx + 1}
                     </td>
 
                     {/* 2. Student (Minimized: Clean Avatar, Name & ID only) */}
-                    <td className="py-3 px-3">
+                    <td className="py-2.5 px-3">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-full overflow-hidden relative bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs">
                           <Image
@@ -572,8 +572,8 @@ export default function SuperAdminKYCManager() {
                       </div>
                     </td>
 
-                    {/* 3. Government Document (Clean: Type & Number only) */}
-                    <td className="py-3 px-3">
+                    {/* 3. Government Document */}
+                    <td className="py-2.5 px-2.5">
                       <div className="font-semibold text-slate-900 dark:text-white text-[13px]">
                         {item.docType}
                       </div>
@@ -582,8 +582,8 @@ export default function SuperAdminKYCManager() {
                       </span>
                     </td>
 
-                    {/* 4. Bank / Payout (Clean: Bank Name & UPI only) */}
-                    <td className="py-3 px-3">
+                    {/* 4. Bank / Payout */}
+                    <td className="py-2.5 px-2.5">
                       <div className="font-semibold text-slate-900 dark:text-white text-[13px] truncate max-w-[160px]">
                         {item.bankName}
                       </div>
@@ -592,13 +592,13 @@ export default function SuperAdminKYCManager() {
                       </span>
                     </td>
 
-                    {/* 5. Submission Date (Clean single line) */}
-                    <td className="py-3 px-3 font-mono text-[13px] text-slate-600 dark:text-slate-400">
+                    {/* 5. Date */}
+                    <td className="py-2.5 px-2.5 font-mono text-[13px] text-slate-600 dark:text-slate-400">
                       {item.submittedDate}
                     </td>
 
                     {/* 6. Verification Status */}
-                    <td className="py-3 px-3 text-center">
+                    <td className="py-2.5 px-2.5 text-center">
                       {item.status === "verified" ? (
                         <span className="text-emerald-700 dark:text-emerald-400 font-bold inline-flex items-center gap-1 text-[13px]">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
@@ -617,8 +617,8 @@ export default function SuperAdminKYCManager() {
                       )}
                     </td>
 
-                    {/* 7. Action: Inspect (Opens full document view & action drawer) */}
-                    <td className="py-3 px-4 text-center">
+                    {/* 7. Action */}
+                    <td className="py-2.5 px-3 text-center">
                       <button
                         onClick={() => {
                           setSelectedRecord(item);

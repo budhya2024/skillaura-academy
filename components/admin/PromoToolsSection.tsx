@@ -290,26 +290,26 @@ export default function PromoToolsSection() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] tracking-wider">
-                <th className="py-3 px-3 w-12 sm:w-14 text-center">SL No.</th>
-                <th className="py-3 px-4">Masterclass Course</th>
-                <th className="py-3 px-3">Price (INR)</th>
-                <th className="py-3 px-3">
+              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] sm:text-[11px] tracking-wider whitespace-nowrap">
+                <th className="py-2.5 px-2 w-10 text-center">#</th>
+                <th className="py-2.5 px-3">Course</th>
+                <th className="py-2.5 px-2.5">Price</th>
+                <th className="py-2.5 px-2.5">
                   Tier 1 (50%)
                   <span className="block text-[9px] font-normal text-slate-400 dark:text-slate-500">1 - 5 Sales</span>
                 </th>
-                <th className="py-3 px-3">
+                <th className="py-2.5 px-2.5">
                   Tier 2 (60%)
                   <span className="block text-[9px] font-normal text-slate-400 dark:text-slate-500">6 - 15 Sales</span>
                 </th>
-                <th className="py-3 px-3 text-[#116E63] dark:text-emerald-400">
+                <th className="py-2.5 px-2.5 text-[#116E63] dark:text-emerald-400">
                   <div className="flex items-center gap-1">
                     <span>Tier 3 (65%)</span>
                     <span className="text-[9px] font-bold text-[#116E63] dark:text-emerald-400">(You)</span>
                   </div>
                   <span className="block text-[9px] font-normal text-slate-400 dark:text-slate-500">16 - 25 Sales</span>
                 </th>
-                <th className="py-3 px-4 text-right">
+                <th className="py-2.5 px-3 text-right">
                   Tier 4 (70%)
                   <span className="block text-[9px] font-normal text-slate-400 dark:text-slate-500">26+ Sales (Max)</span>
                 </th>
@@ -319,10 +319,10 @@ export default function PromoToolsSection() {
               {PROMO_COURSE_COMMISSIONS.map((item, idx) => (
                 <tr
                   key={item.id}
-                  className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors"
+                  className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors whitespace-nowrap"
                 >
                   {/* Serial Number */}
-                  <td className="py-3 px-3 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                  <td className="py-2.5 px-2 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
                     {idx + 1}
                   </td>
 

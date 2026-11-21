@@ -90,26 +90,26 @@ export default function LeaderboardSection() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[500px]">
+          <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[460px]">
             <thead>
-              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] sm:text-xs tracking-wider">
-                <th className="py-2.5 sm:py-3 px-3 sm:px-4 w-12 sm:w-14 text-center">SL No.</th>
-                <th className="py-2.5 sm:py-3 px-3 w-24 text-center">Rank</th>
-                <th className="py-2.5 sm:py-3 px-3">Student / Member</th>
-                <th className="py-2.5 sm:py-3 px-3 sm:px-4 text-right">Earn Amount</th>
-                <th className="py-2.5 sm:py-3 px-3 text-right hidden sm:table-cell">Growth</th>
+              <tr className="bg-slate-100/70 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 uppercase font-bold text-[10px] sm:text-xs tracking-wider whitespace-nowrap">
+                <th className="py-2.5 px-2 w-10 text-center">#</th>
+                <th className="py-2.5 px-2.5 w-20 text-center">Rank</th>
+                <th className="py-2.5 px-3">Member</th>
+                <th className="py-2.5 px-3 text-right">Earnings</th>
+                <th className="py-2.5 px-2.5 text-right hidden sm:table-cell">Growth</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium text-slate-800 dark:text-slate-200">
               {MOCK_LEADERBOARD.map((user, idx) => (
                 <tr
                   key={user.id}
-                  className={`hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors ${
+                  className={`hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors whitespace-nowrap ${
                     user.rankPosition === 1 ? "bg-amber-50/30 dark:bg-amber-950/20" : ""
                   }`}
                 >
                   {/* SL No. Column */}
-                  <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
+                  <td className="py-2.5 px-2 text-center font-mono font-bold text-slate-500 dark:text-slate-400 text-xs">
                     {idx + 1}
                   </td>
 
